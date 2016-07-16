@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>雪狐ThinkPHP商城系统</title>
+<load href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/main.css" />
+<script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/jquery-1.7.2.min.js"></script>
+</head>
+
+<body>
+	{:W('Template/top')}
+    <!--nav end-->
+    
+    <div id="container">
+    	<div class="w main">
+        	{:W('Template/left')}
+            
+            <div id="content">
+            	<div class="mt"><strong>全部订单</strong></div>
+                <div class="mc">
+                	<table class="tb-order">
+                    	
+                        <thead>
+                        	<tr>
+                            	<th width="290">订单信息</th>
+                                <th width="90">收货人</th>
+                                <th width="110">订单金额</th>
+                                <th width="100">订单时间</th>
+                                <th width="100">订单状态</th>
+                                <th width="130">操作</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                        	<volist name="list" id="vo">
+                                <tr class="tr-th">
+                                    <td colspan="6">
+                                        <span>订单编号：<a target="_blank" href="#">{$vo.id}</a></span>
+                                    </td>
+                                </tr>
+                                <tr class="tr-td">
+                                    <td>
+                                        <div class="img-list">
+                                        	<volist name="vo['goods']" id="sub">
+                                            	<a href="__MODULE__/goods/index/id/{$sub.goods_id}" class="img-box" target="_blank"><img width="50" height="50" src="__UPLOAD__{$sub['goods_id']|getGoodimg}"></a>
+                                            </volist>
+                                        </div>
+                                    </td>
+                                    <td><div>{$vo['address']['realname']}</div></td>
+                                    <td>￥{$vo.order_money}<br>在线支付</td>
+                                    <td><span class="order-time">{$vo.add_time|date='Y-m-d',###}<br>{$vo.add_time|date='H:m:s',###}</span></td>
+                                    <td><if condition="$vo['order_status'] eq 0"><strong class="order-status">等待付款</strong><elseif condition="$vo['order_status'] eq 1"/><span class="order-statu">确认支付</span><elseif condition="$vo['order_status'] eq 2"/><span class="order-statu">已发货</span><elseif condition="$vo['order_status'] eq 3"/><span class="order-statu">已完成</span><else /><span class="order-statu">已退货</span></if></td>
+                                    <td>
+                                        <if condition="$vo['order_status'] eq 0"><span><a class="btn" target="_blank" href="__MODULE__/pay/resubmit/oid/{$vo.id}">付&nbsp;款</a></span><else /><a class="btn-again" target="_blank" href="__MODULE__/cart/cartlist">还要买</a></if>
+                                    </td>
+                                </tr>
+                            </volist>
+                        </tbody>
+                        
+                    </table>
+                    <!--分页 begin-->
+                    <div class="pagin">
+                        {$page}
+                    </div>
+                    <!--分页 end-->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--底部 begin-->
+    {:W('Template/bottom')}
+    <!--底部 end-->
+</body>
+</html>

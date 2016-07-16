@@ -1,0 +1,16 @@
+<div class="other-article mb-45">
+    <div class="m-title">
+       <a class="fr more" target="_blank" href="{:U('Index/List/index',array('cat_id'=>$cat_id))}"><i>+</i>更多</a>
+        <div class="txt">同类热销</div>
+    </div>
+    <ul class="bd clearfix">
+     <volist name="list" id="vo" empty="">
+        <li>
+            <a target="_blank" class="pic" href="{:U('Index/Goods/item',array('id'=>$vo['id']))}">
+               <img src="__UPLOAD__{$vo['goods_img']}!c200x200.jpg" />
+            </a>
+            <a target="_blank" href="{:U('Index/Goods/item',array('id'=>$vo['id']))}" class="name">{$vo['goods_name']}</a>
+        </li> 
+     </volist>                                                             
+    </ul>
+</div>

@@ -1,0 +1,120 @@
+<!--查询条件-->
+<div class="pageHeader">
+	<form id="pagerForm" action="__CONTROLLER__" method="post" onsubmit="return navTabSearch(this)">
+    	<input type="hidden" name="pageNum" value="1" />
+        <input type="hidden" name="numPerPage" value="{$numPerPage}" />
+    	<div class="searchBar">
+        	<ul class="searchContent">
+            	<li>
+                	<label>分类名称：</label>
+                    <select name="cat_id" style="width:150px">
+                    	<option value="">全部分类</option>
+                    	<volist name="catlist" id="vo">
+                    		<option value="{$vo.id}" <eq name="vo.id" value="$Think.post.cat_id">selected</eq>
+                                                     <neq name="vo.level" value="3">disabled</neq>
+                            >{$vo.cat_name}</option>
+                        </volist>
+                    </select>
+                </li>
+                <li>
+                	<label>状态：</label>
+                    <select name="status" style="width:150px">
+                    	<option value="">全部</option>
+                    	<foreach name="Think.config.CONSIGN_STATUS" item="vo" key="k" >
+                    		<option value="{$k}" <eq name="k" value="$Think.post.status">selected</eq> >{$vo}</option>
+                        </foreach>
+                    </select>
+                </li>
+                <li>
+                	<label>关键字：</label>
+                    <input name="goods_name" type="text" size="25" value="{$Think.post.goods_name}"  />
+                </li>
+                <li class="uid">
+                	<label>用户：</label>
+                    <input name="user" type="text" size="25" value="{$Think.post.user}" />
+                </li>
+            </ul>
+            <div class="subBar">
+            	<ul>
+                	<li>
+                    	<div class="buttonActive">
+                        	<div class="buttonContent">
+                            	<button type="submit">查询</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="pageContent">
+    <!--操作按钮-->
+    <div class="panelBar">
+    	<ul class="toolBar">
+            <li><a class="edit" href="__CONTROLLER__/edit/id/{cid}" target="dialog" mask="true" warn="请选择一条记录" width="850" height="550" max="false" maxable="true" ><span>修改状态</span></a></li>
+            <li><a class="edit" href="__MODULE__/Goods/add/cid/{cid}" target="dialog" rel="consign_goods" mask="true" warn="请选择一条记录" max="true" ><span>商品上线</span></a></li>
+        </ul>
+    </div>
+    <!--操作按钮结束-->
+
+    <!--数据显示-->
+    <table class="list" width="100%" layoutH="115">
+    	<thead>
+        	<tr>
+            <!--<th width="5%"><input type="checkbox" group="id" class="checkboxCtrl" /></th>-->
+                <th width="5%">编号</th>
+                <th width="6%">寄售分类</th>
+                <th width="10%">寄售品</th>
+                <th width="5%">寄售用户</th>
+                <th width="10%">申请时间</th>
+                <th width="8%">封面</th>
+                <th width="10%">寄售状态</th>
+                <!--<th width="5%">样本提供</th>
+                <th width="5%">瑕疵处理</th>
+                <th width="5%">特殊要求</th>-->
+                <th width="7%">快递公司</th>
+                <th width="8%">快递单号</th>
+                <th width="5%">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<volist id="vo" name="list">
+                <tr target="cid" rel="{$vo['id']}">
+                    <!--<td><input type="checkbox" name="id" value="{$vo['id']}" /></td>-->
+                    <td>{$vo['id']}</td>
+                    <td>{$vo['cat_name']}</td>
+                    <td>{$vo['goods_name']}</td>
+                    <td>{$vo['uid']|uidToField=###,'username'}</td>
+                    <td>{$vo['add_time']|date="Y-m-d H:i:s",###}</td>
+                    <td><img src="__UPLOAD__{$vo['goods_img']}" style="width: 80px; height: 80px;" /></td>
+                    <td>{:C('CONSIGN_STATUS')[$vo['status']]}</td>
+                    <td>{$vo['express_abbr']}</td>
+                    <td>{$vo['express_num']}</td>
+                    <td>
+                      <a href="__CONTROLLER__/detail/cid/{$vo['id']}" target="dialog" rel="consign_detail" mask="true" width="1000" height="800" max="false"><span>详情</span></a>
+                    </td>
+                </tr>
+            </volist>
+        </tbody>
+    </table>
+    <!--数据显示结束-->
+
+    <!--数据分页-->
+    <div class="panelBar">
+    	<div class="pages">
+        	<span>共&nbsp;{$totalCount}&nbsp;条,&nbsp;</span>
+                <select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+                  <option value="10" <eq name="numPerPage" value="10">selected</eq>>10</option>
+                  <option value="15" <eq name="numPerPage" value="15">selected</eq>>15</option>
+                  <option value="20" <eq name="numPerPage" value="20">selected</eq>>20</option>
+                  <option value="50" <eq name="numPerPage" value="50">selected</eq>>50</option>
+                  <option value="100" <eq name="numPerPage" value="100">selected</eq>>100</option>
+           	 	</select>
+            <span>&nbsp;条&nbsp;/&nbsp;页</span>
+        </div>
+        <div class="pagination" targetType="navTab" totalCount="{$totalCount}" numPerPage="{$numPerPage}" pageNumShown="10" currentPage="{$currentPage}"></div>
+    </div>
+    <!--数据分页结束-->
+</div>

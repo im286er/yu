@@ -1,0 +1,34 @@
+<ul class="bd data">
+      <volist id="vo" name="list">
+		<li>
+			<div class="avatar">
+               <eq name="vo['status']" value="2"> 
+                    <a target="_blank" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}">
+                        <img src="__UPLOAD__{$vo['title_img']}"/>
+                    </a>
+               <else/>
+                        <img src="__UPLOAD__{$vo['title_img']}"/>
+			   </eq>
+            </div>
+			<div class="frame">
+				<eq name="vo['status']" value="2">
+                   <a class="title" target="_blank" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}">
+                       <span>{$vo['cat_name']}</span>{$vo['title']}
+                   </a>
+				<else/>
+                    <span>{$vo['cat_name']}</span>{$vo['title']}
+			    </eq>
+                <time>{$vo['add_time']|date="Y-m-d",###}</time>
+				<p class="tips">
+                   <eq name="vo['status']" value="2">
+                        已通过审核
+                   <else/>    
+                        投稿成功，请耐心等待前台显示
+                   </eq>
+                </p>
+			</div>
+			<div class="btn"></div>
+		</li>
+       </volist>
+</ul>
+<include file="Home:page_tpl" />

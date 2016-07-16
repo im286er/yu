@@ -1,0 +1,41 @@
+<php>
+   $startPage = $currentPage - 3;
+   $stopPage =  $currentPage + 3;
+   $prePage  =  $currentPage - 1;
+   $nextPage =  $currentPage + 1; 
+</php>
+<gt name="totalPage" value="1">
+    <div class="m-paginator"> 
+        <egt name="prePage" value="1">
+            <a id="J-page-prev" href="javascript:;" class="paginator-item paginator-item-prev">
+              <span class="paginator-item-prev-icon"></span>
+            </a>
+        </egt>
+        <!-----循环到当前页-------->
+        <elt name="startPage" value="4">
+            <for start="1" end="$currentPage" comparison="elt">
+              <a href="javascript:;" class="J-page-item paginator-item <eq name="currentPage" value="$i">paginator-item-selected</eq>" >{$i}</a>
+            </for>
+        <else/>
+            <a href="javascript:;" class="J-page-item paginator-item" >1</a>
+            <span class="paginator-sep">…</span>
+            <for start="$startPage" end="$currentPage" comparison="elt">
+               <a href="javascript:;" class="J-page-item paginator-item <eq name="currentPage" value="$i">paginator-item-selected</eq>" >{$i}</a>
+            </for>
+        </elt>
+        <!-----当前页到结尾-------->
+        <gt name="totalPage" value="$currentPage">
+            <php>$stopPage = $stopPage >= $totalPage ? $totalPage:$stopPage;</php>
+            <for start="$nextPage" end="$stopPage" comparison="elt">
+              <a href="javascript:;" class="J-page-item paginator-item" >{$i}</a>
+            </for>
+            <gt name="totalPage" value="$stopPage"><span class="paginator-sep">…</span></gt>
+        </gt>
+        <elt name="nextPage" value="$totalPage">
+           <a id="J-page-next" href="JavaScript:;" class="paginator-item paginator-item-next">
+               <span class="paginator-item-next-icon"></span>
+           </a>
+        </elt>
+        <input type="hidden" name="totalPageNum" value="{$totalPage}"/>
+    </div>
+</gt>

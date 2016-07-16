@@ -1,0 +1,66 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/article.css"/>
+<script> 
+    var pageName = 'service',                                                  
+        seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/'              
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+	<div class="article-list-wrap mainbody-2 clearfix">
+		<ul class="m-sub-nav clearfix mb-20">
+			<li>
+				<a <eq name="Think.get.cat" value="">class="active"</eq> href="{:U('Index/Service/index')}">服务首页</a>
+			</li>
+            <volist id="vo" name="catlist">
+          		<li>
+					<a href="{:U('Index/Service/show',array('cat'=>$vo['id']))}"
+                      <eq name="vo['id']" value="$Think.get.cat">class="active"</eq> >{$vo['cat_name']}
+                    </a>
+				</li>		                  	
+            </volist>			 		
+		</ul>
+		<div class="area-l">
+			<div class="menu"></div>
+			<ul class="bd">
+				<volist id="vo" name="list">
+					<li>
+						<a class="pic" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}" target="_blank"><img src="__UPLOAD__{$vo['title_img']}"/></a>
+						<div class="info">
+							<a class="title" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}" target="_blank">{$vo['title']}</a>
+							<div class="data">
+								<a class="name" href="#">{$vo['uid']|uidToField=###,'username'}</a>
+								<time>{$vo['add_time']|date="Y-m-d",###}</time>
+							</div>
+							<a class="txt" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}">{$vo['summary']}</a>
+							<div class="tool">
+								<div class="m-tool-r fr">
+									<a class="comment" href="javascript:;">{$vo['comment_num']}</a>
+									<a class="collect" href="javascript:;">{$vo['collect_num']}</a>
+									<a class="support" href="javascript:;">{$vo['support_num']}</a>
+								</div>			
+							</div>			
+						</div>
+					</li>			                  	
+				</volist> 		
+			</ul>
+	        <div class="m-paginator">
+	            {$page}
+	        </div>			
+		</div>
+		<div class="area-r">
+			<div class="hot m-side-box">
+				<div class="top clearfix">
+					<div class="title">本周热门</div>
+				</div>
+				{:W('Article/heat',array($cat_id))}   					
+			</div>	
+			<div class="m-side-ad mt-10">
+			   {:W('Promote/show',array($Think.CONTROLLER_NAME,'right','1'))}		
+			</div>							
+		</div>		
+	</div>    
+<include file="include:footer" />
+</div>    
+
+
+
+

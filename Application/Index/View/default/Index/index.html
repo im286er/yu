@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>雪狐ThinkPHP商城系统</title>
+<load href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/main.css" />
+<script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/swfobject.js"></script>
+<script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/scrollpic.js"></script>
+<script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/base.js"></script>
+<script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib.js"></script>
+<script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/MSClass.js"></script>
+</head>
+<body>
+	{:W('Template/top')}
+    <!--nav end-->
+    <div class="w test">
+    	<div id="o-slide">
+        	<div class="slide" id="swfContent">
+            	<script type="text/javascript">
+					var xmlData="<list><volist name="ad" id="advo"><item><img>__UPLOAD__{$advo.ad_img}</img><url>{$advo.ad_link}</url></item></volist></list>";
+					var flashvars = {xmlData:xmlData};
+					var params = {menu:false,wmode:"opaque"};
+					var attributes = {};
+					swfobject.embedSWF("__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/swf/lanren.swf", "swfContent", "670", "240", "9","expressInstall.swf", flashvars, params, attributes);
+				</script>
+            </div>
+            <!--slide end-->
+            <div id="mscroll">
+            	<div class="ctrl" id="mscroll-ctrl-prev"><b></b></div>
+                <div class="ctrl" id="mscroll-ctrl-next"><b></b></div>
+                <div class="o-list">
+                	<div class="list" id="rollphoto1">
+                    	<ul>
+                        	<volist name="adscroll" id="voscroll">
+                                <li class="item">
+                                    <a href="{$voscroll.ad_link}" target="_blank"><img width="202" height="159" src="__UPLOAD__{$voscroll.ad_img}"></a>
+                                </li>
+                            </volist>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+			<script language=javascript type=text/javascript>
+                var scrollPic_01 = new ScrollPic();
+                scrollPic_01.scrollContId   = "rollphoto1"; //内容容器ID
+                scrollPic_01.arrLeftId      = "mscroll-ctrl-prev";//左箭头ID
+                scrollPic_01.arrRightId     = "mscroll-ctrl-next"; //右箭头ID
+                if (screen.width >= 1280){scrollPic_01.frameWidth     = 609;}else{scrollPic_01.frameWidth     = 488;}
+                if (screen.width >= 1280){scrollPic_01.pageWidth      = 609;}else{scrollPic_01.pageWidth      = 488;}
+                scrollPic_01.speed          = 10; //移动速度(单位毫秒，越小越快)
+                scrollPic_01.space          = 10; //每次移动像素(单位px，越大越快)
+                scrollPic_01.autoPlay       = true; //自动播放
+                scrollPic_01.autoPlayTime   = 3; //自动播放间隔时间(秒)
+                scrollPic_01.initialize(); //初始化
+            </script>
+            <!--scroll end-->
+        </div>
+        <!--幻灯片片、滚动幻灯片 end-->
+        <div id="rand">
+        	<a href="{$adrand.ad_link}" target="_blank"><img src="__UPLOAD__{$adrand.ad_img}"></a>
+        </div>
+        <!--随机广告 end-->
+        <div class="m" id="studyimnews">
+        	<div class="mt">
+            	<h3>雪狐快报</h3>
+                <div class="extra"><a href="#" target="_blank">更多快报&nbsp;&gt;</a></div>
+            </div>
+            <div class="mc">
+            	<ul>
+                	<volist name="article" id="voarticle">
+                    	<!--奇数时添加class="odd"  mod="2"为默认可以不加，此时默认value="1"-->
+                		<!--<li <eq name="mod" value="0">class="odd"</eq>><a href="{$voarticle.article_link}" target="_blank">{$voarticle.title}</a></li>-->
+                        <li class="{$mod?'':'odd'}"><a href="{$voarticle.article_link}" target="_blank">{$voarticle.title}</a></li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <!--雪狐快报 end-->
+        <div id="studyimfirst" class="m">
+        	<div class="mt">
+            	<h3>雪狐首发</h3>
+            </div>
+            <div class="mc">
+            	<div class="item">
+                	<div class="p-img"><a href="#" target="_blank"><img width="100" height="100" alt="" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/upload/firstpublish001.jpg"></a></div>
+                    <div class="p-title"><a href="#" target="_blank">方太全新一代风魔方</a></div>
+                    <div class="p-detail">方太全新一代风魔方，从此不怕炒辣椒。完美黄金控烟区，防止油烟逃逸，吸烟绝对给力。新品首发，直降1190元，重磅加赠价值558元阿里斯顿小厨宝，买得高端霸气，省钱省力气！</div>
+                </div>
+            </div>
+        </div>
+        <!--雪狐首发 end-->
+    </div>
+    <div style="clear:both"></div>
+    <!--全部商品楼层 begin-->
+    <div id="floors-list">
+    	<!--单层 begin-->
+        <volist name="floor" id="vofloor">
+            <div class="w w1">
+                <!--楼层左侧 begin-->
+                <div class="m m1 catalogue">
+                    <div class="mt ld">
+                        <div class="floor">
+                            <b class="b b1"></b>
+                            <b class="b b2"></b>
+                            <b class="b b3">{$key+1}F</b>
+                            <b class="b4"></b>
+                        </div>
+                        <h2>{$vofloor.name}</h2>
+                    </div>
+                    <div class="mc">
+                        <div class="style1">
+                            <ul class="lh">
+                            	<volist name="vofloor['sub_cat']" id="sub_left">
+                                	<if condition="$sub_left.position eq 1"><li><a href="__MODULE__/list/index/id/{$sub_left.url}">{$sub_left.name}</a></li></if>
+                                </volist>
+                            </ul>
+                            <span>{:getFloorLeftPic($vofloor['id'])}</span>
+                        </div>
+                    </div>
+                </div>
+                <!--楼层左侧 end-->
+                
+                <!--楼层中间 begin-->
+                <div class="m plist">
+                    <div class="tab-arrow"><b></b></div>
+                    <volist name="vofloor['sub_cat']" id="sub_middle">
+                        <!--中间第1列 begin-->
+                        <if condition="$sub_middle.position eq 2 AND $sub_middle.name eq '特价商品'">
+                            <div class="sm fore1 curr" data-widget="tab-item">
+                                <div class="smt">
+                                    <h3>{$sub_middle.name}</h3>
+                                </div>
+                                <div class="smc" data-widget="tab-content">
+                                    <!--四格幻灯片 begin-->
+                                    <div class="slide">
+                                        <div id="SlideMidFrame{$sub_middle.id}" class="slide-itemswrap">
+                                            <div id="SlideMidContent{$sub_middle.id}" class="slide-item">
+                                            	<volist name=":getSlideMid($sub_middle['id'])" id="sub_slidemid">
+                                                    <div><a href="__ROOT__/{$sub_slidemid.ad_link}" target="_blank"><img src="__UPLOAD__{$sub_slidemid.ad_img}" width="473" height="180" alt=""></a></div>
+                                                </volist>
+                                            </div>
+                                        </div>
+                                        <div id="SlideMidBtn{$sub_middle.id}" class="slide-controls">
+                                            <span class="active"><b></b></span>
+                                            <span class=""><b></b></span>
+                                            <span class=""><b></b></span>
+                                            <span class=""><b></b></span>
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                    new Marquee(
+                                    {
+                                        MSClassID :  "SlideMidFrame{$sub_middle.id}",
+                                        ContentID :  "SlideMidContent{$sub_middle.id}",
+                                        TabID :  "SlideMidBtn{$sub_middle.id}",
+                                        Direction : 2,
+                                        Step : 0.2,
+                                        Width : 473,
+                                        Height : 180,
+                                        Timer : 20,
+                                        DelayTime : 0,
+                                        WaitTime : 600000,
+                                        ScrollStep: 0,
+                                        SwitchType: 0,
+                                        AutoStart : 1
+                                    });
+                                    </script>
+                                    <!--四格幻灯片 end-->
+                                    
+                                    <!--幻灯片周边U型广告 begin-->
+                                    <ul class="lh style1">
+                                    	<volist name=":getAdMid($sub_middle['id'])" id="sub_admid">
+                                            <li class="fore{$key+1}">
+                                                <div class="p-img"><a href="__ROOT__/{$sub_admid.ad_link}" target="_blank"><img width="100" height="100" alt="{$sub_admid.ad_name}" src="__UPLOAD__{$sub_admid.ad_img}"></a></div>
+                                                <div class="p-name"><a href="__ROOT__/{$sub_admid.ad_link}" target="_blank">{$sub_admid.ad_name}</a></div>
+                                                <div class="p-price"><span style="display:block; height:1.5em; overflow:hidden">{$sub_admid.ad_ext}</span></div>
+                                            </li>
+                                        </volist>
+                                    </ul>
+                                    <!--幻灯片周边U型广告 end-->
+                                </div>
+                            </div>
+                        <elseif condition="$sub_middle.position eq 2 AND $sub_middle.name neq '特价商品'" />
+                        <!--中间第1列 end-->
+                        
+                        <!--中间第2-5列 begin-->
+                        <div class="sm fore{$key+1}" data-widget="tab-item">
+                            <div class="smt">
+                                <h3>{$sub_middle.name}</h3>
+                            </div>
+                            <div class="smc" data-widget="tab-content">
+                                <ul class="lh style2">
+                                    <volist name=":getAdMid($sub_middle['id'])" id="sub_admid">
+                                        <li class="fore{$key+1}">
+                                            <div class="p-img"><a href="__ROOT__/{$sub_admid.ad_link}" target="_blank"><img width="100" height="100" alt="{$sub_admid.ad_name}" src="__UPLOAD__{$sub_admid.ad_img}"></a></div>
+                                            <div class="p-name"><a href="__ROOT__/{$sub_admid.ad_link}" target="_blank">{$sub_admid.ad_name}</a></div>
+                                            <div class="p-price"><span style="display:block; height:1.5em; overflow:hidden">{$sub_admid.ad_ext}</span></div>
+                                        </li>
+                                    </volist>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--中间第2-5列 end-->
+                        </if>
+                    </volist>
+                </div>
+                <!--楼层中间 end-->
+                
+                <!--楼层右侧品牌 begin-->
+                <div class="sm sm1 brands">
+                    <div class="smt"></div>
+                    <div class="smc">
+                        <ul class="lh">
+                        	<volist name=":getRigBrand($vofloor['id'])" id="sub_rigbrand">
+                              <li class="fore{$key+1}"><a target="_blank" href="{$sub_rigbrand.brand_url}"><img width="98" height="35" alt="{$sub_rigbrand.brand_name}" src="__UPLOAD__{$sub_rigbrand.brand_logo}"></a></li>
+                            </volist>
+                        </ul>
+                    </div>
+                </div>
+                <!--楼层右侧品牌 end-->
+                
+                <!--楼层右侧广告 begin-->
+                <div class="fr_ad">
+                  <div class="slide">
+                      <div id="SlideRigFrame{$vofloor.id}" class="slide-itemswrap">
+                          <div id="SlideRigContent{$vofloor.id}" class="slide-item">
+                              <volist name=":getSlideRig($vofloor['id'])" id="sub_sliderig">
+      						  	  <div><a href="__ROOT__/{$sub_sliderig.ad_link}" target="_blank"><img src="__UPLOAD__{$sub_sliderig.ad_img}" width="209" height="180" alt=""></a></div>
+							  </volist>
+                          </div>
+                      </div>
+                      <div id="SlideRigBtn{$vofloor.id}" class="slide-controls">
+                          <span class="active"><b></b></span>
+                          <span class=""><b></b></span>
+                      </div>
+                  </div>
+                  <script type="text/javascript">
+                  new Marquee(
+                  {
+                      MSClassID :  "SlideRigFrame{$vofloor.id}",
+                      ContentID :  "SlideRigContent{$vofloor.id}",
+                      TabID :  "SlideRigBtn{$vofloor.id}",
+                      Direction : 2,
+                      Step : 0.2,
+                      Width : 209,
+                      Height : 180,
+                      Timer : 20,
+                      DelayTime : 0,
+                      WaitTime : 600000,
+                      ScrollStep: 0,
+                      SwitchType: 0,
+                      AutoStart : 1
+                  });
+                  </script>
+                </div>
+                <!--楼层右侧广告 end-->
+            </div>
+        </volist>
+        <!--单层 end-->
+    </div>
+    <script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/slide.js"></script>
+    <!--全部商品楼层 end-->
+    <!--底部 begin-->
+    {:W('Template/bottom')}
+    <!--底部 end-->
+</body>
+</html>

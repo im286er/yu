@@ -1,0 +1,68 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/user_Center.css"/>
+<script> 
+    var pageName = 'home';
+    var seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';
+    var editAddressUrl ="/Index/Address/edit/id/";        
+
+    yktGlobal.pageName ='home_account';  
+    // 测试                          
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="safe-wrap mainbody-2 clearfix">
+	<include file="Home:left" />
+	<div class="m-content">		
+		<div class="sub-nav">
+			<a class="active" href="#">账号安全</a>
+		</div>
+		<ul class="bd data">
+            <li>
+				<div class="tag">当前用户：</div>
+				<div class="frame">{$Think.session.user}</div>
+			</li>
+			<li>
+				<div class="tag">绑定手机：</div>
+				<div class="frame">{$inf['mobile']|hideKey=###}<!-- <a href="#">更换手机</a> --></div>
+			</li>
+			<li class="password">
+				<div class="tag">密码：</div>
+				<div class="frame">
+					*******<a id="J-modify-btn" href="javascript:;">修改密码</a>
+				</div>	
+				<!-- 修改密码 -->			
+				<div id="J-modify_pwd" class="modify_pwd">
+					<form id="J-modify-form" method="post">
+    					<div class="tag">原密码：</div>
+    					<div class="frame">
+    						<label class="label">
+    							<input type="password" placeholder="输入原密码" name="init_pw" >
+    							<span class="error"></span>
+    						</label>							
+    					</div>		
+    					<div class="tag">新密码：</div>
+    					<div class="frame">
+    						<label class="label">
+    							<input id="new_pw" class="newPass" type="password" placeholder="输入新密码" autocomplete="off" name="new_pw">
+    							<span class="error"></span>
+    						</label>
+    						<label class="label">
+    							<input class="newPass2" type="password" placeholder="重复新密码" autocomplete="off" name="renew_pw">
+    							<span class="error"></span>
+    						</label>
+                            <label class="label">
+    							<input class="newPass2" type="text" placeholder="手机号码" autocomplete="off" name="mobile">
+    							<span class="error"></span> 
+    						</label>
+    						<div class="txt_tip" _text="密码长度8~16位，其中数字，字母和符号至少包含两种">密码长度8~16位，其中数字，字母和符号至少包含两种</div>
+    						<div class="btns">
+    							<input id="J-modify-submit" class="btnOK" type="submit"/>
+    							<a id="J-modify-cancel" class="btnCancel" href="javascript:;" title="取消">取消</a>
+    						</div>								
+    					</div>	
+					</form>														
+				</div>						
+			</li>
+		</ul>		
+	</div>
+</div>
+<include file="include:footer" />

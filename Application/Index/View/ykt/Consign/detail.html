@@ -1,0 +1,207 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/consign.css"/>	
+<script> 
+    var pageName = 'consign';     
+    var seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';
+
+    yktGlobal.pageName = 'detail';
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="body-bg">
+  <div class="mainbody saleProcess-wrap clearfix">
+	<div class="detail-top clearfix">
+		<div class="top-l">委托详情</div>
+		<a class="top-r" href="{:U('Index/Home/consign')}">返回</a>
+	</div>				
+	<div class="saleProcess-l"> 		
+	  <div class="special clearfix">
+		<div class="s-l">
+		    <img src="__UPLOAD__{$consign_inf['goods_img']}" />
+		</div>
+		<div class="s-r">
+            <div class="attr-list attr-list-name clearfix">
+				<div class="tag"></i>委托人：</div>
+				<div class="frame"><div class="show-txt">{$consign_inf['uid']|uidToField=###,'username'}</div></div>
+			</div>
+            <div class="attr-list attr-list-name clearfix">
+				<div class="tag"></i>状态：</div>
+				<div class="frame mt-5">
+					<span id="J-status" class="m-status">{:C('CONSIGN_STATUS')[$consign_inf['status']]}</span>
+				</div>
+			</div> 
+            <div class="attr-list attr-list-name clearfix">
+    				<div class="tag"></i></div>
+    				<div class="frame">
+    					<if condition="C('CONSIGN_STATUS_VAL.modify') eq $consign_inf['status']"><!--请修改-->
+                            <font color="red">【{$consign_inf['modify_desc']}】</font>
+    						<a class="operate u-btn-primary" href="{:U('Index/Consign/edit',array('cid'=>$consign_inf['id']))}" >进入修改</a>
+    					</if>
+    		            <if condition="C('CONSIGN_STATUS_VAL.turn_goods') eq $consign_inf['status']"><!--已转为商品-->
+    		            	<a class="operate" href="{:U('Index/Goods/item',array('id'=>$consign_inf['gid']))}" >商品链接</a>
+    					</if>
+    				</div>
+    		</div>
+			<if condition="C('CONSIGN_STATUS_VAL.pre_send') eq $consign_inf['status']"><!--请寄送商品-->
+				<div class="attr-list attr-list-name clearfix">
+					<div class="tag"></i>快递公司：</div>
+					<div class="frame"><input class="u-input-text" name="express_abbr" type="text" maxlength="30" value="" placeholder="请填写快递公司"/></div>
+				</div>	
+				<div class="attr-list attr-list-name clearfix">
+					<div class="tag"></i>快递单号：</div>
+					<div class="frame express">
+						<p><input class="u-input-text" name="express_num"  type="text" maxlength="30" value="" placeholder="请填写快递单号"/></p>
+						<input name="cid" type="hidden"  value="{$consign_inf['id']}"/>
+						<a id="J-express-save" class="u-btn-primary express-btn" href="javascript:;">确定</a>
+						<font color="red">【请寄出商品之后,在左方填写快递单号】</font>
+					</div>
+				</div>	
+
+				<!-- <div class="attr-list attr-list-name clearfix">
+					<div class="tag-big"><i class="required-icon"></i>快递公司/快递号：</div>
+					<div id="J-express-frame" class="frame express">
+						<ul>
+							<li><input class="u-input-text" name="express_abbr" type="text" maxlength="30" value="" placeholder="请填写快递公司"/></li>
+							<li><input class="u-input-text" name="express_num"  type="text" maxlength="30" value="" placeholder="请填写快递单号"/></li>
+						</ul>
+                        <input name="cid" type="hidden"  value="{$consign_inf['id']}"/>
+						<a id="J-express-save" class="u-btn-primary express-btn" href="javascript:;">确定</a>
+						<font color="red">【请寄出商品之后,在左方填写快递单号】</font>
+					</div>
+				</div>	-->
+			</if>
+            <if condition="($consign_inf['status'] egt C('CONSIGN_STATUS_VAL.send')) && ($consign_inf['status'] elt C('CONSIGN_STATUS_VAL.turn_goods'))"><!--请寄送商品-->
+				<div class="attr-list attr-list-name clearfix">
+					<div class="tag"></i>快递号：</div>
+					<div class="frame"><div class="show-txt">{$consign_inf['express_num']}</div></div>
+				</div>	
+			</if>
+			<div class="attr-list attr-list-name clearfix">
+				<div class="tag"></i>名称：</div>
+				<div class="frame"><div class="show-txt">{$consign_inf['goods_name']}</div></div>
+			</div>	
+            <div class="attr-list attr-list-name clearfix">
+				<div class="tag"></i>类型：</div>
+				<div class="frame"><div class="show-txt">{$consign_inf['cat_name']}</div></div>
+			</div>
+			<div class="attr-list clearfix">
+				<div class="tag"></i>套装：</div>
+				<div class="frame">
+                  <eq name="consign_inf['multi']" value="0">
+                      <a id="J-no-attr" class="add_attr_btn active" href="javascript:;">无套装</a>
+                      <a id="J-multi-attr" class="add_attr_btn" href="javascript:;">多套装</a>
+                  <else/>    
+                      <a id="J-no-attr" class="add_attr_btn" href="javascript:;">无套装</a>
+                      <a id="J-multi-attr" class="add_attr_btn active" href="javascript:;">多套装</a>
+                  </eq>
+				</div>
+			</div>
+            <div class="attr-list clearfix">
+              <!--------------------------------------------------------->
+              <eq name="consign_inf['multi']" value="0">            
+        				<div id="J-attr-frame" class="frame"> 
+        					<div class="m-attr-data clearfix">
+        						<div class="item m-tooltip-wrap">
+        							<input class="u-input-text" readonly type="text" value="{$attr_val['num']}" />
+        							<span class="unit">件</span>
+        							<span class="tooltip J-msg-span"></span>
+        						</div>
+        						<div class="item m-tooltip-wrap">
+        							<input class="u-input-text" readonly type="text" value="{$attr_val['price']}" />
+        							<span class="unit">元</span>
+        							<span class="tooltip J-msg-span"></span>
+        						</div>
+        					</div>	
+        				</div>					
+              <else/> 
+              <!--------------------------------------------------------->
+			    <div id="J-attr-frame" class="frame">
+                  <div class="multi-attr-content">
+                        <ul id="J-ul-attr" class="top">
+                          <volist name="attr_des" id="vo">
+                            <li class="J-attr-row clearfix">
+                              <div class="J-attr-title attr-title m-tooltip-wrap">
+                                  <input class="J-input-edit input-edit valid" readonly type="text" value="{$vo['title']}" />
+                              </div>
+                              <div class="J-attr-val-frame attr-val">
+                                <foreach name="vo['val']" item="voo" >
+                                  <div class="J-attr-val-list attr-val-list m-tooltip-wrap"> 	
+                                    <input class="J-input-edit input-edit valid"  type="text" value="{$voo}" readonly/>
+                                  </div>
+                                </foreach>
+                              </div>
+                            </li>  
+                          </volist> 
+                        </ul>
+                        <div id="J-result-wrap" class="detail">
+                           {$attr_form}
+                        </div>
+                  </div>
+                </div>
+              </eq>
+            </div>
+            <!--------------------------------------------------------->
+          </div>              
+       </div>                       
+    </div>
+	<ul class=" clearfix">			
+		<include file="Consign:edit_public_attr" />
+		<li class="saleProcess-list clearfix">
+			<div class="fl tag">原著：</div>
+			<div class="frame">
+				<div class="show-txt">{$consign_inf['original']}</div>
+			</div>  
+		</li>
+        <li class="saleProcess-list clearfix">
+			<div class="fl tag">作者：</div>
+			<div class="frame">
+				<div class="show-txt">{$consign_inf['author']}</div>
+			</div>  
+		</li>
+        <li class="saleProcess-list clearfix">
+			<div class="fl tag">CP：</div>
+			<div class="frame">
+				<div class="show-txt">{$consign_inf['cp']}</div>
+			</div>  
+		</li>
+        <li class="saleProcess-list clearfix">
+			<div class="fl tag">商品简介：</div>
+			<div class="frame">
+				<div class="show-txt">{$consign_inf['goods_desc']}</div>
+			</div>  
+		</li>
+        <li class="saleProcess-list clearfix">
+			<div class="fl tag">商品参数：</div>
+			<div class="frame">
+				<div class="show-txt">{$consign_inf['goods_param']|htmlspecialchars_decode|stripslashes}</div>
+			</div>  
+		</li>
+        <li class="saleProcess-list clearfix">
+			<div class="fl tag">商品详细：</div>
+			<div class="frame">
+				<div class="show-txt">{$consign_inf['goods_detail']|htmlspecialchars_decode|stripslashes}</div>
+			</div>  
+		</li>
+        <li class="saleProcess-list clearfix">
+			<div class="fl tag">通贩要求和提示：</div>
+			<div class="frame">
+				<div class="show-txt">{$consign_inf['claim']}</div>
+			</div>  
+		</li>
+        <li class="saleProcess-list clearfix">
+			<div class="fl tag">样品提供：</div>
+			<div class="frame">
+				<div class="show-txt">{$consign_inf['sample']=='1'?'提供':'不提供'}</div>
+			</div>  
+		</li>
+        <li class="saleProcess-list clearfix">
+			<div class="fl tag">瑕疵品处理方式：</div>
+			<div class="frame">
+				<div class="show-txt">{$consign_inf['treat_default']=='1'?'默认':'到货决定'}</div>
+			</div>  
+		</li>							
+	</ul>
+  </div>
+</div>
+<include file="include:footer" />
+</body>
+</html>

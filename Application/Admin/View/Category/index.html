@@ -1,0 +1,50 @@
+<!--查询条件-->
+<div class="pageHeader">
+	<form id="pagerForm" action="__CONTROLLER__" method="post" onsubmit="return navTabSearch(this)">
+    	<div class="searchBar">
+        	
+            <div class="subBar">
+            	
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="pageContent">
+    <!--操作按钮-->
+    <div class="panelBar">
+    	<ul class="toolBar">
+        	<li><a class="add" href="__CONTROLLER__/add/" target="dialog" rel="category_add" mask="true" maxable="true" width="500" height="320"><span>新增</span></a></li>
+            <li><a class="delete" href="__CONTROLLER__/foreverdelete/" posttype="string" rel="id" target="selectedTodo" title="确定要删除选中的记录吗？" warn="请至少选择条记录"><span>删除</span></a></li>
+            <li><a class="edit" href="__CONTROLLER__/edit/id/{cid}" target="dialog" rel="category_edit" mask="true" warn="请选择一条记录" width="500" height="320" ><span>编辑</span></a></li>
+        </ul>
+    </div>
+    <!--操作按钮结束-->
+
+    <!--数据显示-->
+    <table class="list" width="100%" layoutH="115">
+    	<thead>
+        	<tr>
+            	<th width="10%"><input type="checkbox" group="id" class="checkboxCtrl" /></th>
+                <th width="10%">编号</th>
+                <th width="20%">分类名称</th>
+                <th width="20%">显示层</th>
+                <th width="20%">是否显示</th>
+                <th width="20%">排序</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<volist id="vo" name="list">
+                <tr target="cid" rel="{$vo['id']}">
+                    <td><input type="checkbox" name="id" value="{$vo['id']}" /></td>
+                    <td>{$vo['id']}</td>
+                    <td style="text-align:left;">{$vo['cat_name']}</td>
+                    <td>{$vo['level']}</td>
+                    <td>{$vo['show']==1?'是':'否'}</td>
+                    <td>{$vo['sort']}</td>
+                </tr>
+            </volist>
+        </tbody>
+    </table>
+    <!--数据显示结束-->
+</div>

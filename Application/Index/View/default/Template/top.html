@@ -1,0 +1,155 @@
+<script language="javascript">
+function showCart(dos)
+{
+	if(dos == 'show')
+	{
+		document.getElementById('openCart').className = "hover";
+	}
+	else
+	{
+		document.getElementById('openCart').className = "";
+	}
+}
+</script>
+
+
+	<div id="shortcut">
+    	<div class="w">
+        	<ul class="fl lh">
+            	<li class="fore1 ld">
+                	<b></b><a href="#">收藏御咖塘商城</a>
+                </li>
+            </ul>
+            <ul class="fr lh">
+            	<li class="fore1 ld">
+                	您好，
+                    <if condition="$Think.session.uid eq null">欢迎来到御咖塘商城！<a href="{:U('login/index')}" target="_self">[登录]</a> <a href="{:U('regist/index')}">[免费注册]</a><else/>{$Think.session.username}！<a href="__MODULE__/index/loginout">[退出]</a></if>
+                </li>
+                <li class="fore2 ld">
+                	<s></s><a href="__APP__/index/user" target="_blank">我的订单</a>
+                </li>
+                <if condition="$Think.session.room eq true">
+                    <li class="fore2 ld">
+                        <s></s><a href="__APP__/admin" target="_blank">管理后台</a>
+                    </li>
+                </if> 
+            </ul>
+        </div>
+    </div>
+    <!--shortcut end-->
+    <div id="header">
+    	<div id="header-top" class="w">
+        	<div id="logo" class="ld">
+                <a href="#"><div class="fl top-logo"></div></a> 
+            </div>
+            <!--logo end-->
+            <div id="search-top">
+            	<div class="i-search">
+                	<div class="search-form">
+                    	<input type="text" class="text">
+                        <input type="button" value="搜索" class="button">
+                    </div>
+                </div>
+<!--                 <div id="hotwords">
+                	<strong>热门搜索：</strong><a href="#" target="_blank" style="color:red;">校园之星</a><a href="#" target="_blank">礼品卡</a><a href="#" target="_blank">四件套</a><a href="#" target="_blank">九阳</a><a href="#" target="_blank">行车记录仪</a><a href="#" target="_blank">LG G2</a><a href="#" target="_blank">考研大纲</a>
+                </div> -->
+            </div> 
+            <!--search-top end-->
+            <div id="mystudyim">
+            	<dl>
+                	<dt class="ld"><s></s><a href="__APP__/index/user" target="_blank">我的御咖塘</a><b></b></dt>
+                </dl>
+            </div>
+            <!--mystudyim end-->
+            <!--购物车 begin-->
+            <div id="shoppingcart">
+            	<dl id="openCart" class="">
+                	<dt class="ld" onmouseover="showCart('show')" onmouseout="showCart('hide')"><s></s><span class="shopping"><span id="shopping-amount"><if condition="!$cart_list">0<else/>{$cart_num}</if></span></span><a href="#">去购物车结算</a><b></b></dt>
+                    <dd onmouseover="showCart('show')" onmouseout="showCart('hide')">
+                    	<if condition="!$cart_list">
+                    		<div class="prompt"><div class="nogoods"><b></b>购物车中还没有商品，赶紧选购吧！</div></div>
+                        <else/>
+                            <div id="cart-content">
+                                <div class="smt"><h4 class="fl">最新加入的商品</h4></div>
+                                <div class="smc">
+                                    <ul>
+                                    	<volist name="cart_list" id="vo">
+                                            <li>
+                                                <div class="p-img fl"><a href="__MODULE__/goods/index/id/{$vo.gid}" target="_blank"><img src="__UPLOAD__{$vo['cartgoods']['goods_img']}" width="50" height="50" alt="" /></a></div>
+                                                <div class="p-name fl"><a href="__MODULE__/goods/index/id/{$vo.gid}" target="_blank">{$vo['cartgoods']['goods_name']}</a></div>
+                                                <div class="p-detail fr"><span class="p-price"><strong>￥{$vo['cartgoods']['goods_price']}</strong>×{$vo.num}</span></div>
+                                            </li>
+                                        </volist>
+                                    </ul>
+                                </div>
+                                <div class="smb">
+                                    共<b>{$cart_num}</b>件商品　共计<strong>￥ {$cart_price}</strong><br />
+                                    <a href="__MODULE__/cart/cartlist" id="payfromcart">去购物车结算</a>
+                                </div>
+                            </div>
+                        </if>
+                    </dd>
+                </dl>
+            </div>
+            <!--购物车 end-->
+        </div>
+    </div>
+    <!--header end-->
+    <div class="w">
+    	<div id="nav">
+        	<div id="category">
+            	<div class="mt ld">
+                	<h2>全部商品分类</h2>
+                </div>
+                <div class="mc" style="<if condition="(strtolower(CONTROLLER_NAME) eq 'index') AND (strtolower(ACTION_NAME) eq 'index')">display:block;<else/>display:none;</if>">
+                	<volist name="category" id="vo">
+                        <div class="item" onMouseOver="this.className='item hover fore1'" onMouseOut="this.className='item'">
+                            <span>
+                                <h3><a href="#">{$vo.cat_name}</a></h3><s></s>
+                            </span>
+                            <div class="i-mc" style="top:5px;">
+                                <div class="subitem">
+                                	<volist name="vo['subitem']" id="sub">
+                                        <dl class="fore1">
+                                            <dt><a href="#">{$sub.cat_name}</a></dt>
+                                            <dd>{$sub.id|getCatName}</dd>
+                                        </dl>
+                                    </volist> 
+                                </div>
+                                
+                                <div class="cat-right">
+                                    <dl class="category-promotions">
+                                        <dd>
+                                            <ul>
+                                              <volist name="vo['ad']" id="subad">
+                                                <li><a href="{$subad.ad_link}" target="_blank"><img src="__UPLOAD__{$subad.ad_img}" width="194" height="70" title="{$subad.ad_name}"></a></li>
+                                              </volist> 
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                    
+                                    <dl class="category-brands">
+
+                                        <dt>推荐品牌</dt>
+                                        <dd>
+                                            <ul>
+                                              <volist name="vo['brand']" id="subbrand">
+                                                <li><a href="{$subbrand.brand_url}" target="_blank">{$subbrand.brand_name}</a></li>
+                                              </volist>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </volist>
+                </div>
+            </div>
+            <ul id="navitems">
+            	<li class="current"><a href="/">首页</a></li>
+                <volist name="nav" id="vo">
+                	<li class=""><a href="/">{$vo.name}</a></li>
+                </volist>
+            </ul>
+        </div>
+    </div>

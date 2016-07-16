@@ -1,0 +1,71 @@
+<!--查询条件-->
+<div class="pageHeader">
+	<form id="pagerForm" action="__CONTROLLER__/goods" method="post" onsubmit="return navTabSearch(this)">
+    	<input type="hidden" name="pageNum" value="1" />
+        <input type="hidden" name="numPerPage" value="{$numPerPage}" />
+    	<div class="searchBar">
+        	<ul class="searchContent">
+            	<li>
+                	<label>分类名称：</label>
+                    <select name="cat_id" style="width:150px">
+                    	<option value="">首页商品</option>
+                    	<volist name="catlist" id="vo">
+                    		<option value="{$vo.id}" <eq name="vo.id" value="$Think.post.cat_id">selected</eq>
+                                                     <neq name="vo.level" value="3">disabled</neq>
+                            >{$vo.cat_name}</option>
+                        </volist>
+                    </select>
+                </li>
+            </ul>
+            <div class="subBar">
+            	<ul>
+                	<li>
+                    	<div class="buttonActive">
+                        	<div class="buttonContent">
+                            	<button type="submit">查询</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>
+
+<form id="pagerForm" action="__CONTROLLER__/doSort" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+    <div class="subBar">
+    	<ul>
+        	<li>
+            	<div class="buttonActive">
+                	<div class="buttonContent">
+                    	<button type="submit">确定排序</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+     </div>
+     <input name="cat_id" type="hidden" value="{$cat_id}" />
+     <div class="pageContent sortDrag promote-goods" layouth="42" style="height: 208px; overflow: auto;">
+       <volist id="vo" name="list">
+            <div class="item">
+                <neq name="vo['goods_img']" value="">
+                    <a class="pic" target="_blank" href="{:U('Index/Goods/item',array('id'=>$vo['id']))}">
+                        <img src="__UPLOAD__{$vo['goods_img']}!c80x80.jpg"/>
+                    </a>
+                </neq>
+                <div class="frame">
+                    <p> 
+                        排序：{$key+1}
+                        <input name="sort[]" type="hidden" value="{$key}" />
+                    </p>
+                    <p>
+                        <a class="name" target="_blank" href="{:U('Index/Goods/item',array('id'=>$vo['id']))}">
+                            {$vo['goods_name']}
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+       </volist>
+    </div>
+</form>

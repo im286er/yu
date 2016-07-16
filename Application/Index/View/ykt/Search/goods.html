@@ -1,0 +1,75 @@
+<include file="Search:search_header" />
+<script>
+var searchType = 'goods';
+</script>
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/channel.css"/>
+<div class="search-goods-wrap">
+	<div class="m-category mt-30 mb-30">
+		<dl class="clearfix">
+			<dt>类型：</dt>
+			<dd <eq name="Think.get.cat" value="">class="active"</eq> >
+               <a href="{:U('Index/Search/goods',array('keyword'=>I('get.keyword'),'s'=>I('get.s')))}">全部</a>
+            </dd>
+			<volist id="vo" name="catlist">
+                <dd <eq name="Think.get.cat" value="$vo['id']">class="active"</eq> >
+                   <a href="{:U('Index/Search/goods',array('keyword'=>I('get.keyword'),'cat'=>$vo['id'],'s'=>I('get.s')))}">
+                      {$vo['cat_name']}
+                   </a>
+                </dd>
+            </volist>
+		</dl>
+		<dl class="clearfix">
+			<dt>状态：</dt>
+            <dd <eq name="Think.get.s" value="">class="active"</eq> >
+               <a href="{:U('Index/Search/goods',array('keyword'=>I('get.keyword'),'cat'=>I('get.cat')))}">全部</a>
+            </dd>
+            <foreach name="Think.config.GOODS_STATUS" item="vo" >
+               <dd <eq name="Think.get.s" value="$key">class="active"</eq> >
+                  <a href="{:U('Index/Search/goods',array('keyword'=>I('get.keyword'),'cat'=>I('get.cat'),'s'=>$key))}">{$vo}</a>
+               </dd>
+            </foreach>
+		</dl>
+		<dl class="clearfix">
+			<dt>排序：</dt>
+			<dd <eq name="Think.get.o" value="id">class="active"</eq> <eq name="Think.get.o" value="">class="active"</eq> >
+              <a href="{:U('Index/Search/goods',array('keyword'=>I('get.keyword'),'cat'=>I('get.cat'),'s'=>I('get.s'),'o'=>'id'))}">最新</a>
+            </dd>
+			<dd <eq name="Think.get.o" value="views">class="active"</eq> >
+              <a href="{:U('Index/Search/goods',array('keyword'=>I('get.keyword'),'cat'=>I('get.cat'),'s'=>I('get.s'),'o'=>'views'))}">点击数</a>
+            </dd>
+			<dd <eq name="Think.get.o" value="collect_num">class="active"</eq> >
+              <a href="{:U('Index/Search/goods',array('keyword'=>I('get.keyword'),'cat'=>I('get.cat'),'s'=>I('get.s'),'o'=>'collect_num'))}">收藏数</a>
+            </dd>
+			<!--<dd <eq name="Think.get.o" value="price"><eq name="Think.get.b" value="">class="active"</eq></eq> >
+              <a href="{:U('Index/Search/goods',array('keyword'=>I('get.keyword'),'cat'=>I('get.cat'),'s'=>I('get.s'),'o'=>'price'))}">价格从高到低</a>
+            </dd>
+			<dd <eq name="Think.get.o" value="price"><eq name="Think.get.b" value="1">class="active"</eq></eq> >
+              <a href="{:U('Index/Search/goods',array('keyword'=>I('get.keyword'),'cat'=>I('get.cat'),'s'=>I('get.s'),'o'=>'price','b'=>1))}">价格从低到高</a>
+            </dd>-->
+		</dl>
+	</div>
+	<ul class="m-product goods bd clearfix">
+	  <volist id="vo" name="list" empty="暂时没有数据">	
+        <li>
+			<div class="pic">
+				<a href="{:U('Index/Goods/item',array('id'=>$vo['id']))}" target="_blank">
+					<img src="__UPLOAD__{$vo['goods_img']}"/> 
+					<div class="overlayh"></div>
+					<div class="overlaym"></div>
+					<div class="overlayb"></div>		 								
+				</a>
+				<i></i>							
+			</div>
+			<a class="title" href="{:U('Index/Goods/item',array('id'=>$vo['id']))}" target="_blank">{$vo['goods_name']|keywordTag=###,I('get.keyword')}</a>
+            <span>{$vo['price']}蚊</span>
+	 	</li>
+	 </volist>	
+	</ul>	
+    <div class="m-paginator">
+       {$page}
+    </div>  		
+</div>
+<include file="include:footer" />
+
+</body>
+</html>

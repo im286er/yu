@@ -1,0 +1,20 @@
+<table class="list" width="100%" layoutH="115">
+    <tbody>
+        <tr><td style="width:180px">编号</td><td>{$vo['id']}</td></tr>
+        <tr><td>用户名</td><td>{$vo['username']}</td></tr>
+        <tr><td>头像</td><td><img src="__UPLOAD__{$vo['id']|avatar=###}" width="80px" height="80px" /></td></tr>
+        <tr><td>寄售状态</td><td>{:C('CONSIGN_QUALI')[$vo['consigner']]}</td></tr>
+        <tr><td>邮箱</td><td>{$vo['email']}</td></tr>
+        <tr><td>手机</td><td>{$vo['mobile']}</td></tr>
+        <tr><td>真名</td><td>{$vo['realname']}</td></tr>
+        <tr><td>性别</td><td>{$vo['sex']=='1'?'男':'女'}</td></tr>
+        <tr><td>QQ</td><td>{$vo['qq']}</td></tr>
+        <tr><td>上次登录时间</td><td>{$vo['last_login']|date="Y-m-d H:i:s",###}</td></tr>
+        <tr><td>上次登录IP</td><td>{$vo['last_ip']}</td></tr>
+        <tr><td>个性签名</td><td>{$vo['sign']}</td></tr>
+        <tr><td>支付宝账户</td><td>{$vo['alipay_account']}</td></tr>
+        <tr><td>支付宝用户</td><td>{$vo['alipay_user']}</td></tr>
+        <tr><td>积分</td><td>{$vo['point']}</td></tr>
+        <tr><td>备注</td><td>{$vo['remark']}</td></tr>
+    </tbody>
+</table>

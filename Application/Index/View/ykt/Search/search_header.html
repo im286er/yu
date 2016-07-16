@@ -1,0 +1,29 @@
+<include file="include:head" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/search.css"/>
+<header class="search-header">
+	<div class="header-body">
+		<div class="top clearfix">
+			<div class="logo clearfix fl">
+				<a href="__SITE__"></a>
+				<span class="txt">搜索</span>
+			</div> 
+			<form id="J-search-form" action="{:U('Index/Search/goods')}" method="get">
+				<div class="search clearfix fl">
+					<input id="J-search-text" class="s-input" type="text" placeholder="请输入要搜索的词" value="{$Think.get.keyword}" name="keyword"/>
+					<input id="J-search-btn" class="btn" type="submit" value="搜索"/>
+				</div>
+			</form>
+			<div id="J-header-user" class="user-guide fr"></div>
+		</div>
+		<div class="nav clearfix">
+			<a <eq name="Think.ACTION_NAME" value="goods">class="active"</eq>  href="{:U('Index/Search/goods',array('keyword'=>I('get.keyword')))}">商品</a>
+			<a <eq name="Think.ACTION_NAME" value="article">class="active"</eq>  href="{:U('Index/Search/article',array('keyword'=>I('get.keyword')))}">文章</a>
+			<!--<a href="#">作者</a>-->
+		</div>
+	</div>
+</header>
+<script> 
+    var pageName = 'search';     
+    var seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>

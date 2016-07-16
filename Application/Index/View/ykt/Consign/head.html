@@ -1,0 +1,17 @@
+<div class="location clearfix">
+	<div class="fl title">寄售</div>
+	<ul class="fl"> 
+        <foreach name="consign_cat" key="k" item="vo" > 
+			<li class="location-list <eq name="cat_id" value="$k">active</eq>">
+				<a href="{:U('Index/Consign/apply',array('cat'=>$k))}">
+				<span class="fl icon"></span>
+				<div class="fl">
+					<div class="headline">
+                      {$vo}
+                    </div>
+				</div>
+				</a>
+			</li>
+        </foreach>				
+	</ul>
+</div>

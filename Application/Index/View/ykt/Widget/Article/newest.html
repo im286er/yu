@@ -1,0 +1,21 @@
+<volist id="vo" name="list">
+    <li>
+        <a class="pic" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}"><img class="m-lazy" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/lazyload360X200.png" data-original="__UPLOAD__{$vo['title_img']}!c360x200.jpg" /></a>  
+        <a class="txt" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}">{$vo['title']}</a>
+        <a class="summary">{$vo['summary']}</a>
+        <div class="bottom">
+            <div class="author">
+                <a href="#">
+                    <img src="__UPLOAD__{$vo['uid']|avatar=###}"/>
+                    <span>{$vo['uid']|uidToField=###,'username'}</span>
+                </a>
+            </div>
+            <time>{$vo['add_time']|date="m-d",###}</time>    
+        </div>
+        <div class="label">{$vo['cat_name']}</div>
+    </li>
+</volist> 
+
+
+
+

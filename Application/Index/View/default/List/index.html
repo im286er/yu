@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>雪狐ThinkPHP商城系统</title>
+<load href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/main.css" />
+<script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/swfobject.js"></script>
+<script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/scrollpic.js"></script>
+<script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/base.js"></script>
+<script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib.js"></script>
+<script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/MSClass.js"></script>
+<script type="text/javascript">
+function showmenu(id)
+{
+	var subitem = document.getElementById("subitem"+id);
+	if(subitem.className == 'item ')
+	{
+		subitem.className = 'item current';
+	}
+	else
+	{
+		subitem.className = 'item ';
+	}
+}
+</script>
+</head>
+<body>
+	{:W('Template/top')}
+    <!--nav end-->
+    
+    <div class="w">
+    	<div class="right">
+        	<!--筛选项 begin-->
+        	<div id="select">
+            	<div class="mt"><h1>{$cate.cat_name} - <strong>商品筛选</strong></h1></div>
+                
+                <volist name="publicattr" id="voAttr" key="k">
+                    <div id="top_attr_{$key+1}" class="attr">
+                        <div class="a-key">{$voAttr.title}：</div>
+                        <div class="a-values">
+                            <ul class="f-list">
+                                <li><a class="{:retSelect($k-1,0)}" class="hilight" href="__ACTION__/id/{$cate.id}/attr/{:getSelectUrl($k-1,0)}">&nbsp;不限&nbsp;</a></li>
+                                <volist name="voAttr['attr_sub']" id="sub">
+                                	<li><a class="{:retSelect($k-1,$sub['id'])}" href="__ACTION__/id/{$cate.id}/attr/{:getSelectUrl($k-1,$sub['id'])}">{$sub.title}</a></li>
+                                </volist>
+                            </ul>
+                        </div>
+                    </div>
+                </volist>
+                
+            </div>
+            <!--筛选项 end-->
+            
+            <!--商品 begin-->
+            <div id="plist">
+            	<ul class="list-h">
+                	<volist name="list" id="volist">
+                        <li>
+                            <div class="lh-wrap">
+                                <div class="p-img"><a target="_blank" href="__MODULE__/goods/index/id/{$volist.id}"><img width="220" height="220" title="{$volist.goods_name_exp}" src="__UPLOAD__/{$volist.goods_img}"></a></div>
+                                <div class="p-name"><a target="_blank" href="__MODULE__/goods/index/id/{$volist.id}">{$volist.goods_name}</a></div>
+                                <div class="p-price"><strong>￥{$volist.goods_price}</strong></div>
+                                <div class="btns"><a target="_blank" href="__MODULE__/cart/index/id/{$volist.id}/num/1" class="btn-buy">加入购物车</a></div>
+                            </div>
+                        </li>
+                    </volist>
+                </ul>
+            </div>
+            <!--商品 end-->
+            
+            <!--分页 begin-->
+            <div class="pagin">
+            	{$page}
+            	<!--<span class="disabled">上一页</span><span class="current">1</span><a href="#">2</a><a href="#">3</a><a href="#">26</a><a href="#">下一页</a>-->
+            </div>
+            <!--分页 end-->
+        </div>
+        <div class="left">
+        	<div id="sortlist">
+            	<div class="mc">
+                	<volist name="category" id="vo">
+                        <div id="subitem{$vo.id}" class="item <if condition="$vo.id eq $pid">current</if>">
+                            <h3 onClick="showmenu({$vo.id})"><b></b>{$vo.cat_name}</h3>
+                            <ul>
+                            	<volist name="vo['subitem']" id="sub">
+                                	<li><a href="__ACTION__/id/{$sub.id}">{$sub.cat_name}</a></li>
+                                </volist>
+                            </ul>    
+                        </div>
+                    </volist>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--底部 begin-->
+    {:W('Template/bottom')}
+    <!--底部 end-->
+</body>
+</html>

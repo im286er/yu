@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>御咖塘</title>
+		<meta name="keywords" content=""/>
+		<meta name="description" content=""/>
+		<meta name="viewport" content="width=device-width"/>
+        <meta property="qc:admins" content="45700047776153141676375" />
+		<!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> -->
+		<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/base.css"/>
+		<!--[if lt IE 9]> 
+			<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/html5.js"></script>		
+		<![endif]-->		
+	</head> 
+<body>
+<div class="body-bg">
+
+<header class="header">
+	<div class="top_bg"></div>
+	<div class="top clearfix">
+		<a class="logo fl" href="__SITE__"></a>
+		<div class="search fl">
+			<input id="J-search-text" class="fl" type="text" placeholder="搜索你喜欢的"/>
+			<a id="J-search-btn" class="search-btn fl" href="javascript:;"></a>
+		</div>
+	</div>
+	<nav class="nav_bg">
+		<ul class="nav clearfix">
+			<li class="active">
+				<a href="__SITE__">
+					<div class="inside">
+						<p>首页</p>
+						<i class="icon icon-home"></i>
+					</div>
+				</a>
+			</li>
+			<li>
+				<a href="/Index/Sale/index.html">
+					<div class="inside">
+						<p>通贩区</p> 
+						<i class="icon icon-orders"></i>
+					</div>
+				</a>
+			</li>
+			<li>
+				<a href="/Index/Service/index.html">
+					<div class="inside">
+						<p>服务区</p>
+						<i class="icon icon-server"></i>
+					</div>
+				</a>
+			</li>				
+			<li>
+				<a href="/Index/Create/index.html">
+					<div class="inside">
+						<p>创作区</p>
+						<i class="icon icon-creation"></i>
+					</div>
+				</a>
+			</li>
+			<li>
+				<a href="/Index/Anli/index.html">
+					<div class="inside">
+						<p>安利区</p>
+						<i class="icon icon-anli"></i>
+					</div>
+				</a>
+			</li>											
+		</ul>
+	</nav>
+</header>
+
+<div class="m-tips-wrap mainbody-2">
+	<div class="error404">
+		<div class="pic"></div>
+		<p>页面自动<a href="#">跳转</a>等待时间：<time id="J-time">5</time></p>		
+	</div>
+</div> 
+<script>
+	// 倒计时
+	var _obj = document.getElementById('J-time');
+	var _oSecs= _obj.innerHTML;
+
+	function time (){
+	    _oSecs--;
+	     if (_oSecs < 0){
+	        clearInterval();
+	        return;
+	     }
+	    
+	     if (_oSecs == 0){
+	        clearInterval();
+	        window.location.href = "__SITE__";
+	     }
+
+	     _obj.innerHTML = _oSecs;
+	  }
+	setInterval(time,1000);
+</script>
+
+<footer class="footer">
+    <div class="bd">
+        <div class="footer-content clearfix">
+            <dl>
+                <dt>御咖塘</dt>
+                <dd><a target="_blank" href="javascript:;">关于我们</a></dd>
+                <dd><a target="_blank" href="javascript:;">加入我们</a></dd>
+                <dd><a target="_blank" href="javascript:;">微博</a></dd>
+                <dd><a target="_blank" href="javascript:;">微信</a></dd>
+            </dl>
+            <dl>
+                <dt>服务</dt>
+                <dd><a target="_blank" href="javascript:;">销售服务</a></dd>
+                <dd><a target="_blank" href="javascript:;">寄售服务</a></dd>
+                <dd><a target="_blank" href="javascript:;">印刷服务</a></dd>
+            </dl>
+            <dl>
+                <dt>网站条款</dt>
+                <dd><a target="_blank" href="javascript:;">销售服务条款</a></dd>
+                <dd><a target="_blank" href="javascript:;">寄售服务条款</a></dd>
+                <dd><a target="_blank" href="javascript:;">免责声明</a></dd>
+            </dl>
+            <dl>
+                <dt>帮助</dt>
+                <dd><a target="_blank" href="javascript:;">读者使用手册</a></dd>
+                <dd><a target="_blank" href="javascript:;">作者使用手册</a></dd>
+                <dd><a target="_blank" href="http://form.mikecrm.com/f.php?t=ykU5pJ">意见反馈</a></dd>
+            </dl>              
+        </div>
+        <div class="footer-ft">
+            <h1>本站收录的各类产品和图文内容，均为网友创作和提供，其版权均归原作者所有。</h1>
+            <a href="http://www.miitbeian.gov.cn/" target="_blank">© 2015 yukatang 粤ICP备15032306号</a>
+        </div>
+    </div>
+<style>
+#cnzz_stat_icon_1254403393{
+    display:none;
+}
+</style>
+<script type='text/javascript'>
+    (function(m, ei, q, i, a, j, s) {
+        m[a] = m[a] || function() {
+            (m[a].a = m[a].a || []).push(arguments)
+        };
+        j = ei.createElement(q),
+            s = ei.getElementsByTagName(q)[0];
+        j.async = true;
+        j.src = i;
+        s.parentNode.insertBefore(j, s)
+    })(window, document, 'script', '//eco-api.meiqia.com/dist/meiqia.js', '_MEIQIA');
+    _MEIQIA('entId', 3858);
+</script>
+<!-- 统计代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254403393'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1254403393' type='text/javascript'%3E%3C/script%3E"));</script>
+</footer>

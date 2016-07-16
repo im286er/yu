@@ -1,0 +1,59 @@
+<div class="m-sidebar"> 
+	<dl>
+		<dt class="index"><a href="{:U('Index/Home/index')}">用户中心</a></dt>
+	</dl>
+    <dl>
+		<dt class="reader">订单</dt>
+		<dd <eq name="Think.ACTION_NAME" value="order">class="active"</eq> >
+           <a href="{:U('Index/Home/order')}">我的订单</a>
+        </dd>
+		<dd <eq name="Think.ACTION_NAME" value="orderToComment">class="active"</eq> >
+           <a href="{:U('Index/Home/orderToComment')}">商品评价</a>
+        </dd>
+		<dd <eq name="Think.ACTION_NAME" value="orderRefund">class="active"</eq> >
+          <a href="{:U('Index/Home/orderRefund')}">退货换货</a>
+        </dd>
+	</dl>
+	<dl>
+		<dt class="collect">收藏</a></dt>
+		<dd <eq name="Think.ACTION_NAME" value="collectGoods">class="active"</eq> >
+          <a href="{:U('Index/Home/collectGoods')}">收藏商品</a>
+        </dd>
+		<dd <eq name="Think.ACTION_NAME" value="collectArticle">class="active"</eq> >
+          <a href="{:U('Index/Home/collectArticle')}">收藏文章</a>
+        </dd>
+	</dl>
+	<dl>
+		<dt class="author">作者</dt>
+        <dd <eq name="Think.ACTION_NAME" value="consign">class="active"</eq> >
+          <a href="{:U('Index/Home/consign')}">我的寄售</a>
+        </dd>
+        <dd <eq name="Think.ACTION_NAME" value="contribute">class="active"</eq> >
+          <a href="{:U('Index/Home/contribute')}">我的投稿</a>
+        </dd>
+	</dl>
+  <dl>
+    <dt class="message">信息</dt>
+    <dd <eq name="Think.ACTION_NAME" value="priMsg">class="active"</eq> >
+      <a href="{:U('Index/Home/priMsg')}">用户通知</a>
+    </dd>
+  </dl>  
+	<dl>
+		<dt class="account">账号</dt>
+		<dd <eq name="Think.ACTION_NAME" value="account">class="active"</eq> >
+          <a href="{:U('Index/Home/account')}">账号安全</a>
+        </dd>
+		<dd <eq name="Think.ACTION_NAME" value="profile">class="active"</eq> >
+          <a href="{:U('Index/Home/profile')}">个人资料</a>
+        </dd>
+        <dd <eq name="Think.ACTION_NAME" value="auth">class="active"</eq> >
+          <a href="{:U('Index/Home/auth')}">实名认证</a>
+        </dd>
+		<dd <eq name="Think.ACTION_NAME" value="avatar">class="active"</eq> >
+          <a href="{:U('Index/Home/avatar')}">头像设置</a>
+        </dd>
+		<dd <eq name="Think.ACTION_NAME" value="address">class="active"</eq> >
+          <a href="{:U('Index/Home/address')}">收货地址管理</a>
+        </dd>
+	</dl>
+</div>

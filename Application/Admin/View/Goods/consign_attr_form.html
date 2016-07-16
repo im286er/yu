@@ -1,0 +1,179 @@
+<div class="unit">       
+    <input name="cid" value="{$con_inf['id']|default='0'}" type="hidden" />
+</div>
+<div class="unit goods-attr-type">
+    <label>套装:</label> 
+    <div class="frame">
+        <a class="add_attr_btn <eq name="con_inf['multi']" value="0">active</eq>" href="javascript:;">无套装</a>
+        <a class="add_attr_btn <in name="con_inf['multi']" value="1,2">active</in>" href="javascript:;">多套装</a>
+        <div id="J-attr-frame" class="frame"> 
+            <switch name="con_inf['multi']" >
+                 <case value="0">
+                    <div class="no-attr-content">
+                       <div class="result-wrap">
+                         <table class="result-table">
+                                <tbody>                               
+                                    <tr>
+                                        <th>价格(元)</th>
+                                        <th>数量</th>
+                                        <th>重量(kg)</th>
+                                        <th>区域码</th>
+                                        <th>商品缩写</th>
+                                    </tr>
+                                    <tr class="result-list">
+                                        <td><input class="input-edit number required" type="text" name="price" value="{$attr_val['price']}"/></td>
+                                        <td><input class="input-edit digits required" type="text" name="stock" value="{$attr_val['num']}"/></td>
+                                        <td><input class="input-edit number required" type="text" name="weight" value=""/></td>
+                                        <td><input class="input-edit required" type="text" name="area_code" value=""/></td>
+                                        <td><input class="input-edit required" type="text" name="abbr" value=""/></td>
+                                    </tr>  
+                                 </tbody>
+                         </table>
+                      </div>
+                    </div>
+                 </case>                   
+                 <case value="1">  
+                    <div class="multi-attr-content">
+                        <ul id="J-ul-attr" class="top">
+                            <li class="J-attr-row clearfix">
+                                <div class="J-attr-title attr-title">
+                                    <input class="input-edit required" type="text" name="attr_des[1][title]" value="{$attr_des[1]['title']}" readonly="readonly"/>
+                                </div>
+                                <div class="J-attr-val-frame attr-val">
+                                    <foreach name="attr_des[1]['val']" item="vo" >
+                                        <div class="J-attr-val-list attr-val-list">
+                                            <input class="input-edit required" type="text" name="attr_des[1][val][{$key}]" value="{$vo}" readonly="readonly"/>
+                                        </div>
+                                    </foreach>
+                                </div>
+                            </li>
+                        </ul>
+                        <div id="J-result-wrap">
+                           <div class="result-wrap">
+                              <table class="result-table">
+                                <tbody>                               
+                                    <tr>
+                                        <th>值</th>
+                                        <th>价格(元)</th>
+                                        <th>数量</th>
+                                        <th>重量(kg)</th>
+                                        <th>区域码</th>
+                                        <th>商品缩写</th>
+                                        <th>图片</th>
+                                        <th>默认</th>
+                                    </tr>
+                                    <volist name="attr_val" id="vo">
+                                        <tr class="result-list">
+                                            <td class="first">
+                                               <input size="15" class="input-edit required" type="text" value="{$vo['attr_match']}" readonly="readonly">
+                                               <input type="hidden" name="attr[{$key}]" value="{$vo['attr']}" />
+                                               <input type="hidden" name="attr_match[{$key}]" value="{$vo['attr_match']}" />
+                                            </td>
+                                            <td>
+                                                <input size="15" class="input-edit number required" type="text" name="price[{$key}]" value="{$vo['price']}">
+                                            </td>
+                                            <td>
+                                                <input size="15" class="input-edit digits required" type="text" name="stock[{$key}]" value="{$vo['num']}">
+                                            </td>
+                                            <td>
+                                                <input size="15" class="input-edit number required" type="text" name="weight[{$key}]" value="">
+                                            </td>
+                                            <td>
+                                               <input class="input-edit required" type="text" name="area_code[{$key}]" value="">
+                                            </td>
+                                            <td>
+                                               <input class="input-edit required" type="text" name="abbr[{$key}]" value="">
+                                            </td>
+                                            <td>
+                                              <neq name="vo['img']" value="">
+                                                 <img id="J-suit-container-{$key}" class="J-img-container" src="__UPLOAD__{$vo['img']}" width="80px" height="80px">
+                                                 <input type="hidden" name="img[{$key}]" value="{$vo['img']}">
+                                              </neq>
+                                            </td>
+                                            <td class="last">
+                                                <input class="default-radio" name="default" type="radio" value="{$key}" <eq name="key" value="1">checked="true"</eq> />
+                                            </td>
+                                        </tr>
+                                     </volist>      
+                                 </tbody>
+                               </table>
+                           </div>
+                        </div>             
+                     </div>                                          
+                  </case> 
+                 <case value="2">
+                     <div class="multi-attr-content">
+                        <ul id="J-ul-attr" class="top">
+                          <volist name="attr_des" id="vo">   
+                            <li class="J-attr-row clearfix">
+                                <div class="J-attr-title attr-title">
+                                    <input class="input-edit required" type="text" name="attr_des[{$i}][title]" value="{$vo['title']}" readonly="readonly"/>
+                                </div>
+                                <div class="J-attr-val-frame attr-val">
+                                    <foreach name="vo['val']" item="voo" key="key" >
+                                        <div class="J-attr-val-list attr-val-list">
+                                            <input class="input-edit required" type="text" name="attr_des[{$i}][val][{$key}]" value="{$voo}" readonly="readonly"/>
+                                        </div>
+                                    </foreach>
+                                </div>
+                            </li>
+                          </volist>
+                        </ul>
+                        <div id="J-result-wrap">
+                           <div class="result-wrap">
+                              <table class="result-table">
+                                <tbody>                               
+                                    <tr>
+                                        <th>值</th>
+                                        <th>价格(元)</th>
+                                        <th>数量</th>
+                                        <th>重量(kg)</th>
+                                        <th>区域码</th>
+                                        <th>商品缩写</th>
+                                        <th>图片</th>
+                                        <th>默认</th>
+                                    </tr>
+                                    <volist name="attr_val" id="vo">
+                                        <tr class="result-list">
+                                            <td class="first">
+                                               <input size="15" class="input-edit required" type="text" value="{$vo['attr_match']}" readonly="readonly" />
+                                               <input type="hidden" name="attr[{$key}]" value="{$vo['attr']}" />
+                                               <input type="hidden" name="attr_match[{$key}]" value="{$vo['attr_match']}" />
+                                            </td>
+                                            <td>
+                                                <input size="15" class="input-edit number required" type="text" name="price[{$key}]" value="{$vo['price']}" />
+                                            </td>
+                                            <td>
+                                                <input size="15" class="input-edit digits required" type="text" name="stock[{$key}]" value="{$vo['num']}" />
+                                            </td>
+                                            <td>
+                                                <input size="15" class="input-edit number required" type="text" name="weight[{$key}]" value="" />
+                                            </td>
+                                            <td>
+                                                <input class="input-edit required" type="text" name="area_code[{$key}]" value="" />
+                                            </td>
+                                            <td>
+                                                <input class="input-edit required" type="text" name="abbr[{$key}]" value="" />
+                                            </td>
+                                            <td>
+                                              <neq name="vo['img']" value="">
+                                                <img id="J-suit-container-{$key}" class="J-img-container" src="__UPLOAD__{$vo['img']}" width="80px" height="80px" />
+                                                <input type="hidden" name="img[{$key}]" value="{$vo['img']}" />
+                                              </neq>
+                                            </td>
+                                            <td class="last">
+                                                <input class="default-radio" name="default" type="radio" value="{$key}" <eq name="key" value="1">checked="true"</eq> />
+                                            </td>
+                                        </tr>
+                                     </volist>      
+                                 </tbody>
+                               </table>
+                           </div>
+                        </div>           
+                     </div>               
+                 </case>
+                 <default />配搭表格错误
+              </switch> 
+        </div> 
+    </div>                                       
+</div>

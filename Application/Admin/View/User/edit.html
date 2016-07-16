@@ -1,0 +1,39 @@
+<div class="pageContent">
+	<form method="post" action="__CONTROLLER__/update" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+    	<input type="hidden" name="callbackType" value="closeCurrent" />
+        <input type="hidden" name="navTabId" value="{$Think.request.navTabId}" />
+        <input type="hidden" name="id" value="{$Think.request.id}" />
+    	<div class="pageFormContent" layoutH="58">
+        	<div class="unit">
+            	<label>用户名：</label>
+                <input type="text" name="username" class="required alphanumericchinese" disabled size="33" maxlength="20" value="{$vo.username}" />
+            </div>
+            <div class="unit">
+            	<label>备注：</label>
+                <input type="text" name="remark"  class="required alphanumericchinese" size="53" maxlength="20" value="{$vo.remark}" />
+            </div>
+            <div class="unit">
+            	<label>状　态：</label>
+                <select name="status" style="width:55px;">
+                	<option value="1" <eq name="vo.status" value="1">selected</eq> >正常</option>
+                    <option value="0" <eq name="vo.status" value="0">selected</eq> >禁止</option>
+                </select>
+            </div>
+            <div class="unit">
+            	<label>寄售资格：</label>
+                <select name="consigner" style="width:85px;">
+                  <foreach name="Think.config.CONSIGN_QUALI" item="vo" key="k" >
+                      <option value="{$k}" <eq name="vo['consigner']" value="$k">selected</eq> >{$vo}</option>
+                  </foreach>
+                </select>
+            </div>
+        </div>
+        
+        <div class="formBar">
+        	<ul>
+            	<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+</div>

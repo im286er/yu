@@ -1,0 +1,70 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/user_Center.css"/>
+<script> 
+    var pageName = 'home',                                                  
+        seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/'              
+
+    yktGlobal.pageName ='home_consign';
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="my-works-wrap mainbody-2 clearfix">
+  <include file="Home:left" />
+  <div class="m-content">
+    <div class="sub-nav">
+      <a class="active" href="javascript:;">我的寄售</a>
+    </div> 
+    <dl id="J-type" class="m-classify mb-20 clearfix">
+      <dd class="active">
+        <a href="javascript:;">全部</a>
+      </dd>
+      <foreach name="Think.config.CONSIGN_STATUS" item="vo" key="k" >
+        <dd data-status="{$k}"><a href="javascript:;">{$vo}</a></dd>
+      </foreach>
+    </dl>			
+
+    <neq name="list" value="">  
+       <div id="J-container">
+          <ul class="bd">
+            <volist id="vo" name="list">
+              <li>
+                  <div class="avatar">
+                    <img src="__UPLOAD__{$vo['goods_img']}"/>
+                  </div>
+                  <div class="frame">
+                    <div class="title">{$vo['goods_name']}</div>
+                    <div class="time">{$vo['add_time']|date="Y-m-d H:i:s",###}</div>
+                    <div class="result">
+                      <span class="m-status">{:C('CONSIGN_STATUS')[$vo['status']]}</span>
+                      <switch name="vo['status']">
+                        <case value="2">
+                          <p class="mt-5"><font color="red">【{$vo['modify_desc']}】</font></p>
+                        </case>
+                        <case value="4">
+                          <p class="mt-5"><font color="red">【请进入委托详情,填写快递单号。】</font></p>
+                        </case>
+                      </switch>  
+                    </div>
+                    <div class="info"></div>
+                  </div>  
+                  <div class="btn">
+                      <a class="u-btn-primary" target="_blank" href="{:U('Index/Consign/detail',array('cid'=>$vo['id']))}">委托详情</a>
+                      <switch name="vo['status']">
+                        <case value="2">
+                           <a class="u-btn-primary" target="_blank" href="{:U('Index/Consign/edit',array('cid'=>$vo['id']))}">修改</a> 
+                        </case>
+                        <case value="7">
+                            <a class="u-btn-primary" target="_blank" href="{:U('Index/Goods/item',array('id'=>$vo['gid']))}">商品链接</a>
+                        </case>
+                        <default />
+                      </switch>
+                  </div>
+              </li>
+            </volist>
+          </ul>	
+       </div>
+      <include file="Home:page_tpl" />  
+    <else />
+        <div class="m-no-record">没有相关记录</div>
+    </neq> 			
+  </div>
+</div>

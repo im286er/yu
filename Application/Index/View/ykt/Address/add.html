@@ -1,0 +1,61 @@
+<form id="J-consignee-form" class="consignee-form">
+	<div class="item">
+		<label>
+			<span class="fl tag"><i>*</i>收货人：</span>
+			<div class="frame"> 
+				<input class="input-width-style2" type="text" value="" name="realname" data-rule-required="true" data-msg-required="请您填写收货人姓名"/>	
+				<span class="msg-span"></span> 
+			</div>
+		</label>
+	</div>
+	<div class="item">
+		<label>
+			<span class="fl tag"><i>*</i>所在地区：</span>
+			<div class="frame">		
+                <select id="J-ajax-province" name="province">
+                    <volist name="province" id="vo"> 
+                        <option value="{$vo.id}">{$vo.areaname}</option>
+                    </volist>
+                </select>
+                <select id="J-ajax-city" name="city">
+                     <volist name="city" id="vo"> 
+                        <option value="{$vo.id}">{$vo.areaname}</option>
+                     </volist>
+                </select>
+                <select id="J-ajax-area" name="district">
+                     <volist name="district" id="vo"> 
+                        <option value="{$vo.id}">{$vo.areaname}</option>
+                     </volist>
+                </select>
+			</div>
+		</label>
+	</div>
+	<div class="item">
+		<label>
+			<span class="fl tag"><i>*</i>详细地址：</span>
+			<div class="frame">
+				<input class="input-width-style1" type="text" value="" name="street" data-rule-required="true" data-msg-required="请您填写收货人详细地址"/>
+				<span class="msg-span"></span>
+			</div>
+		</label>
+	</div>
+	<div class="item">
+		<label>
+			<span class="fl tag"><i>*</i>手机号码：</span>
+			<div class="frame">
+				<input class="input-width-style1" type="text" value="" name="mobile" data-rule-required="true" data-msg-required="请您填写收货人手机号码" data-rule-isMobile="true" data-msg-mobile="请填写正确的手机号码"/>
+				<span class="msg-span"></span>
+			</div>
+		</label>
+	</div>
+	<!-- <div class="item">
+		<label>
+			<span class="fl tag"><i>*</i>邮箱：</span>
+			<div class="frame">
+				<input class="input-width-style1" type="text" value="" name="consignee_email" data-rule-required="true" data-msg-required="请您填写邮箱" data-rule-email="true" data-msg-email="邮箱格式不正确"/>
+				<span class="msg-span"></span>
+				<div class="tips">用来接收订单提醒邮件，便于您及时了解订单状态</div>
+			</div>
+		</label> 
+	</div> -->
+</form>

@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>雪狐ThinkPHP商城系统</title>
+<load href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/main.css" />
+<script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+function goods_cut($val)
+{
+	var num_val = document.getElementById('number'+$val);
+	var new_num = num_val.value;
+	if(isNaN(new_num))
+	{
+		alert('请输入数字');
+		num_val.value = 1;
+		return false;
+	}
+	var Num = parseInt(new_num);
+	if(Num>1)
+	{
+		Num = Num-1;
+		num_val.value = Num;
+		
+		// 更新本地cookie或是数据库
+		window.location = "__CONTROLLER__/cartupdate/gid/"+$val+"/num/"+Num;
+	}
+}
+
+function goods_add($val)
+{
+	var num_val = document.getElementById('number'+$val);
+	var new_num = num_val.value;
+	if(isNaN(new_num))
+	{
+		alert('请输入数字');
+		return false;
+	}
+	var Num = parseInt(new_num);
+	Num = Num+1;
+	num_val.value = Num;
+	
+	// 更新本地cookie或是数据库
+	window.location = "__CONTROLLER__/cartupdate/gid/"+$val+"/num/"+Num;
+}
+</script>
+</head>
+
+<body>
+	{:W('Template/top')}
+    <!--nav end-->
+    
+    <div class="w cart">
+    	<div class="cart-hd"><h2>我的购物车</h2></div>
+        <div class="cart-inner">
+        	<!--购物车标题 begin-->
+            <div class="cart-head">
+            	<div class="column c-checkbox">
+                	<!--<input id="c-checkbox" type="checkbox" checked value="">
+                    <label>全选</label>-->
+                </div>
+                <div class="column c-goods">商品</div>
+                <div class="column c-price">雪狐价</div>
+                <div class="column c-quantity">数量</div>
+                <div class="column c-action">操作</div>
+            </div>
+            <!--购物车标题 end-->
+            
+            <!--购物车商品 begin-->
+            <div class="cart-body">
+            	<volist name="cart_list" id="vo">
+                    <div class="item item_selected">
+                        <div class="cell p-checkbox"></div>
+                        <div class="cell p-goods">
+                            <div class="p-img"><a href="__MODULE__/goods/index/id/{$vo.gid}" target="_blank"><img src="__UPLOAD__{$vo['cartgoods']['goods_img']}" width="50" height="50" alt=""></a></div>
+                            <div class="p-name"><a href="__MODULE__/goods/index/id/{$vo.gid}" target="_blank">{$vo['cartgoods']['goods_name']}</a></div>
+                        </div>
+                        <div class="cell p-price"><span class="price">¥{$vo['cartgoods']['goods_price']}</span></div>
+                        <div class="cell p-quantity">
+                            <div class="quantity_form">
+                                <a href="javascript:void(0);" onClick="goods_cut('{$vo.gid}');" class="decrement">-</a>
+                                <input type="text" id="number{$vo.gid}" class="quantity-text" value="{$vo.num}">
+                                <a href="javascript:void(0);" onClick="goods_add('{$vo.gid}');" class="increment">+</a>
+                            </div>
+                        </div>
+                        <div class="cell p-remove">
+                            <a href="__CONTROLLER__/cartdelete/gid/{$vo.gid}" class="cart-remove">删除</a>
+                        </div>
+                    </div>
+                </volist>
+            </div>
+            <!--购物车商品 end-->
+            
+            <div class="cart-toolbar">
+            	<div class="total fr"><p><span id="totalPrice">¥{$cart_price}</span>总计：</p></div>
+                <div class="amout fr"><span id="selectedCount">{$cart_num}</span> 件商品</div>
+            </div>
+            <div class="cart-total">
+            	<div class="total fr"><span id="finalPrice">¥{$cart_price}</span>总计（不含运费）：</div>
+            </div>
+        </div>
+        
+        <div class="cart-button">
+        	<a class="btn continue" href="__APP__"><span>继续购物</span></a>
+            <a class="checkout" href="<if condition="$Think.session.uid eq null">__MODULE__/login/index/type/cartpay<else/>__MODULE__/cart/cartpay</if>">去结算</a>
+        </div>
+    </div>
+    
+    <!--底部 begin-->
+    {:W('Template/bottom')}
+    <!--底部 end-->
+</body>
+</html>

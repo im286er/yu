@@ -1,0 +1,143 @@
+调用认证类---------------------------------------------------------
+use Common\Util\Auth;
+$auth = new Auth();
+
+调用购物车类---------------------------------------------------------
+import("Index.Util.CartCookie");
+$cartcookie = new \CartCookie();
+
+成功的提示---------------------------------------------------------
+$this->success('注册成功，欢迎来到御咖塘','/Index/index/index',3);
+
+
+重定向---------------------------------------------------------
+redirect('/Index/index/index/');
+
+模型调试---------------------------------------------------------
+$auth_group->getLastSql();
+
+
+敏感词算法---------------------------------------------------------
+<?php
+$badword = array(
+    '张三','张三丰','张三丰田'
+);
+$badword1 = array_combine($badword,array_fill(0,count($badword),'*'));
+$bb = '我今天开着张三丰田上班';
+$str = strtr($bb, $badword1);
+echo $str;
+?>
+
+U函数---------------------------------------------------------
+{:U('Index/user/consignment')}
+
+
+UE编辑器---------------------------------------------------------
+需要配置文件 Application/Common/Conf/config.json
+后台统一处理上传图片类为 var url="{:U('Admin/Ueditor/index')}";
+
+
+日志记录---------------------------------------------------------
+将Runtime下面的Logs目录日志权限关闭，所以暂时写不入日志，部署时候再开启
+
+
+用户头像---------------------------------------------------------
+<img id="J-header-avatar" src="__UPLOAD__{$Think.session.uid|avatar=###}" />
+
+开发趣事---------------------------------------------------------
+<volist name="list" id="vo" key="k" >
+    {$k}.{$vo.name}
+</volist>     key系从1开始的
+
+
+支付宝回调地址---------------------------------------------------------
+http://120.24.219.164/Index/pay/returnurl?buyer_email=cjkxjh25%40qq.com&buyer_id=2088802575187874&exterface=create_direct_pay_by_user&is_success=T&notify_id=RqPnCoPT3K9%252Fvwbh3InSM11IzIYpO70GcXpHSfcEZI76iaCFvFvtQrrd0OblYArGHvD9&notify_time=2015-06-26+10%3A07%3A00&notify_type=trade_status_sync&out_trade_no=78sdadsadsadsalop&payment_type=1&seller_email=yukatang%40aliyun.com&seller_id=2088812102724568&subject=%E9%9B%AA%E7%8B%90%E5%95%86%E5%9F%8E%E4%BC%9A%E5%91%98+%E5%9C%A8%E7%BA%BF%E4%B8%8B%E5%8D%95&total_fee=0.50&trade_no=2015062600001000870056181510&trade_status=TRADE_SUCCESS&sign=b9b09d2fd34ab6b7bbeb0d1e1148ebaa&sign_type=MD5
+
+
+http://www.nowamagic.net/librarys/veda/detail/1978
+
+
+$token_arr['ip'] = I('server.REMOTE_ADDR');
+            $token_arr['agent'] = I('server.HTTP_USER_AGENT');
+            $token_arr['sid'] = session_id();
+            $token =  md5(serialize($token_arr));
+
+
+微信开发记录---------------------------------------------------------
+上公众平台，填写交互服务器,只要微信服务器与开发服务器通讯成功(认证token),就会post数据过来，以后不需再认证
+微信开发的类在 /Index/Util/Wechat.class.php
+
+
+微信支付配置实例---------------------------------------------------------
+'TOKEN'=>'nandudingzhi',        //微信交互密码
+'APPID'=>'wx299e4aef85493bbe',  //APPID
+'APPSECRET'=>'eb97ee84d996d9c70e86b38f18b5a54b', //APPSECRET
+'REDIRECT_URI'=>'http://nddz.oeeee.net/Index/User/index', //登录授权回跳URL
+
+'MCHID'=>'1217873701',                           //商户ID
+'SSLCERT_PATH'=>'http://nddz.oeeee.net/cacert/apiclient_cert.pem', //证书地址
+'SSLKEY_PATH'=>'http://nddz.oeeee.net/cacert/apiclient_key.pem',   //加密key地址
+'KEY'=>'750fe91b145376a20a26d9467ce6dd96',                         //加密key,要到微信后台输入参数加密得出，我输入的是nddz
+'NOTIFY_URL'=>'http://nddz.oeeee.net/Index/Custom/paysuccess',     //支付成功的回调通知，微信后台会post参数过来
+'CURL_TIMEOUT'=>30,                                               //通讯期限
+
+微信调用类说明---------------------------------------------------------
+
+WeChat.class.php  普通交互
+Wxjspay.class.php js位置支付，参数生成  //js接口调用先要生成签名。设置可调用的接口
+WxOrderApi.class.php 生成支付订单，最关键
+
+
+
+推荐位代码示例-------------------------------------------------------
+{:W('Promote/index',array('Index','焦点图','5'))}   ----模板
+
+public function index($controller,$block_name,$limit){  ---控制器
+      
+}
+
+dwz查找带回示例-------------------------------------------------------
+onsubmit="return dwzSearch(this, 'dialog');">
+打开查找页面，表单提交一定要带上面的js函数，代表查找完，还停留在当前页面，才可以带回
+具体示例分析就是后台模板/Admin/view/User/choose
+
+
+拿到redis操作的实例---------------------------------------------------2015.12.09
+首先配置缓存方式为redis.
+然后use Think\Cache;引入缓存类
+通过$redis = Cache::getInstance();    //$redis操作的实例对象 获得缓存的实例
+
+
+php cli模式访问示例-------------------------------------------------------
+php /www/index.php home/article/get 
+
+
+方法/步骤
+
+    1.新建一个入口文件命名cli.php 内容跟index.php不变，增加代码定义当前入口文件调用使用命令行模式define(‘APP_MODE’,'cli'); 
+    2.对APP的路径定义，还有框架引入的路径，从相对路径改成绝对路径，如：define('APP_PATH',dirname(__FILE__).'/Application/');
+    3.在路径 /ThinkPHP/Mode 下面有个文件，名字叫做common.php ，复制一份出来，命名为cli.php，然后把里面引入日志类的代码注释或者删除掉：即干掉 
+       'Think\Log'=> CORE_PATH . ‘Log'.EXT,
+
+
+清空表-------------------------------------------------------
+TRUNCATE `ykt_consign`;
+TRUNCATE `ykt_goods`;
+TRUNCATE `ykt_goods_private`;
+TRUNCATE `ykt_goods_tag_map`;
+TRUNCATE `ykt_order`;
+TRUNCATE `ykt_order_goods`;
+
+模板引用业务配置---------------------------------------------
+  //模板中
+  {:C('ID_TYPE')[$vo['id_type']]}
+  //循环的时候
+  <foreach name="Think.config.ARTICLE_STATUS" item="vo" key="k" >
+           <option value="{$k}" <eq name="k" value="$Think.post.status">selected</eq> >{$vo}</option>
+  </foreach>
+
+
+
+
+
+

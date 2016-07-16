@@ -1,0 +1,46 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/user_Center.css"/>
+<script> 
+    var pageName = 'home';
+    var seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';
+
+    yktGlobal.pageName ='home_order_goods_comment';
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="goods-comment-wrap  mainbody-2 clearfix">
+	<include file="Home:left" />
+	<div class="m-content">
+		<div class="sub-nav">
+			<a class="active" href="{:U('Index/User/order')}">商品评价</a>
+		</div>
+        <neq name="list" value="">
+           <ul class="bd">
+             <!--循环订单概况-->
+             <volist id="vo" name="list">   
+                <li class="comment-list">
+                    <div class="middle clearfix">
+                        <ul>
+                            <li class="clearfix" data-gid="{$vo['gid']}" data-gpid="{$vo['gpid']}" data-orderId="{$vo['order_id']}" >
+                                <div class="pic">
+                                    <a target="_blank" href="{:U('Index/Goods/item',array('id'=>$vo['gid']))}">
+                                      <img src="__UPLOAD__{$vo['gid']|gidToField=###,'goods_img'}"/>
+                                    </a>
+                                </div>
+                                <div class="frame">
+                                    <div class="name">{$vo['gid']|gidToField=###,'goods_name'}</div>
+                                </div>
+                                <a class="J-open-comment comment-btn fr" href="javascript:;">点击评论</a>
+                                <div class="clear"></div>
+                                <div class="J-info"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+             </volist>
+        </ul> 
+        <else />
+          <div class="m-no-record">暂没有待评价商品</div>
+        </neq>
+	</div>
+</div>
+<include file="include:footer" />

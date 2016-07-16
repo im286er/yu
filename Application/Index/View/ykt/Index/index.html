@@ -1,0 +1,111 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/index.css"/>
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/lyz.calendar.css"/>
+<script> 
+    var pageName = 'index',                                                   
+        seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/'              
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="body-bg">
+    <div class="index-wrap mainbody-2">
+        <div class="banner">
+            <div class="top">
+                <!--头图-->
+                <div class="banner-wrap m-flexslider big">
+                    <div id="J-slidedown">
+                        <ul class="slides">
+                            {:W('Promote/show',array($Think.CONTROLLER_NAME,'focus','5'))} 
+                        </ul>
+                    </div>               
+                </div>
+                <!--右推荐-->
+                <div class="top-r">
+                    <div class="inside clearfix">
+                        {:W('Promote/show',array($Think.CONTROLLER_NAME,'topright','4'))} 
+                    </div>
+                </div>
+            </div>
+            <!--下推荐-->
+            <div class="bottom clearfix">
+                {:W('Promote/show',array($Think.CONTROLLER_NAME,'topbuttom','6'))}
+            </div>
+        </div>
+        <div class="middle-ad">
+            {:W('Promote/show',array($Think.CONTROLLER_NAME,'longadv','1'))} 
+        </div>
+        <div class="clearfix">
+            <aside class="aside fl">
+                <div class="notice clearfix">
+                    <div class="n-l fl">已收录:1230</div>
+                    <div class="n-r fr">今周上新：88</div>
+                </div> 
+                <div class="m-side-box message">
+                    <div class="top clearfix">
+                        <div class="title">网站公告</div>
+                    </div>                  
+                    <ul class="bd">
+                      <volist id="vo" name="pub_msg" >
+                        <li class="article-list">
+                           <a href="{:U('Index/PublicMsg/item',array('id'=>$vo['id']))}" target="_blank">{$vo['title']}</a>
+                        </li>
+                      </volist>
+                    </ul>
+                </div>
+                <!--左侧栏-->
+                <div class="ad">
+                        {:W('Promote/show',array($Think.CONTROLLER_NAME,'left','8'))}
+                </div>
+            </aside>
+            <div class="content fr">
+                <div class="product-wrap">
+                    <div class="hd clearfix">
+                        <div class="h-l fl">最新推荐</div>
+                        <div id="J-recommend" class="menu fr">   
+                            <a class="active" href="javascript:;" data-id="0">全部</a>
+                            <volist id="vo" name="catlist" >
+                               <a data-id="{$vo['id']}" href="javascript:;">{$vo['cat_name']}<i></i></a> 
+                            </volist>
+                        </div>
+                    </div> 
+                    <!--######全部#####-->
+                    <ul id="J-recommend-ul" class="m-product bd">
+                        <volist id="vo" name="goods_promote_main">
+                            <li>
+                                <div class="pic">
+                                    <a href="{:U('Index/Goods/item',array('id'=>$vo['id']))}" target="_blank">
+                                        <img src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/lazyload200X200.png" class="m-lazy" data-original="__UPLOAD__{$vo.goods_img}!c200x200.jpg"/>
+                                        <div class="overlayh"></div>
+                                        <div class="overlaym"></div>
+                                        <div class="overlayb"></div>                
+                                    </a>
+                                    <switch name="vo['status']"> 
+                                        <case value="1"><i class="presell"></i></case>
+                                        <case value="2"><i class="stock"></i></case>
+                                        <case value="3"><i class="add"></i></case>
+                                    </switch>  
+                                    <eq name="vo['pre_sale']" value="1">
+                                        <i class="foreshow"></i>
+                                    </eq>                                  
+                                </div>
+                                <a class="title" href="#" target="_blank">{$vo.goods_name}</a>
+                                <a class="classify" href="#">{$vo.original|default='原创'}</a>
+                            </li>                            
+                        </volist>                          
+                        <li class="more"><a href="#">更多</a></li>                                            
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="photo-wrap clearfix">
+            <!--左下图-->
+            {:W('Promote/show',array($Think.CONTROLLER_NAME,'bottomleft','1'))}
+            <div class="p-r fl">
+                <!--右下图-->
+                {:W('Promote/show',array($Think.CONTROLLER_NAME,'bottomright','6'))}
+            </div>
+        </div>
+    </div>
+    <include file="include:footer" />
+</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<eq name="login_info['status']" value="true">
+    <div class="logined">
+    	<a class="avatar" href="{:U('Index/Home/index')}">
+            <img id="J-header-avatar" src="__UPLOAD__{$login_info['uid']|avatar=###}"/>
+        </a>
+    	<div class="popup-frame">
+    		<div class="popup m-popover bottom">
+    		    <ul>
+                    <li>  
+    		        	<a id="J-header-name" class="name" href="{:U('Index/Home/order')}">
+    		        		我的订单
+    		        	</a>
+    		        </li>	
+    		        <eq name="login_info['uid']" value="1">
+        		        <li>
+        		        	<a class="name" href="__APP__/Admin/Login" target="_blank">管理后台</a>
+        		        </li>	
+    		        </eq>							        					        
+    		        <li>
+    		        	<a id="J_logout" class="logout" href="{:U('Index/Index/logout')}">[退出]</a>
+    		        </li>
+    		    </ul>
+    		    <div class="arrow"></div>
+    		</div>
+    	</div>
+    </div>
+	<a class="list" href="{:U('Index/Article/contribute/t/create')}">
+		<i class="icon icon-contribute"></i>
+		<p>投稿</p>
+	</a>		
+	<a class="list" href="{:U('Index/Consign/pre_apply')}">
+		<i class="icon icon-consign"></i>
+		<p>寄售</p>
+	</a>
+	<a class="list" href="{:U('Index/Cart/index')}">
+		<i class="icon icon-cart"></i>
+		<p>购物车</p>
+		<neq name="cart_num" value="">
+			<span class="cart-num">{$cart_num}</num>
+		</neq>
+	</a>
+	<div class="message fr">
+		<a class="list last" href="{:U('Index/Home/priMsg')}">
+			<i class="icon icon-message"></i>
+			<p>消息</p>
+            <gt name="unread_priMsg_num" value="0">
+             <i class="cart-num" id="J-header-message">{$unread_priMsg_num}</i>
+            </gt>
+		</a>	
+	</div>	    
+<else/>
+	<a class="list" href="{:U('Index/Login/index')}">
+		<i class="icon icon-user"></i>
+		<p>登录</p>
+	</a>
+	<a class="list" href="{:U('Index/Article/contribute/t/create')}">
+		<i class="icon icon-contribute"></i>
+		<p>投稿</p>
+	</a>		
+	<a class="list" href="{:U('Index/Consign/pre_apply')}">
+		<i class="icon icon-consign"></i>
+		<p>寄售</p>
+	</a>	
+	<a class="list" href="{:U('Index/Cart/index')}">
+		<i class="icon icon-cart"></i>
+		<p>购物车</p>
+		<gt name="cart_num" value="0">
+			<span class="cart-num">{$cart_num}</num>
+		</gt>
+	</a>	  
+</eq>	
+

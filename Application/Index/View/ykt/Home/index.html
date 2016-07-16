@@ -1,0 +1,123 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/user_Center.css"/>
+<script> 
+    var pageName = 'home',                                                  
+        seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/'              
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="index-wrap mainbody-2 clearfix">
+	<include file="Home:left" />
+	<div class="content">
+		<div class="user-top">
+			<div class="card fl clearfix">
+				<img class="avatar" src="__UPLOAD__{$Think.session.uid|avatar=###}"/>
+				<div class="frame">
+					<div class="name">{$Think.session.user}</div>
+                    <eq name="Think.session.consigner" value="3">
+                      <div class="vip"><i></i>作者</div>
+                    </eq>
+					<div class="integration"><i></i>{$Think.session.point}</div>
+				</div>
+			</div>
+			<ul class="info fl clearfix">
+				<!--<li>
+					<span class="num">{$order_item['pay_count']|default='0'}</span>
+					<p class="txt">待付款</p>
+				</li>
+				<li>
+					<span class="num">{$order_item['send_count']|default='0'}</span>
+					<p class="txt">待发货</p>
+				</li>
+				<li>
+                  <a href="{:U('Index/Home/orderToComment')}">
+                    <span class="num">{$order_item['comment_count']|default='0'}</span>
+					<p class="txt">待评价</p>
+                  </a>
+				</li>-->
+			</ul>
+		</div>
+		<div class="middle">
+			<div class="middle-l fl">
+				<div class="not-paid middle-box">
+					<div class="middle-title clearfix">
+						<h1 class="fl">未支付订单</h1>
+						<a class="more fr" href="{:U('Index/Home/order')}">查看更多</a>
+					</div>
+					<notempty name="unpay_order">
+						<ul class="bd">
+	                      <volist id="vo" name="unpay_order">  
+	                        <li>
+								<div class="item pic clearfix">
+	                              <volist id="voo" name="vo['order_goods']">
+									<a target="_blank" href="{:U('Index/Goods/item',array('id'=>$voo['gid']))}">
+	                                    <img src="__UPLOAD__{$voo['gid']|gidToField=###,'goods_img'}"/></a>
+	                              </volist>
+								</div>
+								<div class="item price">
+									<p>￥{$vo['order_price']}</p>
+									<p>在线支付</p>
+								</div>
+								<div class="item time">{$vo['add_time']|date="Y-m-d H:i:s",###}</div>
+								<div class="item check">
+									<a href="{:U('Index/User/orderView',array('orderId'=>$vo['id']))}">查看</a>
+								</div>
+								<div class="item btn"><a target="_blank" href="{:U('Index/Order/confirm',array('orderId'=>$vo['id'],'passKey'=>strtoupper(md5(md5($vo['order_sn'])))))}">付款</a></div>
+							</li>
+						  </volist>	
+						</ul>
+					<else/>  
+						<div class="no-order">
+							<i class="fa fa-shopping-cart"></i>
+							您买的东西太少了，这里都空空的，快去挑选合适的商品吧！
+						</div>
+					</notempty> 
+				</div>
+				<div class="collect-goods middle-box">
+					<div class="middle-title clearfix">
+						<h1 class="fl">最近浏览过的商品</h1>
+						<a class="more fr" href="{:U('Index/Home/collectGoods')}">查看我收藏的商品</a>
+					</div>	
+					<ul class="bd clearfix">
+                        <notempty name="scan_goods">
+                              <foreach name="scan_goods" item="gid" >
+        						<li>
+        							<a target="_blank" href="{:U('Index/Goods/item',array('id'=>$gid))}">
+                                       <img src="__UPLOAD__{$gid|gidToField=###,'goods_img'}"/>
+                                    </a>
+        							<a class="txt" target="_blank" href="{:U('Index/Goods/item',array('id'=>$gid))}">{$gid|gidToField=###,'goods_name'}</a>
+        						</li>
+        					  </foreach>
+                        <else/>
+                            <div class="no-scan">
+    							   <a href="{:U('Index/Sale/index')}" target="_blank">去浏览下可爱的商品</a>
+    						</div>
+    					</notempty> 
+					</ul>
+				</div>
+			</div>
+			<div class="middle-r fr">
+                <div class="m-side-box">
+                    <div class="top clearfix">
+                        <div class="title">网站公告</div>
+                    </div>                  
+                    <ul class="bd">
+                      <volist id="vo" name="pub_msg" >
+                        <li class="article-list">
+                           <a target="_blank" href="{:U('Index/PublicMsg/item',array('id'=>$vo['id']))}">{$vo['title']}</a>
+                        </li>
+                      </volist>
+                    </ul>
+                </div>
+				<div class="guess middle-box mt-10">
+					<div class="middle-title clearfix">
+						<h1 class="fl">猜你喜欢</h1>
+					</div>
+					<ul class="bd">
+						<script>document.write(unescape('%3Cdiv id="hm_t_84830"%3E%3C/div%3E%3Cscript charset="utf-8" src="http://crs.baidu.com/t.js?siteId=352c522800d232581b58a54e019aa48a&planId=84830&async=0&referer=') + encodeURIComponent(document.referrer) + '&title=' + encodeURIComponent(document.title) + '&rnd=' + (+new Date) + unescape('"%3E%3C/script%3E'));</script>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>
+<include file="include:footer" />

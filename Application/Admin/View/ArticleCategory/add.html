@@ -1,0 +1,45 @@
+<div class="pageContent">
+	<form method="post" action="__CONTROLLER__/insert" class="pageForm required-validate" onsubmit="return iframeCallback(this, dialogAjaxDone)">
+    	<input type="hidden" name="callbackType" value="closeCurrent" />
+    	<div class="pageFormContent" layoutH="58">
+        	<div class="unit">
+                <label>上级分类名称：</label>
+                <select name="pid" style="width:198px;">
+                    <option value="0">顶层</option>
+                    <volist name="catlist" id="vo">
+                        <option value="{$vo.id}">{$vo.cat_name}</option>
+                    </volist>
+                </select>
+            </div>
+            <div class="unit">
+            	<label>文章分类名称：</label>
+                <input type="text" name="cat_name" class="required" size="33" value="" />
+            </div>
+            <div class="unit">
+            	<label>层：</label>
+                <select name="level">
+                	<option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div class="unit">
+            	<label>是否显示：</label>
+                <select name="show">
+                	<option value="1">是</option>
+                    <option value="0">否</option>
+                </select>
+            </div>
+            <div class="unit">
+            	<label>排序：</label>
+                <input type="text" name="sort" class="required" size="33" value="" />
+            </div>
+        </div>
+        <div class="formBar">
+        	<ul>
+            	<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+</div>

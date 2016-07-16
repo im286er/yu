@@ -1,0 +1,37 @@
+<div class="result-wrap">
+    <table class="result-table">
+		<tr>
+			<th>{$attr_des['1']['title']}</th>
+            <th>{$attr_des['2']['title']}</th>
+			<th>价格(元)</th>
+			<th>数量</th>
+			<th>图片</th>
+		</tr>
+        <volist name="attr_match" id="vo">
+           <tr class="result-list" attr-mark="{$vo['attr']}">
+    			<td class="first">{$vo['attr_str'][1]}</td>
+                <td class="first">{$vo['attr_str'][2]}</td>
+    			<td class="m-tooltip-wrap">
+                  <input class="input-edit J-attr-fill" type="text" name="price[{$key}]" value="{$attr_fill[$vo['attr']]['price']}" placeholder="输入价格"  data-rule-required="true" data-msg-required="价格不能为空" data-rule-number="true" data-rule-min="0"/><span class="tooltip J-msg-span"></span>
+                </td>
+    			<td class="m-tooltip-wrap">
+                  <input class="input-edit J-attr-fill" type="text" name="num[{$key}]" value="{$attr_fill[$vo['attr']]['num']}" placeholder="输入数量"  data-rule-required="true" data-msg-required="数量不能为空" data-rule-digits="true"/><span class="tooltip J-msg-span"></span>
+                </td>
+    			<td class="last">
+    				<div id="J-suit-button-{$key}" class="fl upload-btn u-btn u-btn-primary" data-i="{$key}">上传图片</div>
+    				<ul id="J-suit-img-wrap-{$key}" class="fl upload-pic">
+                       <neq name="attr_fill[$vo['attr']]['img']" value="">
+                        <li class="upload-pic-list">
+                          <img id="J-suit-container-{$key}" class="J-img-container" src="__UPLOAD__{$attr_fill[$vo['attr']]['img']}"/>
+                        </li>
+                       </neq>
+                    </ul>
+    				<div id="J-suit-status-{$key}" style="display:none"></div>
+    				<input type="hidden" id="J-suit-inputVal-{$key}" class="J-attr-fill" name="img[{$key}]" value="{$attr_fill[$vo['attr']]['img']}" />
+                    <input type="hidden" name="attr_match[{$key}]" value="{$vo['attr_match']}" />
+                    <input type="hidden" name="attr[{$key}]" value="{$vo['attr']}" />
+    			</td>
+	       </tr>
+        </volist>
+    </table> 
+</div>

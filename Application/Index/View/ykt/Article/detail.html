@@ -1,0 +1,163 @@
+<include file="include:header" />
+<div class="body-bg clearfix">
+<div class="blank10"></div>
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/article.css"/>
+<script> 
+	//seajs配置
+    var pageName = 'article';
+    var seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';
+    // 上传图片url
+    var uploadPath = '__UPLOAD__';
+    // 评论url
+    var commentUrl = "{:U('Index/ArticleComment/add')}";
+    var pageUrl = "{:U('Index/ArticleComment/getComment')}";
+    var insidePageUrl = "{:U('Index/ArticleComment/insideComment')}";
+    //顶url
+    var likeUrl = "{:U('Index/ArticleComment/likes')}";
+    var articleId = "{$vo['id']}";
+    var catId = "{$vo['cat_id']}"  //分类ID 
+    //当前页
+    yktGlobal.pageName = 'detail';  
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="mainbody-1 clearfix">
+	<div class="m-crumb">
+		<a href="__SITE__">主页</a>
+		<span class="separator">>{$vo['cat_info']['cat_area']} > </span>
+		<a class="active" href="{$vo['cat_info']['link']}">{$vo['cat_name']}</a>
+	</div>
+	<div class="artile-show-wrap">
+		<div id="J-article-id" class="area-l fl clearfix" data-articleId="{$vo['id']}">
+			<div class="top clearfix">
+				<div class="top-l">
+					<h1>{$vo['title']}</h1>
+					<p>
+						<time>{$vo['add_time']|date="Y-m-d H:i:s",###}</time>
+						<span>来源：御咖塘</span>
+					</p>
+				</div>
+				<ul class="m-share top-r">
+					<li class="share-frame">
+						<div class="share-icon"></div>
+						<p>分享</p>
+						<div class="popup">
+							<div class="bdsharebuttonbox">
+							    <a href="#" class="bds_tsina" data-cmd="tsina"></a>
+							    <a href="#" class="bds_qzone" data-cmd="qzone"</a>
+							    <a href="#" class="bds_tieba" data-cmd="tieba"></a>
+							</div>
+							<script>
+							window._bd_share_config = {
+							    "common": {
+							        "bdSnsKey": {},
+							        "bdText": "",
+							        "bdMini": "1",
+							        "bdMiniList": false,
+							        "bdPic": "",
+							        "bdStyle": "1",
+							        "bdSize": "32"
+							    },
+							    "share": {}
+							};
+							with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+							</script>
+						</div>
+					</li> 
+					<li id="J-like" data-switch="true">
+						<div class="like-icon"></div>
+						<p>点赞</p>
+					</li>
+					<li id="J-collect" data-switch="true">
+						<div class="collect-icon"></div>
+						<p>收藏</p>
+					</li>												
+				</ul>
+			</div>
+			<div class="big-pic">
+				<img src="__UPLOAD__{$vo['title_img']}"/>
+			</div>
+			<div class="summary">{$vo['summary']}</div>
+			<div class="process">
+			    {$vo['content']|htmlspecialchars_decode|stripslashes}
+			</div>
+ 			<script>document.write(unescape('%3Cdiv id="hm_t_88635"%3E%3C/div%3E%3Cscript charset="utf-8" src="http://crs.baidu.com/t.js?siteId=352c522800d232581b58a54e019aa48a&planId=88635&async=0&referer=') + encodeURIComponent(document.referrer) + '&title=' + encodeURIComponent(document.title) + '&rnd=' + (+new Date) + unescape('"%3E%3C/script%3E'));</script>
+			<div class="comment">
+				<div class="m-title">
+					<div class="txt">评论</div>
+				</div>		
+				<div id="J-open-comment" class="open-comment"><i class="fl"></i>点击展开评论</div>
+				<div id="J-comment-wrap" class="m-comment area-l-box" style="display:none">
+					<div class="top clearfix">
+						<div class="avatar"><a href="#"><img id="J-comment-avatar" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/lazyload200X200.png"/></a></div>
+						<div class="bd">
+							<textarea id="J-comment-textarea" class="comment-textarea" placeholder="说说你的看法"></textarea>
+							<div class="J-expression-wrap expression fl">
+								<a class="btn J-expression-btn">(・ω・) 颜文字</a>
+								<div class="box J-expression-box">
+									<a>(⌒▽⌒)</a>
+									<a>（￣▽￣）</a>
+									<a>(=・ω・=)</a>
+									<a>(｀・ω・´)</a>
+									<a>(〜￣△￣)〜</a>
+									<a>(･∀･)</a>
+									<a>(°∀°)ﾉ</a>
+									<a>(￣3￣)</a>
+									<a>╮(￣▽￣)╭</a>
+									<a>( ´_ゝ｀)</a>
+									<a>←_←</a>
+									<a>→_→</a>
+									<a>(&lt;_&lt;)</a>
+									<a>(&gt;_&gt;)</a>
+									<a>(;¬_¬)</a>
+									<a>("▔□▔)/</a>
+									<a>(ﾟДﾟ≡ﾟдﾟ)!?</a>
+									<a>Σ(ﾟдﾟ;)</a>
+									<a>Σ( ￣□￣||)</a>
+									<a>(´；ω；`)</a>
+									<a>（/TДT)/</a>
+									<a>(^・ω・^ )</a>
+									<a>(｡･ω･｡)</a>
+									<a>(●￣(ｴ)￣●)</a>
+									<a>ε=ε=(ノ≧∇≦)ノ</a>
+									<a>(´･_･`)</a>
+									<a>(-_-#)</a>
+									<a>（￣へ￣）</a>
+									<a>(￣ε(#￣) Σ</a>
+									<a>ヽ(`Д´)ﾉ</a>
+									<a>(╯°口°)╯(┴—┴</a>
+									<a>（#-_-)┯━┯</a>
+									<a>_(:3」∠)_</a>
+									<a>(笑)</a>
+									<a>(汗)</a>
+									<a>(泣)</a>
+									<a>(苦笑)</a>
+								</div>
+							</div>
+							
+							<div id="J-comment-btn" class="u-btn u-btn-primary u-btn-size-1 radius fr" data-logined="XX">评论</div>
+						</div>
+					</div>
+					<div id="J-comment-area">
+				    	{$commentArea}
+				    </div>
+				</div>
+			</div>
+
+		</div>
+		<div class="area-r fr">
+			<!-- 用户卡片 -->
+            {:W('User/card',array($vo['uid']))}
+			<div class="other m-side-box">
+				<div class="top clearfix">
+					<div class="title">TA的作品</div>
+				</div>					
+				<ul class="clearfix">
+					{:W('Article/contribute',array($vo['uid'],$vo['cat_id']))} 	 																		
+				</ul>
+			</div>				
+		</div>
+	</div>
+</div>
+<include file="include:footer" />
+</div>
+

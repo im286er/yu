@@ -1,0 +1,17 @@
+<ul class="bd">
+      <volist id="vo" name="list">
+		<li>
+			<div class="title">{$vo['title']}</div>
+			<div class="content">{$vo['summary']}
+               <neq name="vo['link']" value="">
+                      <a target="_blank" href="{$vo['link']}">详情链接</a></div>
+                </neq> 
+            </div>
+			<div class="time">
+				<time>{$vo['add_time']|date="Y-m-d H:i:s",###}</time>
+			</div>
+             {$vo['read']?'已读':'未读'}
+		</li>
+	  </volist>				
+</ul>
+<include file="Home:page_tpl" />

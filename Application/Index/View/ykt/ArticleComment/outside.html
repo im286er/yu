@@ -1,0 +1,152 @@
+<!-- 描点 -->
+<neq name="list" value="">
+<a name="commentPage"></a><if condition="$i eq 1">active</if>
+<!--<ul class="tab clearfix"> 
+	<li class="tab-list J-comment-type" data-order="add_time"><a <eq name="order" value="add_time">class="active"</eq> href="#commentPage">最新评论</a></li>
+	<li class="tab-list J-comment-type" data-order="reply_num"><a <eq name="order" value="reply_num">class="active"</eq> href="#commentPage">最热评论</a></li>
+</ul>-->
+<ul id="J-reply-frame" class="reply">
+     <volist id="vo" name="list">
+
+		<li class="reply-list clearfix animate" data-topId="{$vo['id']}">
+			<div class="hd">
+				<div class="avatar" data-userID="{$vo['uid']}">
+					<a href="#"><img src="__UPLOAD__{$vo['uid']|avatar=###}"/></a>
+				</div>
+            </div>
+			<div class="bd J-comment-reply-content">
+				<div class="name">{$vo.uid|uidToField=###,'username'}</div>
+				<span class="time">{$vo.add_time|date="Y-m-d H:i",###}</span>
+				<div class="txt">{$vo.content}</div>
+				<div class="comment-tool">
+					<ul class="frame"> 
+						<li class="comment-tool-list J-comment-like" data-switch="true">顶[<span class="num">{$vo.likes}</span>]</li>
+						<li class="comment-tool-list J-comment-reply-hd">回复</li>
+					</ul>
+				</div>
+				<div class="inside J-comment-reply-bd clearfix">
+					<div class="J-second-reply-page">
+						<ul class="J-second-reply-frame">
+							<volist name="vo['relpy']" id="v">
+								<li class="inside-list clearfix">
+									<div class="inside-l">
+										<div class="inside-avatar" data-userID="{$v['uid']}"> 
+											<a href="#"><img src="__UPLOAD__{$v['uid']|avatar=###}"/></a>
+										</div>
+									</div>
+									<div class="bd J-comment-reply-inside-content">
+										<div class="name">{$v.uid|uidToField=###,'username'}</div>
+										<span class="time"> {$v.add_time|date="Y-m-d H:i",###}</span>
+										<div class="txt">{$v.content}</div>
+										<div class="comment-tool">
+											<ul class="frame">
+												<li class="comment-tool-list J-comment-reply-inside-hd">回复</li>
+											</ul>
+										</div>											
+									</div>
+								</li>
+							</volist>                      								
+						</ul>		
+	                    <span>共<strong class="J-reply-num">{$vo['reply_num']}</strong>条回复</span>
+						<div class="page fl">
+							<gt name="vo['reply_num']" value="4">
+								<for start="1" end="ceil($vo['reply_num']/4)+1"> 
+									<a href="javascript:;" class="J-inside-paginator <if condition="$i eq 1">active</if>">{$i}</a>
+								</for>
+							</gt>
+						</div>	 
+					</div> 												
+					<div class="reply-comment fr J-reply-comment-hd">我也要回复</div>
+					<div class="clear"></div>
+					<div class="J-reply-comment-bd clearfix" style="display:none">
+						<div class="comment-textarea" contenteditable="true"><span class="J-reply-obj"></span></div>
+						<div class="J-expression-wrap expression fl">
+							<a class="btn J-expression-btn">(・ω・) 颜文字</a>
+							<div class="box J-expression-box">
+								<a>(⌒▽⌒)</a>
+								<a>（￣▽￣）</a>
+								<a>(=・ω・=)</a>
+								<a>(｀・ω・´)</a>
+								<a>(〜￣△￣)〜</a>
+								<a>(･∀･)</a>
+								<a>(°∀°)ﾉ</a>
+								<a>(￣3￣)</a>
+								<a>╮(￣▽￣)╭</a>
+								<a>( ´_ゝ｀)</a>
+								<a>←_←</a>
+								<a>→_→</a>
+								<a>(&lt;_&lt;)</a>
+								<a>(&gt;_&gt;)</a>
+								<a>(;¬_¬)</a>
+								<a>("▔□▔)/</a>
+								<a>(ﾟДﾟ≡ﾟдﾟ)!?</a>
+								<a>Σ(ﾟдﾟ;)</a>
+								<a>Σ( ￣□￣||)</a>
+								<a>(´；ω；`)</a>
+								<a>（/TДT)/</a>
+								<a>(^・ω・^ )</a>
+								<a>(｡･ω･｡)</a>
+								<a>(●￣(ｴ)￣●)</a>
+								<a>ε=ε=(ノ≧∇≦)ノ</a>
+								<a>(´･_･`)</a>
+								<a>(-_-#)</a>
+								<a>（￣へ￣）</a>
+								<a>(￣ε(#￣) Σ</a>
+								<a>ヽ(`Д´)ﾉ</a>
+								<a>(╯°口°)╯(┴—┴</a>
+								<a>（#-_-)┯━┯</a>
+								<a>_(:3」∠)_</a>
+								<a>(笑)</a>
+								<a>(汗)</a>
+								<a>(泣)</a>
+								<a>(苦笑)</a>
+							</div>
+						</div>
+						<div class="u-btn u-btn-primary u-btn-size-1 radius fr J-second-reply">回复</div>
+					</div>
+				</div>        							
+			</div>
+		</li>
+     </volist>
+</ul>
+<php>
+   $startPage = $currentPage - 3;
+   $stopPage =  $currentPage + 3;
+   $prePage  =  $currentPage - 1;
+   $nextPage =  $currentPage + 1; 
+</php>
+<gt name="totalPage" value="1">
+    <div class="m-paginator"> 
+        <egt name="prePage" value="1">
+            <a id="J-page-prev" class="paginator-item paginator-item-prev">
+              <span class="paginator-item-prev-icon"></span>
+            </a>
+        </egt>
+        <!-----循环到当前页-------->
+        <elt name="startPage" value="4">
+            <for start="1" end="$currentPage" comparison="elt">
+              <a href="javascript:;" class="J-page-item paginator-item <eq name="currentPage" value="$i">paginator-item-selected</eq>" >{$i}</a>
+            </for>
+        <else/>
+            <a href="javascript:;" class="J-page-item paginator-item" >1</a>
+            <span class="paginator-sep">…</span>
+            <for start="$startPage" end="$currentPage" comparison="elt">
+               <a href="javascript:;" class="J-page-item paginator-item <eq name="currentPage" value="$i">paginator-item-selected</eq>" >{$i}</a>
+            </for>
+        </elt>
+        <!-----当前页到结尾-------->
+        <gt name="totalPage" value="$currentPage">
+            <php>$stopPage = $stopPage >= $totalPage ? $totalPage:$stopPage;</php>
+            <for start="$nextPage" end="$stopPage" comparison="elt">
+              <a href="javascript:;" class="J-page-item paginator-item" >{$i}</a>
+            </for>
+            <gt name="totalPage" value="$stopPage"><span class="paginator-sep">…</span></gt>
+        </gt>
+        <elt name="nextPage" value="$totalPage">
+           <a id="J-page-next" href="#" class="paginator-item paginator-item-next">
+               <span class="paginator-item-next-icon"></span>
+           </a>
+        </elt>
+    </div>
+</gt>   
+</neq>

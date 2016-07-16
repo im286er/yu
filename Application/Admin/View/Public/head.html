@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>御咖塘后台首页</title>
+    <link href="__PUBLIC__/dwz/themes/default/style.css" rel="stylesheet" type="text/css" />
+    <link href="__PUBLIC__/dwz/themes/css/core.css" rel="stylesheet" type="text/css" />
+    <link href="__PUBLIC__/dwz/themes/css/extcore.css" rel="stylesheet" type="text/css" />
+    <link href="__PUBLIC__/dwz/themes/css/ui-dialog.css" rel="stylesheet" type="text/css" />
+    <!--[if IE]>
+      <link href="__PUBLIC__/dwz/themes/css/ieHack.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <script src="__PUBLIC__/dwz/js/speedup.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/dwz/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/dwz/js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/dwz/js/jquery.validate.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/dwz/js/jquery.bgiframe.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/dwz/js/dwz.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/dwz/js/dialog-min.js" type="text/javascript"></script>
+    
+    <!--加载ajaxupload-->
+    <script src="__PUBLIC__/ajaxupload/ajaxupload.js" type="text/javascript"></script>
+    <!--加载UE编辑器-->
+    <script src="__PUBLIC__/ueditor/ueditor.config.admin.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/ueditor/ueditor.all.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var adminGlobal = {
+            pageName:''
+        }
+        $(function(){
+                //DWZ初始化
+                DWZ.init("__PUBLIC__/dwz/dwz.frag.xml", {
+                    statusCode: {
+                        ok: 1,
+                        error: 0
+                    },
+                    debug: false, // 调试模式 【true|false】
+                    callback: function () {
+                        initEnv();
+                        $("#themeList").theme({
+                            themeBase: "__PUBLIC__/dwz/themes"
+                        });
+                    }
+                });           
+        //---------------------------------------------------------               
+        });
+   </script>
+</head>

@@ -1,0 +1,52 @@
+<style type="text/css">
+#connect_combox .combox { position:absolute; left:110px; }
+</style>
+
+<div class="pageContent">
+	<form method="post" action="__CONTROLLER__/update" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+    	<input type="hidden" name="callbackType" value="closeCurrent" />
+        <input type="hidden" name="navTabId" value="{$Think.request.navTabId}" />
+        <input type="hidden" name="id" value="{$Think.request.id}" />
+    	<div id="connect_combox" class="pageFormContent" layoutH="58">
+            <div class="unit">
+            	<label>分类名称：</label>
+                <!--<select name="cat_id" class="combox" ref="combox_attr" refUrl="__CONTROLLER__/returnAttr/cat_id/{value}">
+                    <volist name="categorylist" id="vo">
+                        <option value="{$vo.id}" <if condition="$vo.id eq $cat_id">selected</if> <if condition="$vo.cat_level neq 3">disabled</if>>{$vo.cat_name}</option>
+                    </volist>
+                </select>-->
+                <input type="hidden" name="cat_id" value="{$cat_id}" />{$cat_name}
+            </div>
+            <div class="unit">
+            	<label>父类属性名：</label>
+                <select name="pid" class="combox" id="combox_attr">
+                	<volist name="attrlist" id="voattrlist">
+                		<option value="{$voattrlist[0]}" <if condition="$voattrlist[0] eq $pid">selected</if>>{$voattrlist[1]}</option>
+                    </volist>
+                </select>
+            </div>
+            <div class="unit">
+            	<label>属性名称：</label>
+                <input type="text" name="title" class="required" size="33" maxlength="20" value="{$attr.title}" />
+            </div>
+            <div class="unit">
+            	<label>层：</label>
+                <select name="level">
+                	<option value="1" <if condition="$attr.level eq 1">selected</if>>1</option>
+                    <option value="2" <if condition="$attr.level eq 2">selected</if>>2</option>
+                </select>
+            </div>
+            <div class="unit">
+            	<label>排序：</label>
+                <input type="text" name="sort" class="required" size="33" maxlength="20" value="{$attr.sort}" />
+            </div>
+        </div>
+        
+        <div class="formBar">
+        	<ul>
+            	<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,73 @@
+<volist name="list" id="vo">
+	<li class="reply-list clearfix" data-topId="{$vo['id']}">
+    	<div class="hd">
+    		<div class="avatar" data-userID="{$vo['uid']}">
+    			<a href="#"><img src="__UPLOAD__{$vo['uid']|avatar=###}"/></a>
+    		</div>
+    	</div>
+    	<div class="bd J-comment-reply-content">
+    		<div class="name">{$vo.uid|uidToField=###,'username'}</div>
+    		<span class="time">{$vo.add_time|date="Y-m-d H:i",###}</span>
+    		<div class="star">
+    	        <for start="0" end="$vo['star']">
+    	            <img src="/Public/themes/ykt/images/star_1.png"/>
+    	        </for>				
+    	    </div>
+    		<div class="txt">{$vo.comment}</div>
+    		    <neq name="vo.respond" value="">
+    				<div class="inside J-comment-reply-bd clearfix" style="display: block;">
+    				    <div class="J-second-reply-page">
+    				        <ul class="J-second-reply-frame">
+    				            <li class="inside-list clearfix">
+    				                <div class="bd J-comment-reply-inside-content">
+    				                    <div class="name">店主回复:</div>
+    				                    <div class="txt">{$vo['respond']}</div>
+    				                </div>
+    				            </li>
+    				        </ul>
+    				    </div>
+    				</div>	
+    	        </neq>    							
+    	</div>
+	</li>
+</volist>
+<php>
+   $startPage = $currentPage - 3;
+   $stopPage =  $currentPage + 3;
+   $prePage  =  $currentPage - 1;
+   $nextPage =  $currentPage + 1; 
+</php>
+<gt name="totalPage" value="1">
+    <div class="m-paginator"> 
+        <egt name="prePage" value="1">
+            <a id="J-page-prev" class="paginator-item paginator-item-prev">
+              <span class="paginator-item-prev-icon"></span>
+            </a>
+        </egt>
+        <!-----循环到当前页-------->
+        <elt name="startPage" value="4">
+            <for start="1" end="$currentPage" comparison="elt">
+              <a href="javascript:;" class="J-page-item paginator-item <eq name="currentPage" value="$i">paginator-item-selected</eq>" >{$i}</a>
+            </for>
+        <else/>
+            <a href="javascript:;" class="J-page-item paginator-item" >1</a>
+            <span class="paginator-sep">…</span>
+            <for start="$startPage" end="$currentPage" comparison="elt">
+               <a href="javascript:;" class="J-page-item paginator-item <eq name="currentPage" value="$i">paginator-item-selected</eq>" >{$i}</a>
+            </for>
+        </elt>
+        <!-----当前页到结尾-------->
+        <gt name="totalPage" value="$currentPage">
+            <php>$stopPage = $stopPage >= $totalPage ? $totalPage:$stopPage;</php>
+            <for start="$nextPage" end="$stopPage" comparison="elt">
+              <a href="javascript:;" class="J-page-item paginator-item" >{$i}</a>
+            </for>
+            <gt name="totalPage" value="$stopPage"><span class="paginator-sep">…</span></gt>
+        </gt>
+        <elt name="nextPage" value="$totalPage">
+           <a id="J-page-next" href="#" class="paginator-item paginator-item-next">
+               <span class="paginator-item-next-icon"></span>
+           </a>
+        </elt>
+    </div>
+</gt>

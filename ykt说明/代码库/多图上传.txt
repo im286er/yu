@@ -1,0 +1,103 @@
+                                   PHP 
+
+
+//----------------------------------------------------------------------------------------------------------  
+//------------------显示商品图集--------------------------------
+   public function uploadimg() {
+      $model = M('GoodsImg');
+      $map['gid'] = I('id');
+      $this->assign('gid',I('id'));
+      $count = $model->where($map)->count();
+      if($count>0){
+        $list = $model->where($map)->select();
+        $this->imgs = $list;
+      }
+      $this->display();
+   }
+//-----------------上传商品图集-----------------------
+   public function uploadify(){         
+         $config = C('UPLOAD_BASE_CONFIG');
+         $config['saveName'] = array('uniqid','');
+         $config['savePath'] = DIRECTORY_SEPARATOR.strtolower(CONTROLLER_NAME).DIRECTORY_SEPARATOR;
+         $upload = new Upload($config); 
+         $info = $upload->upload();
+         if($info){
+                $width = (int)I('w')?(int)I('w'):0;
+                $heigh = (int)I('h')?(int)I('h'):0;
+                if($width > 0 && $heigh > 0){
+                    $fname=$upload->rootPath.$info['Filedata']['savepath'].$info['Filedata']['savename'];
+                    $image=new Image();
+                    $image->Open($fname);
+    	            $image->thumb($width,$heigh,Image::IMAGE_THUMB_FILLED)->save($fname);
+                }
+                //--------------------- 
+                $data['gid'] = I('gid');
+                $data['img'] = $info['Filedata']['savepath'].$info['Filedata']['savename'];
+                $id = M('GoodsImg')->add($data);
+                //----------------------
+                $this->id =  $id;
+                $this->img = $info['Filedata']['savepath'].$info['Filedata']['savename'];
+                //--------------------- 
+                $this->display();
+         }else{
+                echo $upload->getError();
+                return false;
+  	     } 
+   }
+//-----------------删除图集图片---------------------------------
+   public function delImg() {
+     $model = M('GoodsImg'); 
+     $model->where('id='.I('id'))->delete();
+     $file = new File();
+     if($file->has(I('img'))) $file->unlink(I('img'));
+   }
+
+
+
+
+
+
+
+
+
+$(function(){
+		$('#file_upload').uploadify({
+			//'formData'      : {'id' : id, 'uid':uid },
+            'formData'      : {'gid':gid},
+			'fileTypeDesc' : 'Image Files',				//类型描述
+			'fileTypeExts' : '*.gif; *.jpg; *.png',		//允许类型
+			'fileSizeLimit' : '5MB',					//允许上传最大值
+			'swf'      : '__PUBLIC__/uploadify/uploadify.swf',	//加载swf
+			'uploader' : '__CONTROLLER__/uploadify',		   //上传路径
+			'buttonImage' : '__PUBLIC__/uploadify/browse-btn.png',
+            'method' : 'post',
+            'buttonText':'上传图片',
+            'width':'78px',
+            'height':'28px',
+			'onUploadSuccess' : function(file,data,response) {	//成功上传返回
+                if(data.indexOf('-')>0){
+                    $('#J-upload-image').append(data).fadeIn();  
+                    deleteImg();
+                }else{
+                    alert('图片上传错误:'+data);
+                    return false;
+                }
+			}
+		});
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

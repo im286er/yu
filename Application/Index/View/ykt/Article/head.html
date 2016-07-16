@@ -1,0 +1,35 @@
+<div class="location clearfix">
+		<div class="fl title">投稿</div>
+		<ul class="fl">
+			<li class="location-list  <eq name="Think.get.t" value="create">active"</eq> ">
+				<a href="{:U('Index/Article/contribute',array('t'=>'create'))}">
+				<span class="fl icon"></span>
+				<div class="fl">
+					<div class="headline">
+                      创作区
+                    </div>
+					<div class="subheadline">分享你的创作过程</div>
+				</div>
+				</a>
+			</li>
+			<li class="location-list <eq name="Think.get.t" value="anli">active"</eq> ">
+				<a href="{:U('Index/Article/contribute',array('t'=>'anli'))}">
+				<span class="fl icon"></span>
+				<div class="fl">
+					<div class="headline">
+                       安利区
+                    </div>
+					<div class="subheadline">好的创作素材要跟大家分享哟</div>
+				</div>
+				</a>
+			</li>			
+		</ul>
+</div>
+<script>
+	//seajs配置 
+    var pageName = 'article';                                           
+    var seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';
+    //ue配置
+    var UEurl="{:U('Index/Ueditor/index')}";
+    var UEhomeUrl = "__PUBLIC__/ueditor/";     
+</script>

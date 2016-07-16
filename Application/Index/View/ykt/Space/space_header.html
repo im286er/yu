@@ -1,0 +1,76 @@
+<include file="include:head" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/space.css"/>
+<header class="space-header">
+	<div class="top">
+		<div class="mainbody-2 clearfix">
+			<a class="logo" href="__SITE__"></a> 
+			<nav class="nav">
+				<ul>
+					<li><a href="__SITE__">首页</a></li>
+					<li><a href="{:U('Index/Sale/index')}">通贩区</a></li>
+					<li><a href="{:U('Index/Service/index')}">服务区</a></li>
+					<li><a href="{:U('Index/Create/index')}">创作区</a></li>
+					<li><a href="{:U('Index/Anli/index')}">安利区</a></li>
+				</ul>
+			</nav>
+			<div id="J-header-user" class="m-user-guide fr"></div>
+			<div class="search fr">
+				<form id="J-search-form" action="{:U('Index/Search/goods')}" method="get">
+					<input id="J-search-text" class="fl text-input" type="text" placeholder="搜索你喜欢的" name="keyword">
+					<input id="J-search-btn" class="search-btn fl" type="submit" value="">             
+					<input type="hidden" name="__hash__" value="">
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="mainbody-2">
+		<div class="data clearfix">
+			<div class="card fl">
+				<img class="fl" src="__UPLOAD__{$userInfo['id']|avatar=###}"/>
+				<div class="info fl">
+					<p class="name">{$userInfo.username}<i></i></p>
+					<p class="uid">UID:{$userInfo.id}</p>
+					<eq name="Think.session.consigner" value="2">
+                      <i class="author-icon"></i>
+                    </eq>
+				</div>
+			</div>   
+			<div class="sign fl"><neq name="userInfo.sign" value="">{$userInfo.sign}<else />TA的签名还是空的呢</neq></div>
+			<ul class="menu fr">
+				<li>
+					作品
+					<p class="num">{$userInfo.consign_num}</p>
+				</li>
+				<li>
+					文章
+					<p class="num">{$userInfo.article_num}</p>
+				</li>
+			</ul>
+		</div>
+		<ul class="sub-nav clearfix mb-20">
+			<li>  
+				<a <eq name="Think.ACTION_NAME" value="index">class="active"</eq> href="{:U('Index/Space/index',array('uid'=>$userInfo['id']))}">
+					<i class="home-icon"></i>
+					首页
+				</a>
+			</li>
+			<li>
+				<a <eq name="Think.ACTION_NAME" value="consign">class="active"</eq> href="{:U('Index/Space/consign',array('uid'=>$userInfo['id']))}">
+					<i class="author-icon"></i>
+					作品
+				</a>
+			</li>
+			<li>
+				<a <eq name="Think.ACTION_NAME" value="contribute">class="active"</eq> href="{:U('Index/Space/contribute',array('uid'=>$userInfo['id']))}">
+					<i class="article-icon"></i>
+					文章
+				</a>
+			</li>			 		
+		</ul>
+	</div>
+</header>
+<script> 
+    var pageName = 'space';     
+    var seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>

@@ -1,0 +1,18 @@
+<table class="list" width="100%" layoutH="115">
+    <tbody>
+        <tr><td>编号</td><td>{$row['id']}</td></tr>
+        <tr><td>寄售分类</td><td>{$row['cat_name']}</td></tr>
+        <tr><td>寄售用户</td><td>{$row['uid']|uidToField=###,'username'}</td></tr>
+        <tr><td>寄售品</td><td>{$row['goods_name']}</td></tr>
+        <tr><td>快递公司</td><td>{$row['express_abbr']}</td></tr>
+        <tr><td>快递单号</td><td>{$row['express_num']}</td></tr>
+        <tr><td>封面</td><td><img src="__UPLOAD__{$row['goods_img']}" style="width: 80px; height: 80px;" /></td></tr>
+        <tr><td>寄售状态</td><td>{:C('CONSIGN_STATUS')[$row['status']]}</td></tr>
+        <tr><td>申请时间</td><td>{$row['add_time']|date="Y-m-d H:i:s",###}</td></tr>
+        <tr><td>样本提供</td><td>{$row['sample']==1?'提供':'不提供'}</td></tr>
+        <tr><td>瑕疵处理</td><td>{$row['treat_default']==1?'默认':'到货后决定'}</td></tr>
+        <tr><td>特殊要求</td><td>{$row['claim']}</td></tr>
+        <tr><td>CP</td><td>{$row['cp']}</td></tr>
+        <tr><td>原著</td><td>{$row['original']}</td></tr>
+    </tbody>
+</table>

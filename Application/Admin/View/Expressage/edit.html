@@ -1,0 +1,56 @@
+<script>
+// 当前页面
+adminGlobal.pageName = 'expressage_edit';
+var cityUrl = '__CONTROLLER__';
+</script>
+<script src="__PUBLIC__/dwz/js/extraBase.js" type="text/javascript"></script>
+<div class="pageContent">
+	<form method="post" action="__CONTROLLER__/update" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+    	<input type="hidden" name="callbackType" value="closeCurrent" />
+        <input type="hidden" name="navTabId" value="{$Think.request.navTabId}" />
+        <input type="hidden" name="id" value="{$yfinf.id}" />
+    	<div class="pageFormContent" layoutH="58">
+        	<div class="unit J-linkage">
+                <label>省[必选]：</label>
+                <select id="J-ajax-province" name="province_id" style="width:198px;">
+                    <volist name="province" id="vo">
+                        <option value="{$vo.id}" <eq name="vo.id" value="$yfinf['area_id']">selected</eq> 
+                                                 <eq name="vo.id" value="$province_id">selected</eq>
+                        >{$vo.areaname}</option>
+                    </volist>
+                </select>
+            </div>
+            <div class="unit J-linkage">
+            	<label>市[可选]：</label>
+                <select id="J-ajax-city" name="city_id" style="width:198px;">
+                    <option value=""></option>
+                    <volist name="city" id="vo"> 
+                        <option value="{$vo.id}" <eq name="vo.id" value="$yfinf['area_id']">selected</eq> >{$vo.areaname}</option>
+                    </volist>
+                </select>
+            </div>
+            <div class="unit">
+            	<label>首重 kg：</label>
+                <input type="text" name="init_weight"  class="required number" size="33" value="{$yfinf['init_weight']}" />
+            </div>
+            <div class="unit">
+            	<label>首重 元：</label>
+                <input type="text" name="init_cost"  class="required number" size="33" value="{$yfinf['init_cost']}" />
+            </div>
+            <div class="unit">
+            	<label>续重 kg：</label>
+                <input type="text" name="extra_weight" class="required number" size="33" value="{$yfinf['extra_weight']}" />
+            </div>
+            <div class="unit">
+            	<label>续费 元：</label>
+                <input type="text" name="extra_cost" class="required number" size="33" value="{$yfinf['extra_cost']}" />
+            </div>
+        </div>
+        <div class="formBar">
+        	<ul>
+            	<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,40 @@
+ <div class="m-sidebar-user">
+	<div class="top clearfix">
+		<div class="fl avatar">
+			<a target="_blank" href="{:U('Index/Space/index',array('uid'=>$vo['id']))}">
+             <img class="m-lazy" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/lazyload200X200.png" data-original="__UPLOAD__{$vo['id']|avatar=###}!c60x60.jpg"/>
+            </a>
+		</div>
+		<div class="info">
+          <a target="_blank" href="{:U('Index/Space/index',array('uid'=>$vo['id']))}">
+			<div class="name">{$vo.username}</div>
+          </a>
+		</div>
+	</div> 
+	<div class="intro">{$vo.sign}</div>						
+	<ul class="relation clearfix">
+		<li>
+			<a href="{:U('Index/Space/consign',array('uid'=>$vo['id']))}" target="_blank">
+				<span class="txt">寄售</span>
+				<span class="num">{$vo.consign_num}</span>
+			</a>
+		</li>
+		<li>
+			<a href="{:U('Index/Space/contribute',array('uid'=>$vo['id']))}" target="_blank">
+				<span class="txt">投稿</span>
+				<span class="num">{$vo.article_num}</span>
+			</a>
+		</li>
+		<!--<li class="last">
+			<a href="#" target="_blank">
+				<span class="txt">粉丝</span>
+				<span class="num">{$vo.fans_num}</span>
+			</a>
+		</li>-->						
+	</ul>
+	<neq name="showIcon" value="">
+		<neq name="vo.consigner" value="1">
+			<i class="consignor"></i>
+		</neq>
+	</neq>
+</div>

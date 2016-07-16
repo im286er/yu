@@ -1,0 +1,22 @@
+<ul class="bd">
+	<volist id="vo" name="list" key="k">
+		<elt name="k" value="3">
+		    <li>
+		    	<a class="pic" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}" target="_blank">
+		    		<img src="__UPLOAD__{$vo['title_img']}"/>
+		    		<i>{$k}</i>
+		    	</a>							
+		    	<a class="txt" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}">{$vo['title']}</a>
+		    </li>
+		</elt>
+	</volist>
+</ul>
+<volist id="vo" name="list" key="k">
+	<gt name="k" value="3">
+	<dl>
+		<dt>{$k}</dt>
+		<dd><a class="txt" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}">{$vo['title']}</a></dd>
+	</dl>	
+	</gt>
+</volist>
+	

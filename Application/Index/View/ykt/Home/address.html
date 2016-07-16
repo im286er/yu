@@ -1,0 +1,65 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/user_Center.css"/>
+<script> 
+    var pageName = 'home';
+    var seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';
+    var editAddressUrl ="/Index/Address/edit/id/";        
+
+    yktGlobal.pageName ='home_address';              
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="address-wrap mainbody-2 clearfix">
+	<include file="Home:left" />
+	<div class="m-content">
+		<div class="sub-nav">
+			<a class="active" href="#">收货地址</a>
+		</div>
+		<div id="J-address-wrap" class="bd">
+		    <div class="top">
+		        <a id="J-add-btn" class="btn" href="javascript:;">新增收货地址</a>
+		        <span class="txt">
+		        	您已创建<span id="J-address-num" class="ftx-02">{$num}</span>个收货地址，最多可创建<span class="ftx-02">5</span>个 
+		        </span>
+		    </div>
+		    <ul id="J-consignee" class="middle">
+                <volist id="vo" name="list">
+                    <li class="J-addr-list <eq name="vo['default']" value="1">setDefault</eq>" data-id="{$vo['id']}">
+                        <div class="l-top">
+                            <h3>{$vo['realname']} {$vo['province']|areaName=###} 
+                                 <eq name="vo['default']" value="1">
+                    				<span class="default">默认地址</span>
+                    			 </eq>      
+                            </h3>
+                            <div class="extra">
+                                <a class="del-btn J-consignee-delete" href="javascript:;">删除</a>
+                            </div>
+                        </div>
+                        <div class="l-content">
+                            <div class="item">
+                                <span class="label">收货人：</span>
+                                <div class="addr-name txt">{$vo['realname']}</div>
+                            </div>
+                            <div class="item">
+                                <span class="label">所在地区：</span>
+                                <div class="addr-info txt">{$vo['province']|areaName=###} {$vo['city']|areaName=###} {$vo['district']|areaName=###}</div>
+                            </div>
+                            <div class="item">
+                                <span class="label">地址：</span>
+                                <div class="addr-street txt">{$vo['street']}</div>
+                            </div>
+                            <div class="item">
+                                <span class="label">手机：</span>
+                                <div class="addr-tel txt"> {$vo['mobile']}</div>
+                            </div>
+                            <div class="extra">
+                                <a class="J-setdefault" href="javascript:;">设为默认地址</a>
+                                <a class="J-consignee-edit" href="javascript:;">编辑</a>
+                            </div>
+                        </div>
+                    </li>
+	            </volist>
+		    </ul>
+		</div>	
+	</div>
+</div>
+<include file="include:footer" />

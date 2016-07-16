@@ -1,0 +1,135 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/bugProcess.css"/>
+<script>  
+    var pageName = 'order';                                                   
+    var seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';
+    var addAddressUrl ="{:U('Index/Address/add')}";
+    var editAddressUrl ="/Index/Address/edit/id/";
+    yktGlobal.pageName = 'info';		//当前页
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="bugProcess-wrap clearfix">
+	<div id="J-address-wrap" class="step step-1">
+		<div class="step-title clearfix">
+			<h3 class="fl">收货人信息</h3>
+			<a id="J-add-btn" class="back fr" href="javascript:;">添加收货人信息</a>
+		</div>
+		<div class="step-content">
+			<div class="consignee"> 
+				<ul id="J-consignee" class="clearfix">
+					<notempty name="address">
+					 <volist name="address" key="k" id="vo" > 
+						<li class="J-addr-list <eq name="vo['default']" value="1">setDefault selected</eq>" data-id="{$vo['id']}">
+							<div class="consignee-item">
+								<span data-consignee="{$vo['province']|areaName=###} {$vo['realname']}">
+									<eq name="vo['default']" value="1">
+										默认地址
+									<else />
+										{$vo['province']|areaName=###} {$vo['realname']}
+									</eq>
+								</span>			
+								<i></i>
+							</div>
+                            <div class="addr-detail">
+								<span class="addr-name">{$vo['realname']}</span>
+								<span class="addr-info">{$vo['province']|areaName=###} {$vo['city']|areaName=###} {$vo['district']|areaName=###} {$vo['street']}</span>
+								<span class="addr-tel">{$vo['mobile']}</span>
+							</div>
+							<div class="op-btns"> 			
+								<a class="J-setdefault" href="javascript:;" data-id="{$vo['id']}">设为默认地址</a>
+								<a class="J-consignee-edit" href="javascript:;" data-id="{$vo['id']}">编辑</a>
+								<a class="J-consignee-delete" href="javascript:;" data-id="{$vo['id']}">删除</a>
+							</div>
+						</li>
+			         </volist>		
+			         <else/>
+			         	<h3 class="fl" style="color: red;">未有收货人信息!</h3>
+			         </notempty>    				
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="step step-4">
+		<div class="step-title">寄出时间</div>
+		<div class="step-content">
+			<ul class="send-time clearfix" data-toggle="buttons">
+				<li class="send-time-list">
+					<label class="btn s-label active">
+						<input class="u-hiden" type="radio" name="time" value="1">
+						现货情况下3个工作日（不含周六日/节假日）内寄出
+					</label>
+					<div class="send-time-notice">*预售商品发货时间请参考具体物品页面</div>
+				</li>
+			</ul>
+		</div>
+	</div>		
+	<div class="step-title">
+		确认商品清单
+		<a class="fr back" href="/Index/Cart">返回购物车</a>
+	</div>
+	<div class="order"> 
+		<div class="hd clearfix">
+			<div class="th t-itemCheck">商品名称</div> 
+			<div class="th t-price">价格</div> 
+			<div class="th t-amount">数量</div> 
+			<div class="th t-sum">小计</div> 
+			<div class="th t-status">状态</div> 
+		</div>             			
+		<div class="bd clearfix">
+    		 <volist id="vo" name="order_info['goods']" key="k">	
+                <div class="order-list clearfix">
+    				<div class="clearfix">
+    					<div class="td t-item t-itemCheck">
+							<div class="t-pic">
+							  <a href="{:U('Index/Goods/item',array('id'=>$vo['gid'],'attr'=>$vo['attr']))}" target="_blank">
+                                <img src="__UPLOAD__{$vo['gid']|gidToField=###,'goods_img'}"/>
+                              </a>	
+							</div>
+							<div class="t-title">
+                               <a href="{:U('Index/Goods/item',array('id'=>$vo['gid'],'attr'=>$vo['attr']))}" target="_blank">
+                                    {$vo['gid']|gidToField=###,'goods_name'}
+                                    <neq name="vo['attr_match']" value="">[{$vo['attr_match']}]</neq>
+                               </a>
+                            </div>                        
+    					</div>  
+    					<div class="td t-price">￥<span class="num">{$vo['price']}</span></div> 
+    					<div class="td t-amount">{$vo['num']}</div> 
+    					<div class="td t-sum"><span class="num">{$vo['item_price']}</span>元</div> 
+    					<div class="td t-status t-reserve">{:C('GOODS_STATUS')[$vo['status']]}
+                           <span class="t-reserve-icon"></span>
+                        </div> 
+    				</div>                   
+    			</div>
+                <php> $order_goods_num += $vo['num']; </php>
+              </volist>				 
+		</div>
+		<div class="ft clearfix">
+			<ul class="fr check-bar">
+				<li class="check-bar-list clearfix">
+					<div class="tag"><span class="amount">{$order_goods_num}</span>件商品 金额合计：</div>
+					<div class="content">￥<span id="J-goods-price">{$order_info['total_goods_price']}</span></div>
+				</li>
+				<li class="check-bar-list clearfix">
+					<div class="tag">运费：</div>
+                    <input type="hidden" name="total_weight" value="{$order_info['total_weight']}" />
+                    <input type="hidden" name="express_fee" value="{$order_info['express_fee']}" />
+                    <input type="hidden" name="address_id" value="{$order_info['address_id']}" />
+					<div class="content">￥<span id="J-expressage">{$order_info['express_fee']}</span></div>
+				</li>					
+				<li class="check-bar-list clearfix">
+					<div class="tag tag-sum">应付总额：</div>
+					<div class="content sum">
+						￥<span id="J-total-price">{$order_info['order_price']}</span>
+					</div>
+				</li>					
+			</ul>
+		</div>
+        <form method="post" action="{:U('Index/Order/submit')}">
+    		<div class="order-btn-frame clearfix">
+                    <input type="hidden" name="tcId" value="{$Think.get.tcId}" />
+    				<div id="J-submit-btn" class="u-btn u-btn-large u-btn-primary order-btn">提交订单</div>
+    		</div>
+        </form>	
+	</div>	
+</div>
+<include file="include:footer" />

@@ -1,0 +1,59 @@
+<style type="text/css">
+.pageFormContent span { padding-left:0;}
+</style>
+<div class="pageContent">
+	<form method="post" action="__CONTROLLER__/update" class="pageForm required-validate" enctype="multipart/form-data" onsubmit="return iframeCallback(this,dialogAjaxDone);">
+    	<input type="hidden" name="callbackType" value="closeCurrent" />
+        <input type="hidden" name="id" value="{$Think.request.id}" />
+    	<div class="pageFormContent" layoutH="58">
+            <div class="unit">
+        	<label>上级：</label>
+                <select name="pid" style="width:198px;">
+                    <option value="0" <eq name="vo['pid']" value="0">selected</eq> >顶层</option>
+                    <volist name="block" id="b">
+                        <option value="{$b.id}" <eq name="vo['pid']" value="$b.id">selected</eq> >{$b.desc}</option>
+                    </volist>
+                </select>
+            </div>
+            <div class="unit">
+            	<label>层级：</label>
+                <select name="level" style="width:198px;">
+                    <option value="1" <eq name="vo['level']" value="1">selected</eq> >页面</option>
+                    <option value="2" <eq name="vo['level']" value="2">selected</eq> >块</option>
+                </select>
+            </div>
+            <div class="unit">
+            	<label>标识：</label>
+                <input type="text" name="sign" class="required" size="30" value="{$vo['sign']}" />
+            </div>
+            <div class="unit">
+            	<label>描述：</label>
+                <input type="text" name="desc" class="required" size="30" value="{$vo['desc']}" />
+            </div>
+        </div>
+        <div class="formBar">
+        	<ul>
+            	<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+</div>
+
+<style type="text/css">
+.create-process ul{
+    float:left;
+}
+.create-process .list{
+    margin-bottom:5px;
+    clear:both;
+}
+.create-process .list img{
+    width:55px;
+    height: 40px;
+    float:left;
+}
+.create-process .list input{
+    float:left;
+}
+</style>

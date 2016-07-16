@@ -1,0 +1,89 @@
+<include file="include:header" />
+<script> 
+    var pageName = 'cart';                                            
+    var seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';
+</script>    
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/jquery-1.11.1.js"></script> 
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/bugProcess.css"/>    
+
+<div class="bugProcess-wrap clearfix">
+	<div class="step-title">我的购物车</div>
+	<div class="order">   
+      <notempty name="cart">     
+         <div class="hd clearfix">
+          <div class="th t-checkbox">
+            <input id="J-checkbox-all" type="checkbox" value="" checked="true"/>
+            <label for="J-checkbox-all">全选</lable>
+          </div>
+          <div class="th t-item">商品名称</div> 
+          <div class="th t-price">价格</div> 
+          <div class="th t-amount">数量</div> 
+          <div class="th t-sum">小计</div> 
+          <div class="th t-status">状态</div> 
+          <div class="th t-delete"></div> 
+	      </div> 
+    		<form action="/Index/Order/genernate.html" method="post">
+     	      <div class="bd clearfix">
+        		<volist id="vo" name="cart" key="k">	
+                  <div class="J-order-list order-list clearfix" data-gpid="{$vo['gpid']}" data-stock="{$vo['stock']}">
+                  <div class="td t-checkbox"><input checked="true" type="checkbox" value="{$vo['gpid']}" name="gpid[]" /></div>
+      					<div class="td t-item">
+      						<a href="#">
+      							<div class="t-pic">
+      							  <a href="{:U('Index/Goods/item',array('id'=>$vo['gid'],'attr'=>$vo['attr']))}" target="_blank">
+                                        <img src="__UPLOAD__{$vo['gid']|gidToField=###,'goods_img'}!c100x100.jpg"/> 
+                                    </a>	
+      							</div>
+      							<div class="t-title">
+                                    <a href="{:U('Index/Goods/item',array('id'=>$vo['gid'],'attr'=>$vo['attr']))}" target="_blank">
+                                       {$vo['gid']|gidToField=###,'goods_name'}
+                                       <neq name="vo['attr_match']" value="">[{$vo['attr_match']}]</neq>
+                                    </a>
+                                  </div>
+      						</a>
+      					</div> 
+      					<div class="td t-price">￥<span class="num">{$vo['price']}</span></div> 
+      					<div class="td t-amount">
+      						<div class="t-amount-inner">
+      							<a href="javascript:;" class="minus J-amount-decrease">-</a>
+      							<input type="text" value="{$vo['num']}" class="J-amount-input amount-input"  autocomplete="off"/>
+      							<a href="javascript:;" class="plus J-amount-increase">+</a>
+      						</div>
+      					</div> 
+      					<div class="td t-sum J-item-price"><span class="num">{$vo['item_price']}</span>元</div> 
+      					<div class="td t-status t-reserve">
+                           {:C('GOODS_STATUS')[$vo['status']]}
+                        </div> 
+      					<div class="td t-delete"><span class="J-delete t-delete-icon"></span></div> 
+        			</div>
+                 </volist>				
+    		  </div>
+   	          <div class="ft clearfix">
+        			<div class="fr total">
+        				<div class="fl tag"> 
+        					{$k}样商品 共<span id="J-total-amount" class="amount">{$amount}</span>件  总计（不含运费）：					
+        				</div>
+        				<div class="fl conent">
+        					<span id="J-total-price" class="sum">￥{$total}</span>
+        				</div>
+        			</div>
+      		   </div>
+      		   <div class="order-btn-frame clearfix">
+                    <input id="J-merge-btn" class="u-btn u-btn-large u-btn-primary order-btn" type="button" value="合并订单" />
+        			<input id="J-sure-btn" class="u-btn u-btn-large u-btn-primary order-btn" type="button" value="去结算" />
+                    <input id="J-clearAll" class="u-btn u-btn-large u-btn-white order-btn" type="button" value="清空" />
+                    <a class="u-btn u-btn-large u-btn-white order-btn" href="__SITE__">继续购物</a>
+      		   </div>	
+    		</form> 
+      <else/>
+        <div class="cart-empty">
+            <div class="message">
+                <div class="txt">购物车内暂时没有商品</div>
+                <div class="btn"><a href="{:U('Index/Sale/index')}">去购物></a></div>
+            </div>  
+        </div>
+      </notempty>	
+    </div>	
+</div>
+<include file="include:footer" />

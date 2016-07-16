@@ -1,0 +1,34 @@
+<style type="text/css">
+.pageFormContent span { padding-left:0;}
+</style>
+<div class="pageContent">
+	<form method="post" action="__CONTROLLER__/insert" class="pageForm required-validate" enctype="multipart/form-data" onsubmit="return iframeCallback(this,dialogAjaxDone);">
+    	<input type="hidden" name="callbackType" value="closeCurrent" />
+    	<div class="pageFormContent" layoutH="58">
+            <div class="unit">
+            	<label>用户组：</label>
+                <input type="text"   name="user.username" class="readonly" size="53" value="" readonly="readonly" />
+                <input type="hidden" name="user.uid"   class="readonly" size="33" value="" readonly="readonly" />
+                <a class="unit btn" href="__MODULE__/User/choose" target="dialog" mask="true" title="选择用户组" width="900" height="750" lookupGroup="user" >选择用户组</a>
+            </div>
+            <div class="unit">
+            	<label>标题：</label>
+                <input type="text" name="title" class="required w425" value="" />
+            </div>
+            <div class="unit">
+            	<label>摘要：</label>
+                <textarea name="summary" class=" w425"></textarea>
+            </div>
+            <div class="unit">
+            	<label>链接：</label>
+                <input type="text" name="link" class="w425"value="" />
+            </div>
+        </div>
+        <div class="formBar">
+        	<ul>
+            	<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+</div>

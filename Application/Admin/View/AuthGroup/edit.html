@@ -1,0 +1,54 @@
+<script src="__PUBLIC__/dwz/js/extraBase.js" type="text/javascript"></script>
+<div class="pageContent">
+	<form method="post" action="__CONTROLLER__/update" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+    	<input type="hidden" name="callbackType" value="closeCurrent" />
+        <input type="hidden" name="navTabId" value="{$Think.request.navTabId}" />
+        <input type="hidden" name="id" value="{$Think.request.id}" />
+    	<div class="pageFormContent" layoutH="58">
+            <div class="unit">
+            	<label>用户组：</label>
+                <input type="text" name="title" class="required" size="33" maxlength="100" value="{$vo.title}" />
+            </div>
+            <div class="unit">
+            	<label>状　态：</label>
+                <select name="status" style="width:55px;">
+                	<option value="1" <if condition="$vo.status eq 1">selected</if>>正常</option>
+                    <option value="0" <if condition="$vo.status eq 0">selected</if>>停用</option>
+                </select>
+            </div>
+            <div class="unit">
+                <label>权　限：</label>
+                <input class="readonly textInput" type="text" size="50" readonly="readonly" name="rule.ids" value="{$vo.rule_ids}">
+            	<a class="btnLook" lookupgroup="rule" href="__CONTROLLER__/searchRule" target="dialog" mask="true">分配权限</a>
+            </div>
+        </div>
+        <div class="formBar">
+        	<ul>
+            	<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+</div>
+<style type="text/css">
+.pageFormContent span { padding-left:0;}
+.J-UEcontainer{
+    margin-left:109px;
+}
+.pageFormContent div.unit .add-label{
+    width:auto;
+    cursor: pointer;
+}
+.modify_attr{
+    display: inline-block;
+    margin-left:10px;
+}
+.modify_attr input{
+    margin-top:4px;
+    cursor: pointer;
+}
+.add-radio{
+    margin-top:5px;
+}
+
+</style>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>{$page_title|default=''} 御咖塘 - 二次元居民的自由集市</title>
+		<meta name="keywords" content=""/>
+		<meta name="description" content=""/>
+		<meta name="viewport" content="width=device-width"/>
+        <meta property="qc:admins" content="45700047776153141676375" />
+		<!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> -->
+		<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/font-awesome.min.css"/>
+		<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/base.css"/>
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<!--[if lt IE 9]> 
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-shim.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+			<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/html5.js"></script>		
+		<![endif]-->		
+	</head> 
+<script>
+var yktGlobal = { 
+	uid:'{$Think.session.uid}',               //用户id
+	userName:'{$Think.session.user}',         //用户名
+	controller:'__CONTROLLER__',              //控制器
+	action:'__ACTION__',                      //action
+	site:'__SITE__',                          //首页
+	upload:'__UPLOAD__',                      //upload
+	pageName:''                               //当前页面
+}
+</script>		 
+
+<body>
+<div class="body-bg">	

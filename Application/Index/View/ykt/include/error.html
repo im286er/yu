@@ -1,0 +1,38 @@
+<include file="include:header" />
+<script> 
+    var pageName = 'other',                                                   
+        seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/'              
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="m-tips-wrap mainbody-2">
+   
+	<div class="error">
+		<div class="pic icons"></div>
+		<h1>{$msg}</h1>
+		<p>页面自动<a href="<neq name='jumpUrl' value=''>{$jumpUrl}<else />javascript:history.back()</neq>">跳转</a>等待时间：<time id="J-time">{$sec}</time></p>		
+	</div>   
+
+	<script>
+		// 倒计时
+		var _obj = document.getElementById('J-time');
+		var _oSecs= _obj.innerHTML;
+
+		function time (){
+		    _oSecs--;
+		     if (_oSecs < 0){
+		        clearInterval();
+		        return;
+		     }
+		    
+		     if (_oSecs == 0){
+		        clearInterval();
+		        window.location.href = "<neq name='jumpUrl' value=''>{$jumpUrl}<else />javascript:history.back()</neq>";
+		     }
+
+		     _obj.innerHTML = _oSecs;
+		  }
+		setInterval(time,1000);
+	</script> 		 
+ 
+<include file="include:footer" />
+

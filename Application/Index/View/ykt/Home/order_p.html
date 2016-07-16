@@ -1,0 +1,66 @@
+<neq name="list" value="">
+	<ul class="bd">
+         <!-- 循环订单概况 -->
+		 <volist id="vo" name="list">	
+                <li class="order-list">
+					<div class="top clearfix">    
+						<div class="top-l">
+							<div class="static <eq name='vo["status"]' value='1'>not-paid</eq>">
+                                {:C('ORDER_STATUS')[$vo['status']]}
+                            </div>
+							<div class="info">
+								<span>{$vo['add_time']|date="Y-m-d H:i:s",###}</span>
+								<span>订单编号: {$vo['order_sn']}</span>
+								<span>在线支付</span>
+                                <if condition="C('ORDER_STATUS_VAL.hasPay') eq $vo['status']"><!--待支付-->
+                                 <span>支付时间 {$vo['pay_time']|date="Y-m-d H:i",###}</span>
+                                </if>
+							</div>
+						</div>
+						<div class="top-r">
+							<div class="price">金额：<strong>{$vo['order_price']}</strong>元</div>
+						</div>
+					</div>
+					<div class="middle clearfix">
+						<ul class="middle-l">
+                          <!-- 订单商品概况 -->
+						  <volist id="voo" name="vo['order_goods']">	
+                            <li class="clearfix">
+								<div class="pic">
+									<a target="_blank" href="{:U('Index/Goods/item',array('id'=>$voo['gid']))}">
+                                      <img src="__UPLOAD__{$voo['gid']|gidToField=###,'goods_img'}"/>
+                                    </a>
+								</div>
+								<div class="frame">
+									<div class="name">
+                                       {$voo['gid']|gidToField=###,'goods_name'}&nbsp;
+                                       {$voo['gpid']|gpidToField=###,$voo['gid'],'attr_match'}
+                                    </div>
+									<div class="price">{$voo['gpid']|gpidToField=###,$voo['gid'],'price'}元  ×:{$voo['num']}</div>
+								</div>
+							</li>
+						  </volist>	
+						</ul>
+                        <!-- 订单操作区 -->
+						<div class="middle-r">
+                           <if condition="C('ORDER_STATUS_VAL.toPay') eq $vo['status']"><!--待支付-->
+                               <a class="btn important-btn" target="_blank" href="{:U('Index/Order/confirm',array('orderId'=>$vo['id'],'passKey'=>cryptKey($vo['order_sn'])))}">
+                                 付款
+                               </a>
+                               <a class="btn" href="{:U('Index/Order/cancel',array('orderId'=>$vo['id'],'passKey'=>cryptKey($vo['order_sn'])))}">
+                                 取消
+                               </a>
+                           </if>
+                           <if condition="C('ORDER_STATUS_VAL.receive') eq $vo['status']"><!--已收货-->
+                               <a class="btn" href="{:U('Index/Home/orderRefundApply',array('orderId'=>$vo['id'],'passKey'=>cryptKey($vo['order_sn'])))}">退货换货</a>
+                           </if>
+                           <a class="btn" target="_blank" href="{:U('Index/Home/orderView',array('orderId'=>$vo['id'],'passKey'=>cryptKey($vo['order_sn'])))}">订单详细</a>
+						</div>
+					</div>
+				</li>
+		  </volist>
+    </ul>		
+	<include file="Home:page_tpl" />
+<else/>
+	<div class="m-no-record">没有相关记录</div>
+</neq>

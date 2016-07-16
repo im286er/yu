@@ -1,0 +1,64 @@
+<style type="text/css">
+.pageFormContent span { padding-left:0;}
+</style>
+<div class="pageContent">
+	<form method="post" action="__CONTROLLER__/update" class="pageForm required-validate" enctype="multipart/form-data" onsubmit="return iframeCallback(this,dialogAjaxDone);">
+    	<input type="hidden" name="callbackType" value="closeCurrent" />
+        <input type="hidden" name="id" value="{$Think.request.id}" />
+    	<div class="pageFormContent" layoutH="58">
+            <div class="unit">
+            	<label>寄售物件：</label>
+                {$vo['goods_name']}
+            </div>
+            <div class="unit">
+            	<label>图片：</label>
+                <img class="pic" src="__UPLOAD__{$vo['goods_img']}" width="80px" height="80px"/>
+            </div>
+            <div class="unit">
+            	<label>寄售用户：</label>
+                {$vo['uid']|uidToField=###,'username'}
+            </div>
+        	<div class="unit">
+            	<label>寄售状态：</label>
+                <select name="status" style="width:198px;">
+                    <foreach name="Think.config.CONSIGN_STATUS" item="voo" key="k" >
+                         <option <neq name="k%2" value="0">disabled</neq> 
+                                value="{$k}" <eq name="k" value="$vo['status']">selected</eq> >{$voo}
+                         </option>
+                    </foreach>
+                </select>
+            </div>
+            <div class="unit">
+            	<label>修改原因：</label>
+                <textarea class="m-textarea" type="text" name="modify_desc"></textarea>
+            </div>
+            <div class="unit">
+                <input type="hidden" name="rec_uid" value="{$vo['uid']}" />
+                <input type="hidden" name="goods_name" value="{$vo['goods_name']}" />
+            </div>
+        </div>
+        <div class="formBar">
+        	<ul>
+            	<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+</div>
+<style type="text/css">
+.create-process ul{
+    float:left;
+}
+.create-process .list{
+    margin-bottom:5px;
+    clear:both;
+}
+.create-process .list img{
+    width:55px;
+    height: 40px;
+    float:left;
+}
+.create-process .list input{
+    float:left;
+}
+</style>

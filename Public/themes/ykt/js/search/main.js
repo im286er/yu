@@ -1,0 +1,1 @@
+"use strict";define(function(require,exports,module){var $=require("jquery"),t=require("../../common/common");t.toolbar(),t.focusBlur(".u-input-text, .u-textarea"),$("#J-search-form").attr("action","/Index/Search/"+searchType+".html")});

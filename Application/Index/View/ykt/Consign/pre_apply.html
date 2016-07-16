@@ -1,0 +1,29 @@
+<include file="include:header" />
+<script> 
+	var pageName = 'consign';                                                   //页面
+	var seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';              //路径
+    yktGlobal.pageName = 'pre_apply';		//当前页
+</script>	  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/consign.css"/>
+<div class="body-bg">
+	<div class="pre-apply-wrap">
+		<div class="hd clearfix">
+			<div class="item first active">1.选择商品品类</div>
+			<div class="item second">2.编辑商品详细</div>
+		</div>
+		<div class="bd"> 
+			<div class="apply-bg">
+				<ul id="J-apply-type" class="clearfix">
+					<foreach name="Think.config.CONSIGN_CAT" key="k" item="vo" > 
+						<li <eq name="k" value="4">class='active'</eq> data-id="{$k}">{$vo}</li></li>
+					</foreach>
+				</ul>
+			</div>
+			<a id="J-next-btn" class="next-btn" href="{:U('Index/Consign/apply',array('cat'=>4))}">下一步</a>
+		</div>
+	</div>
+<include file="include:footer" />
+</div>
+</body>
+</html>

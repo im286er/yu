@@ -1,0 +1,81 @@
+<include file="Search:search_header" />
+<script>
+    var searchType = 'article';
+</script>
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/channel.css"/>
+
+<div class="search-article-wrap">
+    <div class="m-category mt-30 mb-30">
+        <dl class="clearfix">
+            <dt>排序：</dt>
+            <dd <eq name="Think.get.o" value="id">class="active"</eq> <eq name="Think.get.o" value="">class="active"</eq> >
+              <a href="{:U('Index/Search/article',array('keyword'=>I('get.keyword'),'o'=>'id'))}">最新</a>
+            </dd>
+            <dd <eq name="Think.get.o" value="views">class="active"</eq> >
+              <a href="{:U('Index/Search/article',array('keyword'=>I('get.keyword'),'o'=>'views'))}">点击数</a>
+            </dd>
+            <dd <eq name="Think.get.o" value="collect_num">class="active"</eq> >
+              <a href="{:U('Index/Search/article',array('keyword'=>I('get.keyword'),'o'=>'collect_num'))}">收藏数</a>
+            </dd>
+            <dd <eq name="Think.get.o" value="support_num">class="active"</eq> >
+              <a href="{:U('Index/Search/article',array('keyword'=>I('get.keyword'),'o'=>'support_num'))}">点赞数</a>
+            </dd>
+        </dl>
+    </div>
+    <ul class="bd">
+        <volist id="vo" name="list" empty="暂时没有数据">
+            <li>
+                <a class="pic" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}" target="_blank"><img class="m-lazy" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/lazyload226X160.png" data-original="__UPLOAD__{$vo['title_img']}"/></a>
+                <div class="info">
+                    <a class="title" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}" target="_blank">{$vo['title']|keywordTag=###,I('get.keyword')}</a>
+                    <div class="data">
+                        <a class="name" href="#">{$vo['uid']|uidToField=###,'username'}</a>
+                        <time>{$vo['add_time']|date="Y-m-d",###}</time>
+                    </div>
+                    <a class="txt" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}">{$vo['summary']}</a>
+                    <div class="tool">
+                        <div class="m-tool-r fr">
+                            <a class="comment" href="javascript:;">{$vo['comment_num']}</a>
+                            <a class="collect" href="javascript:;">{$vo['collect_num']}</a>
+                            <a class="support" href="javascript:;">{$vo['support_num']}</a>
+                        </div>          
+                    </div>          
+                </div>
+            </li>                               
+        </volist>                                
+    </ul>
+    <div class="m-paginator">
+        {$page}
+    </div>  
+
+    <!-- <div class="m-msg mt-30 mb-30">
+        <span class="error"><i></i>没有想结果</span>
+    </div> -->  
+</div>  
+
+<!-- <div class="search-goods-wrap">    
+	<div class="m-category mt-30 mb-30">
+		
+	</div>
+	<ul class="m-product goods bd clearfix">
+	   <volist id="vo" name="list" empty="暂时没有数据">
+            <li>
+    			<div class="pic">
+    				<a href="{:U('Index/Article/detail',array('id'=>$vo['id']))}" target="_blank">
+    					<img src="__UPLOAD__{$vo['title_img']}"/> 
+    					<div class="overlayh"></div>
+    					<div class="overlaym"></div>
+    					<div class="overlayb"></div>		 								
+    				</a>
+    				<i></i>							
+    			</div>
+    			<a class="title" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}" target="_blank">{$vo['title']|keywordTag=###,I('get.keyword')}</a>
+    			<a class="classify" href="#">{$vo['cat_name']}</a>
+    		</li>
+	    </volist>	
+	</ul>			
+</div> -->
+<include file="include:footer" />
+
+</body>
+</html>

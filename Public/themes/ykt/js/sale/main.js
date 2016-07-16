@@ -1,0 +1,1 @@
+"use strict";define(function(require,exports,module){var $=require("jquery"),t=require("common");t.focusBlur(".u-input-text, .u-textarea"),$(".J-filter-more").on("click",function(){var t,e=$(this).parents("dl"),i=$(this).parents("dl").find("dd").length,n=e.height(),r=40;t=i>7?parseInt(i/7)*r:"auto",n==r?e.height(t):e.height(r)})});

@@ -1,0 +1,17 @@
+<!--查询条件-->
+<div class="pageHeader">
+	<form id="pagerForm" action="__CONTROLLER__/search" method="post" onsubmit="return navTabSearch(this)">
+        <textarea name="word" cols="10" style="width:1200px; height:480px;">{$word}</textarea>
+        <div>
+        	<ul>
+            	<li>
+                	<div class="buttonActive">
+                    	<div class="buttonContent">
+                        	<button type="submit">提交</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>

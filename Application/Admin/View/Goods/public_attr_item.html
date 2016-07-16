@@ -1,0 +1,25 @@
+<div class="page">
+    <div class="pageContent" style="border-top-width:1px;">
+    	  <div layoutH="37">
+              <h2 class="contentTitle" style="border-bottom:none; background-color:#ebf0f5; margin-bottom:0;"> {$cat_name}</h2>
+              <div class="pageFormContent" style="border-width:0;">
+                  <volist name="list" id="vo">
+                      <fieldset class="J-just-one">
+                          <legend>&nbsp;{$vo.title}&nbsp;</legend>
+                          <volist name="vo.sub" id="voo" key="k">
+                              <label style="width:130px; padding-right:10px;">
+                                 <input type="checkbox" name="public" value="{attr_ids:'{$voo.id}'}" <eq name="k" value="1">checked="true"</eq> />{$voo.title}
+                              </label>
+                          </volist>
+                      </fieldset>
+                  </volist>
+              </div>
+          </div>
+          <div class="formBar">
+              <ul>
+                  <li><div class="buttonActive"><div class="buttonContent"><button type="button" multLookup="public">确定</button></div></div></li>
+                  <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+              </ul>
+          </div> 
+    </div>
+</div>

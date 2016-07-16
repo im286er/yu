@@ -1,0 +1,50 @@
+<neq name="list" value="">  
+		<table class="m-table mb-50">
+			<thead>
+				<tr class="hd">
+					<th class="width20">订单编号</th>
+					<th class="item-name">商品名称</th>
+					<th class="width15">售后方式</th>
+					<th class="width15">状态</th>
+                    <th class="width15">添加时间</th>						
+				</tr>
+			</thead>
+			<tbody>
+              <volist id="vo" name="list">
+				<tr>
+					<td>{$vo['order_sn']}</td>
+					<td class="item-name">
+						<div class="goods-pic">
+							<a target="_blank" href="{:U('Index/Goods/item',array('id'=>$vo['gid']))}">
+                               <img src="__UPLOAD__{$vo['gid']|gidToField=###,'goods_img'}"/>
+                            </a>
+						</div>
+						<div class="frame tr-height-auto">
+							<a target="_blank" class="title" href="{:U('Index/Goods/item',array('id'=>$vo['gid']))}">
+                                {$vo['gid']|gidToField=###,'goods_name'}&nbsp;
+                                {$vo['gpid']|gpidToField=###,$vo['gid'],'attr_match'}
+                            </a>
+							<p class="price">{$vo['gpid']|gpidToField=###,'price'}</p>
+						</div>	
+					</td>
+					<td>{$vo['type']=='1'?'退货':'换货'}</td>
+					<td class="operate-fail">
+                         <switch name="vo.status">
+                                <case value="1">待处理</case>
+                                <case value="2">已处理</case>
+                                <case value="3">
+                                      <p>如有问题请联系客服</p>
+						              <p>QQ493827380</p>
+                                </case>
+                                <default />待处理
+                         </switch>
+                    </td>
+                    <td>{$vo['add_time']|date="Y-m-d H:i:s",###}</td>	
+				</tr>
+			  </volist>			
+			</tbody>
+		</table>	
+<else />
+    <div class="m-no-record">没有相关记录</div>
+</neq>
+<include file="Home:page_tpl" />

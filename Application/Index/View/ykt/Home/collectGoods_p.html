@@ -1,0 +1,20 @@
+<neq name="list" value=""> 
+    <ul class="goods-bd clearfix">
+          <volist id="vo" name="list">
+            <li data-id="{$vo['gid']}">
+              <div class="pic">
+                <a href="{:U('Index/Goods/item',array('id'=>$vo['gid']))}" target="_blank">
+                <img src="__UPLOAD__{$vo['gid']|gidToField=###,'goods_img'}" />
+                </a>
+              </div>
+              <a class="title" href="{:U('Index/Goods/item',array('id'=>$vo['gid']))}" target="_blank">
+                 {$vo['gid']|gidToField=###,'goods_name'}
+              </a>
+              <a class="J-cancelCollect cancelCollect" href="javascript:;">取消收藏</a>
+            </li>
+          </volist>												
+    </ul>
+    <include file="Home:page_tpl" />
+<else />
+    <div class="m-no-record">没有相关记录</div>
+</neq> 

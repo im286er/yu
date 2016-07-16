@@ -1,0 +1,58 @@
+<include file="include:head" />
+<header class="header">
+	<div class="top_bg"></div>
+	<div class="top clearfix">
+		<a class="logo fl" href="__SITE__"></a>
+		<div class="search fl">
+            <form action="{:U('Index/Search/goods')}" method="get">
+    			<input id="J-search-text" class="fl text-input" type="text" placeholder="搜索你喜欢的" name="keyword"/>
+                <input id="J-search-btn" class="search-btn fl" type="submit" value=""/>             
+            </form>
+		</div>
+		<div id="J-header-user" class="m-user-guide fr"></div>
+	</div>
+	<nav class="nav_bg">
+		<ul class="nav clearfix">
+			<li <eq name='Think.CONTROLLER_NAME' value="Index">class="active"</eq> >
+				<a href="__SITE__">
+					<div class="inside">
+						<p>首页</p>
+						<i class="icon icon-home"></i>
+					</div>
+				</a>
+			</li>
+			<li <eq name='Think.CONTROLLER_NAME' value="Sale">class="active"</eq> >
+				<a href="{:U('Index/Sale/index')}">
+					<div class="inside">
+						<p>通贩区</p> 
+						<i class="icon icon-orders"></i>
+					</div>
+				</a>
+			</li>
+			<li <eq name='Think.CONTROLLER_NAME' value="Service">class="active"</eq> >
+				<a href="{:U('Index/Service/index')}">
+					<div class="inside">
+						<p>服务区</p>
+						<i class="icon icon-server"></i>
+					</div>
+				</a>
+			</li>				
+			<li <eq name='Think.CONTROLLER_NAME' value="Create">class="active"</eq> >
+				<a href="{:U('Index/Create/index')}">
+					<div class="inside">
+						<p>创作区</p>
+						<i class="icon icon-creation"></i>
+					</div>
+				</a>
+			</li>
+			<li <eq name='Think.CONTROLLER_NAME' value="Anli">class="active"</eq> >
+				<a href="{:U('Index/Anli/index')}">
+					<div class="inside">
+						<p>安利区</p>
+						<i class="icon icon-anli"></i>
+					</div>
+				</a>
+			</li>											
+		</ul>
+	</nav>
+</header>

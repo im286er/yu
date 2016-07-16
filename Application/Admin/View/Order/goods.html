@@ -1,0 +1,49 @@
+<table class="list" width="100%" layoutH="115">
+    	<thead>
+            <!---订单信息---->
+            <tr>
+                <td colspan="1">订单号码</td>
+                <td colspan="5">{$vo['order_sn']}</td>
+            </tr>
+            <tr>
+                <td colspan="1">下单用户</td>
+                <td colspan="5">{$vo['uid']|uidToField=###,'username'}</td>
+            </tr>
+            <tr>
+                <td colspan="1">下单时间</td>
+                <td colspan="5">{$vo['add_time']|date="Y-m-d H:i:s",###}</td>
+            </tr>
+            <tr>
+                <td colspan="1">订单状态</td>
+                <td colspan="5">{:C('ORDER_STATUS')[$vo['status']]}</td>
+            </tr>
+            <!---订单信息---->
+        	<tr>
+                <th width="10%">商品序号</th>
+                <th width="20%">商品名称</th>
+                <th width="5%">gpid</th>
+                <th width="10%">封面</th>
+                <th width="10%">价格</th>
+                <th width="10%">数量</th>
+                <th width="10%">重量</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<volist id="voo" name="vo['order_goods']" key="k">
+                <tr>
+                    <td>{$k}</td>
+                    <td>
+                      <a href="{:U('Index/Goods/item',array('id'=>$voo['gid'],'attr'=>gpidToField($voo['gpid'],$voo['gid'],'attr')))}" target="_blank">
+                       {$voo['gid']|gidToField=###,'goods_name'}&nbsp;
+                       {$voo['gpid']|gpidToField=###,$voo['gid'],'attr_match'}
+                      </a>
+                    </td>
+                    <td>{$voo['gpid']}</td>
+                    <td><img src="__UPLOAD__{$voo['gid']|gidToField=###,'goods_img'}" width="80px" height="80px" /></td>
+                    <td>{$voo['gpid']|gpidToField=###,$voo['gid'],'price'}</td>
+                    <td>{$voo['num']}</td>
+                    <td>{$voo['gpid']|gpidToField=###,$voo['gid'],'weight'}</td>
+                </tr>
+            </volist>
+        </tbody>
+</table>

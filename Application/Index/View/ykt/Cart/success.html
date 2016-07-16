@@ -1,0 +1,23 @@
+
+<include file="include:header" />
+<script> 
+    var pageName = 'cart';                                            
+    var seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';
+</script>    
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/jquery-1.11.1.js"></script> 
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/bugProcess.css"/>    
+
+<div class="bugProcess-wrap clearfix">
+	<!-- <div class="step-title">我的购物车</div> -->
+	<div class="order">   
+		<div class="success clearfix">
+			<div class="success-l fl"><i></i>商品已成功加入购物车！</div>
+			<div class="success-r fl"> 
+				<a class="buy-btn" href="{:U('Index/Cart/index')}" >去购物车结算</a>
+				<span class="continue">您还可以 <a onclick="window.history.back()">继续购物</a></span>				
+			</div>
+		</div>
+    </div>	
+</div>
+<include file="include:footer" />

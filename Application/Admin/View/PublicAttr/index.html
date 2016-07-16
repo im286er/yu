@@ -1,0 +1,70 @@
+<!--查询条件-->
+<div class="pageHeader">
+	<form id="pagerForm" action="__URL__" method="post" onsubmit="return navTabSearch(this)">
+    	<input type="hidden" name="pageNum" value="1" />
+        <input type="hidden" name="numPerPage" value="{$numPerPage}" />
+    	<div class="searchBar">
+        	<ul class="searchContent">
+            	<li>
+                	<label>分类名称：</label>
+                    <select name="cat_id" style="width:150px">
+                        <volist name="catlist" id="vo">
+                    		<option value="{$vo.id}" <eq name="vo.id" value="$cat_id">selected</eq>
+                                                     <neq name="vo.level" value="3">disabled</neq>
+                            >{$vo.cat_name}</option>
+                        </volist>
+                        
+                    </select>
+                </li>
+            </ul>
+            <div class="subBar">
+            	<ul>
+                	<li>
+                    	<div class="buttonActive">
+                        	<div class="buttonContent">
+                            	<button type="submit">查询</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="pageContent">
+    <!--操作按钮-->
+    <div class="panelBar">
+    	<ul class="toolBar">
+        	<li><a class="add" href="__URL__/add" target="dialog" rel="public_add" mask="true" maxable="false" width="500"><span>新增</span></a></li>
+            <li><a class="delete" href="__URL__/foreverdelete" posttype="string" rel="id" target="selectedTodo" title="确定要删除选中的记录吗？" warn="请至少选择一位用户"><span>删除</span></a></li>
+            <li><a class="edit" href="__URL__/edit/id/{sid}" target="dialog" rel="public_edit" mask="true" warn="请选择一条记录" width="500"><span>编辑</span></a></li>
+        </ul>
+    </div>
+    <!--操作按钮结束-->
+
+    <!--数据显示-->
+    <table class="list" width="100%" layoutH="115">
+    	<thead>
+        	<tr>
+            	<th width="15%"><input type="checkbox" group="id" class="checkboxCtrl" /></th>
+                <th width="20%">编号</th>
+                <th width="25%">公共属性名</th>
+                <th width="20%">层</th>
+                <th width="20%">排序</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<volist id="vo" name="list">
+                <tr target="sid" rel="{$vo['id']}">
+                    <td><input type="checkbox" name="id" value="{$vo['id']}" /></td>
+                    <td>{$vo['id']}</td>
+                    <td style=" text-align: left;">{$vo['title']}</td>
+                    <td>{$vo['level']}</td>
+                    <td>{$vo['sort']}</td>
+                </tr>
+            </volist>
+        </tbody>
+    </table>
+    <!--数据显示结束-->
+</div>

@@ -1,0 +1,56 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/user_Center.css"/>
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/bootstrap-datepicker.css"/>
+<script> 
+    var pageName = 'home',                                                  
+        seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';
+
+    yktGlobal.pageName ='home_profile';
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="data-wrap mainbody-2 clearfix">
+	<include file="Home:left" />
+	<div class="m-content">
+		<div class="sub-nav">
+			<a class="active" href="#">个人资料</a>
+		</div>		
+		<ul class="bd">
+            <!-- <li>
+				<label>头像</label>
+				<div class="frame">
+					<img src="__UPLOAD__{$Think.session.uid|avatar=###}" />
+				</div>
+			</li> -->
+			<li>
+				<label>用户名</label>
+				<div class="frame">
+					<p>{$inf['username']}</p>
+				</div>
+			</li>
+			<li>
+				<label>我的签名</label>
+				<div class="frame">
+					<textarea name="sign">{$inf['sign']}</textarea>
+				</div>
+			</li>
+			<li>
+				<label>性别</label>
+				<div class="frame">
+					<select name="sex">
+						<option value="1" <eq name="inf.sex" value="1">selected</eq> >男</option>
+                        <option value="2" <eq name="inf.sex" value="2">selected</eq> >女</option>
+                        <option value="3" <eq name="inf.sex" value="3">selected</eq> >保密</option>
+					</select>
+				</div>
+			</li>
+			<li> 
+				<label>出生日期</label>
+				<div class="frame">
+					<input name="birth" id="J-data" class="date start" type="text" value="{$inf['birth']}"/>				
+				</div>
+			</li>
+		</ul>
+		<a id="j-profile-btn" class="btn" href="javascript:;">提交</a>
+	</div>
+</div>
+<include file="include:footer" />

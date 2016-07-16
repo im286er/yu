@@ -1,0 +1,69 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/bugProcess.css"/>
+<script>  
+    var pageName = 'order';                                                   
+    var seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';
+    yktGlobal.pageName = 'confirm';		//当前页
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="bugProcess-wrap clearfix">
+	<div class="feedback clearfix">
+		<div class="title"> 
+		   <neq name="Think.get.delay" value="1">
+              <p>订单提交成功！去付款咯～</p>
+           </neq>	
+		   <p class="sub">成功付款后，全现货情况下三天内发货，如有预售商品则顺延</p>
+		</div>
+		<ul class="info">
+			<li class="info-list clearfix">
+				<div class="content">请在<time>23小时59分</time>内完成支付, 超时后将取消订单</div>
+			</li>
+			<li class="info-list clearfix">
+				<div class="tag">订单号码：</div>
+				<div class="content">{$order_inf['order_sn']}</div>
+			</li>
+			<li class="info-list clearfix">
+				<div class="tag">收货地址：</div>
+				<div class="content">{$order_inf['address_id']|addressMsg=###,'location'}</div>
+			</li>
+            <li class="info-list clearfix">
+				<div class="tag">收货人：</div>
+				<div class="content">{$order_inf['address_id']|addressMsg=###,'realname'}</div>
+			</li>
+            <li class="info-list clearfix">
+				<div class="tag">收货人电话：</div>
+				<div class="content">{$order_inf['address_id']|addressMsg=###,'mobile'}</div>
+			</li>		
+							
+		</ul>
+		<div class="fr">
+			<span class="sum-txt">应付金额：</span>
+			<span class="sum">￥{$order_inf['order_price']}</span>
+		</div>
+		<div class="blank10"></div>
+		<div class="step step-2 clearfix">
+			<div class="step-title">支付方式</div>
+			<div class="step-content">
+				<ul class="pay">
+					<li class="pay-list">
+						<div class="btn pay-list-label zfb active"></div>
+					</li>					
+				</ul>
+			</div>
+		</div>
+		<div class="fr order-btn-frame clearfix">
+			<form action="{:U('Index/Pay/submit')}" method="post" target="_blank">
+              <input type="hidden" name="order_id" value="{$order_inf['id']}" />
+              <input type="hidden" name="order_sn" value="{$order_inf['order_sn']}" />
+              <input id="J-submit-btn" class="u-btn u-btn-large u-btn-primary order-btn" type="button" value="立即支付" data-toggle="modal" data-target=".paying-wrap" data-backdrop="false" />
+            </form>
+        </div>	
+		<div aria-hidden="true" aria-labelledby="myLargeModalLabel" role="dialog" tabindex="-1" class="m-modal paying-wrap">
+			<div class="modal-dialog">
+				
+			</div>
+		</div>
+	</div> 
+</div>
+
+<include file="include:footer" />

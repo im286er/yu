@@ -1,0 +1,52 @@
+<form id="J-consignee-form" class="consignee-form">
+    <input type="hidden" name="id" value="{$Think.request.id}" />
+	<div class="item">
+		<label>
+			<span class="fl tag"><i>*</i>收货人：</span>
+			<div class="frame"> 
+				<input class="input-width-style2" type="text" value="{$vo['realname']}" name="realname" data-rule-required="true" data-msg-required="请您填写收货人姓名"/>	
+				<span class="msg-span"></span> 
+			</div>
+		</label>
+	</div>
+	<div class="item">
+		<label>
+			<span class="fl tag"><i>*</i>所在地区：</span>
+			<div class="frame">		
+                <select id="J-ajax-province" name="province">
+                    <volist name="province" id="voo"> 
+                        <option value="{$voo.id}" <eq name="voo.id" value="$vo.province">selected</eq> >{$voo.areaname}</option>
+                    </volist>
+                </select>
+                <select id="J-ajax-city" name="city">
+                    <volist name="city" id="voo"> 
+                        <option value="{$voo.id}" <eq name="voo.id" value="$vo.city">selected</eq> >{$voo.areaname}</option>
+                    </volist>
+                </select>
+                <select id="J-ajax-area" name="district">
+                    <volist name="district" id="voo"> 
+                        <option value="{$voo.id}" <eq name="voo.id" value="$vo.district">selected</eq> >{$voo.areaname}</option>
+                    </volist>
+                </select>
+			</div>
+		</label>
+	</div>
+	<div class="item">
+		<label>
+			<span class="fl tag"><i>*</i>详细地址：</span>
+			<div class="frame">
+				<input class="input-width-style1" type="text" value="{$vo['street']}" name="street" data-rule-required="true" data-msg-required="请您填写收货人详细地址"/>
+				<span class="msg-span"></span>
+			</div>
+		</label>
+	</div>
+	<div class="item">
+		<label>
+			<span class="fl tag"><i>*</i>手机号码：</span>
+			<div class="frame">
+				<input class="input-width-style1" type="text" value="{$vo['mobile']}" name="mobile" data-rule-required="true" data-msg-required="请您填写收货人手机号码"/>
+				<span class="msg-span"></span>
+			</div>
+		</label>
+	</div>
+</form>

@@ -1,0 +1,67 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/channel.css"/>
+
+<script> 
+    var pageName = 'sale',                                                  
+        seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/'              
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="channel-wrap">
+    <div class="mainbody-2"> 
+        <ul class="m-sub-nav clearfix mb-20">
+            <li>
+                <a href="{:U('Index/Sale/index')}">全部</a>
+            </li>
+            <volist id="vo" name="catlist">
+                <li>
+                <a <eq name="Think.get.cat" value="$vo['id']">class="active"</eq> href="{:U('Index/List/category',array('cat'=>$vo['id']))}" >{$vo['cat_name']}</a>
+                </li>
+            </volist>
+        </ul>
+    </div>
+
+    <div class="filter">
+        <div class="inside mainbody-2">
+            <volist name="public_attr" id="voAttr" key='k'>
+                <dl class="clearfix">
+                    <dt>{$voAttr.title}：</dt>
+                    <dd class="{:attrSelect($k,I('get.attr'),0)}">
+                        <a href="__ACTION__/cat/{$Think.get.cat}/attr/{:attrUrl($k,count($public_attr),I('get.attr'),0)}">全部</a>
+                    </dd>
+                    <volist name="voAttr['sub']" id="sub" key='kk'>
+                        <dd class="{:attrSelect($k,I('get.attr'),$sub['id'])}">
+                          <a href="__ACTION__/cat/{$Think.get.cat}/attr/{:attrUrl($k,count($public_attr),I('get.attr'),$sub['id'])}">
+                            {$sub.title}
+                          </a>
+                        </dd>
+                    </volist>                   
+                </dl> 
+            </volist>            
+        </div>
+    </div>
+    <div class="mainbody-2">
+        <ul class="goods m-product clearfix">
+            <volist name="list" id="vo">
+                <li>
+                    <div class="pic">
+                        <a href="{:U('Index/Goods/item',array('id'=>$vo['id']))}" target="_blank">
+                            <img class="m-lazy" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/lazyload200X200.png" data-original="__UPLOAD__{$vo['goods_img']}!c200x200.png"/>  
+                            <div class="overlayh"></div>
+                            <div class="overlaym"></div>
+                            <div class="overlayb"></div>                                        
+                        </a>                         
+                    </div>
+                    <a class="title" href="{:U('Index/Goods/item',array('id'=>$vo['id']))}" target="_blank">{$vo['goods_name']}</a>
+                    <a class="classify" href="#">{$vo.original|default='原创'}</a>
+                </li>                       
+            </volist>           
+        </ul>
+        <div class="m-paginator">
+          {$page}
+        </div>      
+    </div>      
+</div>
+<include file="include:footer" />
+
+</body>
+</html>

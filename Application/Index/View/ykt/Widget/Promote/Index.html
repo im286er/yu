@@ -1,0 +1,53 @@
+<!-- 首页区 -->
+
+<!-- 头图 -->
+<eq name="block_sign" value="focus">
+   <volist id="vo" name="list" empty="头图" key="k">
+     		<eq name="k" value="1">
+          	<li><a target="_blank" href="{$vo['link']}"><img class="m-lazy" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/lazyload750X300.png" data-original="__UPLOAD__{$vo['img']}!c680x270.jpg" /></a></li>
+          <else />
+          	<li><a target="_blank" href="{$vo['link']}"><img src="__UPLOAD__{$vo['img']}!c680x270.jpg" /></a></li>
+        </eq>
+   </volist> 
+</eq>
+<!-- 右推荐 -->
+<eq name="block_sign" value="topright">
+   <volist id="vo" name="list" empty="右推荐">
+        <a href="{$vo['link']}" target="_blank"><img class="m-lazy" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/lazyload220X130.png" data-original="__UPLOAD__{$vo['img']}!c220x130.jpg"/></a>
+   </volist> 
+</eq>
+
+<!-- 下推荐 -->
+<eq name="block_sign" value="topbuttom">
+   <volist id="vo" name="list" empty="下推荐">
+        <a href="{$vo['link']}" target="_blank"><img class="m-lazy" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/lazyload220X130.png" data-original="__UPLOAD__{$vo['img']}!c220x130.jpg"/></a>
+   </volist> 
+</eq>
+
+<!-- 左侧栏 -->
+<eq name="block_sign" value="left">
+   <volist id="vo" name="list" empty="左侧栏">
+        <a href="{$vo['link']}" target="_blank"><img class="m-lazy" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/lazyload220X130.png" data-original="__UPLOAD__{$vo['img']}"/></a>
+   </volist> 
+</eq>
+
+<!-- 左下图 -->
+<eq name="block_sign" value="bottomleft">
+   <volist id="vo" name="list" empty="左下图">
+        <a href="{$vo['link']}" target="_blank" class="big-pic fl"><img class="m-lazy" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/lazyload680X412.png" data-original="__UPLOAD__{$vo['img']}!c680x412.jpg"/></a>
+   </volist> 
+</eq>
+
+<!-- 右下图 -->
+<eq name="block_sign" value="bottomright">
+   <volist id="vo" name="list" empty="右下图">
+        <a href="{$vo['link']}" target="_blank"><img class="m-lazy" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/lazyload220X130.png" data-original="__UPLOAD__{$vo['img']}!c220x130.jpg"/></a>
+   </volist> 
+</eq>
+
+<!-- 右推荐 -->
+<eq name="block_sign" value="longadv">
+  <volist id="vo" name="list" empty="长广告">
+    <a href="{$vo['link']}" target="_blank"><img src="__UPLOAD__{$vo['img']}"/></a>
+  </volist> 
+</eq>

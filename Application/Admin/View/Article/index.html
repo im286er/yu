@@ -1,0 +1,117 @@
+<!--查询条件-->
+<div class="pageHeader">
+   <form id="pagerForm" action="__CONTROLLER__" method="post" onsubmit="return navTabSearch(this)">
+    	<input type="hidden" name="pageNum" value="1" />
+        <input type="hidden" name="numPerPage" value="{$numPerPage}" />
+    	<div class="searchBar">
+        	<ul class="searchContent">
+            	<li>
+                	<label>文章分类：</label>
+                    <select name="cat_id" style="width:150px">
+                    	<option value="">全部分类</option>
+                    	<volist name="catlist" id="vo">
+                    		<option value="{$vo.id}" <eq name="vo.id" value="$Think.post.cat_id">selected</eq>
+                                                     <neq name="vo.level" value="3">disabled</neq>
+                              >{$vo.cat_name}
+                            </option>
+                        </volist>
+                    </select>
+                </li>
+                <li>
+                	<label>状态：</label>
+                    <select name="Think.config.ARTICLE_STATUS" style="width:150px">
+                    	<option value="">全部</option>
+                    	<foreach name="status" item="vo" key="k" >
+                    		<option value="{$k}" <eq name="k" value="$Think.post.status">selected</eq> >{$vo}</option>
+                        </foreach>
+                    </select>
+                </li>
+                <li>
+                	<label>标题：</label>
+                    <input name="title" type="text" size="25" value="{$Think.post.title}"  />
+                </li>
+                <li>
+                	<label>用户：</label>
+                    <input name="user" type="text" size="25" value="{$Think.post.user}"  />
+                </li>
+            </ul>
+            <div class="subBar">
+            	<ul>
+                	<li>
+                    	<div class="buttonActive">
+                        	<div class="buttonContent">
+                            	<button type="submit">查询</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="pageContent">
+    <!--操作按钮-->
+    <div class="panelBar">
+    	<ul class="toolBar">
+        	<li><a class="add" href="__CONTROLLER__/add/" target="dialog" rel="article_add" mask="true" maxable="true" width="800" height="550" max="true"><span>新增</span></a></li>
+            <li><a class="delete" href="__CONTROLLER__/foreverdelete/" posttype="string" rel="id" target="selectedTodo" title="确定要删除选中的记录吗？" warn="请至少选择条记录"><span>删除</span></a></li>
+            <li><a class="edit" href="__CONTROLLER__/edit/id/{aid}" rel="article_edit" target="dialog" mask="true" warn="请选择一条记录" width="800" height="550" max="true" ><span>编辑</span></a></li>
+        </ul>
+    </div>
+    <!--操作按钮结束-->
+
+    <!--数据显示-->
+    <table class="list" width="100%" layoutH="115">
+    	<thead>
+        	<tr>
+            	<th width="5%"><input type="checkbox" group="id" class="checkboxCtrl" /></th>
+                <th width="5%">编号</th>
+                <th width="30%">标题</th>
+                <th width="10%">文章分类</th> 
+                <th width="10%">添加时间</th>
+                <th width="10%">修改时间</th>
+                <th width="10%">投稿人</th>
+                <th width="10%">状态</th>
+                <th width="5%">来源</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<volist id="vo" name="list">
+                <tr target="aid" rel="{$vo['id']}" ondblclick="$.getInfo({$vo['id']})">
+                    <td><input type="checkbox" name="id" value="{$vo['id']}" /></td>
+                    <td>{$vo['id']}</td>
+                    <td>{$vo['title']}</td>               
+                    <td>{$vo['cat_name']}</td>
+                    <td>{$vo['add_time']|date="Y-m-d H:i:s",###}</td>
+                    <td>
+                      <neq name="vo.update_time" value="0">	
+                        {$vo['update_time']|date="Y-m-d H:i:s",###}
+                      </neq>
+                    </td>
+                    <td>{$vo['uid']|uidToField=###,'username'}</td>
+                    <td>{:C('ARTICLE_STATUS')[$vo['status']]}</td>
+                    <td>{:C('ARTICLE_SOURCE')[$vo['source']]}</td>
+                </tr>
+            </volist>
+        </tbody>
+    </table>
+    <!--数据显示结束-->
+
+    <!--数据分页-->
+    <div class="panelBar">
+    	<div class="pages">
+        	<span>共&nbsp;{$totalCount}&nbsp;条,&nbsp;</span>
+                <select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+                  <option value="10" <eq name="numPerPage" value="10">selected</eq>>10</option>
+                  <option value="15" <eq name="numPerPage" value="15">selected</eq>>15</option>
+                  <option value="20" <eq name="numPerPage" value="20">selected</eq>>20</option>
+                  <option value="50" <eq name="numPerPage" value="50">selected</eq>>50</option>
+                  <option value="100" <eq name="numPerPage" value="100">selected</eq>>100</option>
+           	 	</select>
+            <span>&nbsp;条&nbsp;/&nbsp;页</span>
+        </div>
+        <div class="pagination" targetType="navTab" totalCount="{$totalCount}" numPerPage="{$numPerPage}" pageNumShown="10" currentPage="{$currentPage}"></div>
+    </div>
+    <!--数据分页结束-->
+</div>

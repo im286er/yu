@@ -1,0 +1,22 @@
+<volist name="PublicAttr" id="vo">
+	<li  id="top_attr_{$key+1}" class="public-attr-list saleProcess-list clearfix J-public-attr">
+		<div class="fl tag"><i class="required-icon"></i>{$vo.title}：</div>
+		<div class="frame">
+			<ul data-toggle="buttons">
+				<volist name="vo['sub']" id="sub">
+					<li class="option-list J-radio-hide-error">
+                        <in name="sub.id" value="$consign_inf['public_attr_ids']">
+                          <label class="btn s-p-label active">
+                        <else/>
+                          <label class="btn s-p-label">
+                        </in>
+						<input name="publicIname_{$vo.id}" class="required s-p-radio-hide" type="radio" value="{$sub.id}" data-msg-required="请选择属性" <in name="sub.id" value="$consign_inf['public_attr_ids']">checked="true"</in>/>
+							{$sub.title}
+						</label>
+					</li>
+				</volist>					
+			</ul>
+			<label for="publicIname_{$vo.id}" class="msg-span error"></label>
+		</div>
+	</li>
+</volist>

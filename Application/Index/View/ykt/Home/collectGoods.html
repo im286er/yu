@@ -1,0 +1,47 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/user_Center.css"/>
+<script> 
+    var pageName = 'home',                                                  
+        seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/'              
+
+    yktGlobal.pageName ='home_collectGoods';
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="collect-wrap mainbody-2 clearfix">
+	<include file="Home:left" />
+	<div class="m-content">
+		<div class="sub-nav">
+			<a class="active" href="#">收藏商品</a>
+		</div>
+        <dl id="J-type" class="m-classify clearfix">
+          <dt>类型：</dt>
+            <dd data-id="{$vo['id']}" class="active"><a href="javascript:;">全部</a></dd>
+            <volist id="vo" name="catlist">
+              <dd data-status="{$vo['id']}"><a href="javascript:;">{$vo['cat_name']}</a></dd>				                  	
+            </volist>
+        </dl>
+        <div id="J-container">
+          <neq name="list" value="">  
+                <ul class="goods-bd clearfix">
+                  <volist id="vo" name="list">
+                    <li data-id="{$vo['gid']}">
+                      <div class="pic">
+                        <a href="{:U('Index/Goods/item',array('id'=>$vo['gid']))}" target="_blank">
+                        <img src="__UPLOAD__{$vo['gid']|gidToField=###,'goods_img'}" />
+                        </a>
+                      </div>
+                      <a class="title" href="{:U('Index/Goods/item',array('id'=>$vo['gid']))}" target="_blank">
+                         {$vo['gid']|gidToField=###,'goods_name'}
+                      </a>
+                      <a class="J-cancelCollect cancelCollect" href="javascript:;">取消收藏</a>
+                    </li>
+                  </volist>												
+                </ul>						
+            <include file="Home:page_tpl" />  
+          <else />
+              <div class="m-no-record">没有相关记录</div>
+          </neq>    
+        </div>
+  </div>      			
+</div>
+<include file="include:footer" />

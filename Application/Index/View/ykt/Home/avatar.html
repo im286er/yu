@@ -1,0 +1,67 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/user_Center.css"/>
+<script> 
+    var avatarUpload = "{:U('Index/Avatar/upload')}";
+    var avatarCropUpload = "{:U('Index/Avatar/cropUpload')}";
+	var pageName = 'home',                                                   
+		seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/'              
+
+	yktGlobal.pageName ='home_avatar';
+</script>	 
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/ui-dialog.css"/>
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="avatar-wrap mainbody-2 clearfix">
+	<include file="Home:left" />
+	<div class="m-content">
+		<div class="sub-nav">
+			<a class="active" href="#">头像设置</a>
+		</div>			
+		<table>
+		  <tr>
+			<td style="text-align:right;width:120px;">当前头像：</td>
+			<td>
+              <div id="my_avatar">
+                    <img src="__UPLOAD__{$Think.session.uid|avatar=###}" />
+                </div>
+              </td>
+		  </tr>
+		  <tr id="crop_container" style="display:none;">
+			<td style="text-align:right;">裁切头像：</td>
+			<td>
+				<table style="border:none;"> 
+					<tr>
+						<td><div id="crop_target"></div></td>
+						<td valign="top">
+							<div id="crop_preview" style="width:90px; height:90px; overflow:hidden;margin-left:10px;">
+							</div>
+						</td>
+					</tr>
+				</table>
+			</td>
+		  </tr>
+		  <tr>
+			<td style="text-align:right;">上传新头像：</td>
+			<td>
+				<div id="upload_avatar" style="padding-top:10px;"></div>
+			</td>
+		  </tr>
+		  <tr>
+			<td>&nbsp;</td>
+			<td><input type="button" id="J-save-crop-btn" value="保存" style="padding:2px 10px;"/></td>
+		  </tr>
+		</table>
+		<form id="form_crop_avatar">
+			<input type="hidden" name="tmp_avatar" id="crop_tmp_avatar" value="">
+			<input type="hidden" name="x1" id="crop_x1" value="">
+			<input type="hidden" name="y1" id="crop_y1" value="">
+			<input type="hidden" name="x2" id="crop_x2" value="">
+			<input type="hidden" name="y2" id="crop_y2" value="">
+			<input type="hidden" name="w" id="crop_w" value="">
+			<input type="hidden" name="h" id="crop_h" value="">
+		</form>	
+	</div>
+</div>
+
+
+</body>
+</html>  

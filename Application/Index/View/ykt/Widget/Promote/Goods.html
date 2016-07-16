@@ -1,0 +1,14 @@
+<!-- 服务区 -->
+
+<!-- 头图 -->
+<eq name="block_sign" value="right">
+   <volist id="vo" name="list" empty="右广告" key="k">
+        <a href="{$vo['link']}" target="_blank"><img src="__UPLOAD__{$vo['img']}"></a>
+   </volist> 
+</eq>
+
+<eq name="block_sign" value="left">
+   <volist id="vo" name="list" empty="左广告" key="k">
+        <a class="fl <eq name="k" value="1">mr-10</eq>" href="{$vo['link']}" target="_blank"><img src="__UPLOAD__{$vo['img']}"/></a>
+   </volist> 
+</eq> 

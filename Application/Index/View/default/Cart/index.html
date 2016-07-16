@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>雪狐ThinkPHP商城系统</title>
+<load href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/main.css" />
+<script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/jquery-1.7.2.min.js"></script></head>
+
+<body>
+	{:W('Template/top')}
+    <!--nav end-->
+    
+    <div class="w">
+    	<div class="success">
+        	<div class="success-inf"><h3>商品已成功加入购物车！</h3></div>
+            <div class="next-go">
+            	<a href="__MODULE__/goods/index/id/{$Think.request.id}" class="btn-continue" target="_self">继续购物</a>
+                <a href="__MODULE__/cart/cartlist" class="btn-pay" target="_self">去购物车结算</a>
+            </div>
+        </div>
+    </div>
+    
+    <!--底部 begin-->
+    {:W('Template/bottom')}
+    <!--底部 end-->
+</body>
+</html>

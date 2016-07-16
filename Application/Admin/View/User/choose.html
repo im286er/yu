@@ -1,0 +1,112 @@
+<!--查询条件-->
+<div class="pageHeader">
+	<form id="pagerForm" action="__MODULE__/User/choose" method="post" onsubmit="return dwzSearch(this, 'dialog');">
+    	<input type="hidden" name="pageNum" value="1" />
+        <input type="hidden" name="numPerPage" value="{$numPerPage}" />
+    	<div class="searchBar">
+        	<ul class="searchContent">
+            	<li>
+                	<label>查找范围：</label>
+                    <select name="keytype">
+                        <option value="id"       <eq name="Think.post.keytype" value="id">selected</eq>       >UID</option>
+                    	<option value="username" <eq name="Think.post.keytype" value="username">selected</eq> >用户名</option>
+                        <option value="email"    <eq name="Think.post.keytype" value="email">selected</eq>    >邮箱</option>
+                        <option value="qq"       <eq name="Think.post.keytype" value="qq">selected</eq>       >QQ</option>
+                        <option value="mobile"   <eq name="Think.post.keytype" value="mobile">selected</eq>   >手机</option>
+                    </select>
+                </li>
+                <li>
+                	<label>关键字：</label>
+                    <input name="keyword" type="text" size="25" value="{$Think.post.keyword}"  />
+                </li> 
+                <li>
+                	<label>寄售资格：</label>
+                    <select name="consigner">
+                        <option value="">全部</option>
+                        <foreach name="Think.config.CONSIGN_QUALI" item="vo" key="k" >
+                             <option value="{$k}" <eq name="Think.post.consigner" value="$k">selected</eq> >{$vo}</option>
+                        </foreach>
+                    </select>
+                </li>
+                <li>
+                	<label>状态：</label>
+                    <select name="status">
+                    	<option value="">全部</option>
+                        <option value="1" <eq name="Think.post.status" value="1">selected</eq> >正常</option>
+                        <option value="0" <eq name="Think.post.status" value="0">selected</eq> >禁止</option>
+                    </select>
+                </li>
+            </ul>
+            <div class="subBar">
+            	<ul>
+                	<li>
+                    	<div class="buttonActive">
+                        	<div class="buttonContent">
+                            	<button type="submit">查询</button>
+                            </div>
+                        </div>
+                        <div class="buttonActive" style="margin-left:10px;">
+                            <div class="buttonContent">
+                            <button type="button" multLookup="userInf">选择带回</button>
+                            </div>                        
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="pageContent">
+    <!--数据显示-->
+    <table class="list" width="100%" layoutH="115">
+    	<thead>
+        	<tr>
+            	<th width="8%"><input type="checkbox" group="userInf" class="checkboxCtrl" /></th>
+                <th width="5%">编号</th>
+                <th width="12%">用户名</th>
+                <th width="15%">邮箱</th>
+                <th width="10%">手机</th>
+                <th width="10%">QQ</th>
+                <th width="10%">状态</th>
+                <th width="10%">寄售状态</th>
+                <th width="15%">头像</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<volist id="vo" name="list">
+                <tr target="uid" rel="{$vo['id']}" ondblclick="$.getInfo({$vo['id']})">
+                    <td>
+                        <input id="user_{$key}" type="checkbox" name="userInf"  value="{id:'{$vo.id}', uid:'{$vo.id}', username:'{$vo.username}'}" />
+                    </td>
+                    <td>{$vo['id']}</td>
+                    <td>{$vo['username']}</td>
+                    <td>{$vo['email']}</td>
+                    <td>{$vo['mobile']}</td>
+                    <td>{$vo['qq']}</td>
+                    <td>{$vo['status']?'正常':'禁止'}</td>
+                    <td>{:C('CONSIGN_QUALI')[$vo['consigner']]}</td>
+                    <td><img src="__UPLOAD__{$vo['id']|avatar=###}" width="80px" height="80px" /></td>
+                </tr>
+            </volist>
+        </tbody>
+    </table>
+    <!--数据显示结束-->
+
+    <!--数据分页-->
+    <div class="panelBar">
+    	<div class="pages">
+        	<span>共&nbsp;{$totalCount}&nbsp;条,&nbsp;</span>
+                <select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+                  <option value="10" <eq name="numPerPage" value="10">selected</eq>>10</option>
+                  <option value="15" <eq name="numPerPage" value="15">selected</eq>>15</option>
+                  <option value="20" <eq name="numPerPage" value="20">selected</eq>>20</option>
+                  <option value="50" <eq name="numPerPage" value="50">selected</eq>>50</option>
+                  <option value="100" <eq name="numPerPage" value="100">selected</eq>>100</option>
+           	 	</select>
+            <span>&nbsp;条&nbsp;/&nbsp;页</span>
+        </div>
+        <div class="pagination" targetType="navTab" totalCount="{$totalCount}" numPerPage="{$numPerPage}" pageNumShown="10" currentPage="{$currentPage}"></div>
+    </div>
+    <!--数据分页结束-->
+</div>

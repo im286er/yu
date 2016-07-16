@@ -1,0 +1,192 @@
+<include file="include:header" />
+<script> 
+    var pageName = 'goods';                                            
+    var seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';
+    var goodsId = '{$goods_inf.id}';      //商品ID
+    var catId = "{$goods_inf['cat_id']}";  //分类ID
+    var gpid = "{$gp['gpid']}";
+    var addCartLink = "{:U('Index/Cart/add')}";   //购物车接口 
+    var quickLink = "{:U('Index/Cart/quickItem')}";   //立即购买接口 
+</script>    
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/goods.css"/>
+<div class="body-bg"> 
+    <div class="mainbody-2 clearfix">
+        <div class="m-crumb">
+            <a href="__SITE__">主页</a>
+            <span class="separator">></span>
+            <a href="{:U('Index/Sale/index')}">贩售区</a>
+            <span class="separator">></span>
+            <a class="active" href="{:U('Index/List/index',array('cat_id'=>$goods_inf['cat_id']))}">{$goods_inf['cat_name']}</a>
+        </div>
+        <div class="goods-wrap"> 
+            <div class="area-l fl clearfix">
+                <div class="top clearfix">
+                    <div class="fl">
+                        <h1>{$goods_inf['goods_name']}</h1>
+                        <neq name="goods_inf['goods_ps']" value=""><h2>{$goods_inf['goods_ps']}</h2></neq>
+                    </div>
+                    <ul class="m-share fr">
+                        <li class="share-frame">
+                            <div class="share-icon"></div>
+                            <p>分享</p>
+                            <div class="popup">
+                                <div class="bdsharebuttonbox">
+                                    <a href="#" class="bds_tsina" data-cmd="tsina"></a>
+                                    <a href="#" class="bds_qzone" data-cmd="qzone"</a>
+                                    <a href="#" class="bds_tieba" data-cmd="tieba"></a>
+                                </div>
+                                <script>
+                                window._bd_share_config = {
+                                    "common": {
+                                        "bdSnsKey": {},
+                                        "bdText": "",
+                                        "bdMini": "1",
+                                        "bdMiniList": false,
+                                        "bdPic": "",
+                                        "bdStyle": "1",
+                                        "bdSize": "32"
+                                    },
+                                    "share": {}
+                                };
+                                with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+                                </script>
+                            </div>
+                        </li>
+                        <li id="J-like" data-switch="true">
+                            <div  class="like-icon"></div>
+                            <p>点赞</p>
+                        </li>
+                        <li id="J-collect" data-switch="true">
+                            <div class="collect-icon"></div>
+                            <p>收藏</p>
+                        </li>                                               
+                    </ul>           
+                </div>  
+                <div class="product-intro clearfix">
+                    <div class="preview fl">
+                        <div id="J-booth" class="pic img-booth jqzoom" >
+                           <img src="__UPLOAD__{$gp['attr_img']?$gp['attr_img']:$goods_inf['goods_img']}!c400x400.jpg" jqimg="__UPLOAD__{$gp['attr_img']?$gp['attr_img']:$goods_inf['goods_img']}!c600x600.jpg"/>
+                        </div>
+                        <switch name="status[$goods_inf['status']]"> 
+                            <case value="现货"><i class="status stock"></i></case>
+                            <case value="预售"><i class="status presell"></i></case>
+                            <case value="补货"><i class="status add"></i></case>
+                        </switch>                                             
+                    </div>
+                    <div class="info">
+                        <div class="prepare fr clearfix">                           
+                           <eq name="goods_inf.pre_sale" value="1"> 
+                             <div class="txt">预备上架</div>
+                             <time>
+                                <i id="J-onsale"></i>
+                                <span id="J-day-show">0天</span>
+                                <span id="J-hour-show">0时</span> 
+                                <span id="J-minute-show">0分</span> 
+                                <span id="J-second-show">0秒</span>                                
+                            </time>
+                             <input id="J-hidden-onsale" type="hidden" value="{$goods_inf.onsale_time}"/>
+                           </eq>
+                        </div>
+                        <div class="price">¥{$gp['price']}</div>
+                        <ul class="attr clearfix">
+                            <neq name="goods_inf['original']" value="">
+                            <li>
+                                <div class="tag">原作：</div>
+                                <div class="frame">{$goods_inf['original']}</div>
+                            </li>  
+                            </neq> 
+                            <neq name="goods_inf['cp']" value="">
+                            <li> 
+                                <div class="tag">CP：</div>
+                                <div class="frame">{$goods_inf['cp']}</div>
+                            </li> 
+                            </neq>           
+                            <li>
+                                <div class="tag">作者：</div>
+                                <div class="frame">{$goods_inf['author']}</div>
+                            </li>   
+                            <include file="Goods:attr" />
+                            <li> 
+                                <div class="tag">发货：</div>
+                                <div class="frame">广东广州</div>
+                            </li>                               
+                            <li>
+                                <div class="tag">库存：</div>
+                                <div class="frame" data-stock="{$gp['stock_rate']}">
+                                    <input type="hidden" name="stock" value="{$gp['stock']}">
+                                    <ul class="inventory clearfix active">  
+                                        <for start="0" end="$gp['stock_rate']*10">
+                                            <li></li>
+                                        </for>
+                                    </ul>  
+                                    <ul class="inventory clearfix">
+                                        <for start="0" end="10">   
+                                            <li></li>
+                                        </for>
+                                    </ul>      
+                                </div>                                
+                            </li>                                    
+                        </ul>
+                        <div class="btn clearfix">
+                          <form method="post" action="{:U('Index/Cart/add')}">
+                                <eq name="goods_inf['pre_sale']" value="0">
+                                    <div class="amount fl"> 
+                                        <a id="J-amount-decrease" class="btn-reduce" href="javascript:;">-</a>
+                                        <a id="J-amount-increase" class="btn-add" href="javascript:;">+</a>
+                                        <input id="J-buy-num" name="num" class="text J-amount-input" id="buy-num" value="1">
+                                        <input type="hidden" name="gid" value="{$goods_inf['id']}" />
+                                        <input type="hidden" name="gpid" value="{$gp['gpid']}" />
+                                        <input type="hidden" name="quick" value="1" />
+                                    </div>
+                                        <egt name="gp['stock']" value="1"> 
+                                            <a id="J-basket-btn" class="append" href="javascript:;"><i></i>加入购物车</a>
+                                            <a id="J-quick-btn" class="u-btn u-btn-white buy-btn" href="javascript:;">立即购买</a>
+                                        <else/>  
+                                            <a class="disabled" href="javascript:;"><i></i>无货</a>
+                                        </egt>
+                                <else/>  
+                                    <a class="disabled" href="javascript:;"><i></i>未开售</a>
+                                </eq>
+                          </form>
+                        </div>
+                    </div>
+                </div>
+                <notempty name="goods_inf['tag']">  
+                <div class="m-tag mt-20 mb-20">
+                    <div class="hd fl">标签：</div>
+                    <volist name="goods_inf['tag']" id="vo" empty="" key="k">
+                        <a href="#">{$vo['tag_id']|goodsTag=###,'tag_name'}</a>
+                    </volist>
+                </div>    
+                </notempty>      
+                <div class="ad mt-25 clearfix">
+                    {:W('Promote/show',array($Think.CONTROLLER_NAME,'left','2'))} 
+                </div>  
+                <div id="J-goods-tab" class="goods-tab">
+                    <div class="tabBar clearfix">
+                        <span>商品详细</span>
+                        <span id="J-user-comment-hd">商品评价(<strong id="J-comment-num">{$goods_inf['comment_num']}</strong>)</span>
+                        <span id="J-buy-read-hd">购物须知</span>
+                    </div>
+                    <div class="tabCon detail">
+                        {$goods_inf['goods_param']|htmlspecialchars_decode|stripslashes}
+                        {$goods_inf['goods_detail']|htmlspecialchars_decode|stripslashes}                    
+                    </div>
+                    <div id="J-user-comment-bd" class="tabCon m-comment"> 
+                        <ul id="J-reply-frame" class="reply">
+                        </ul>
+                    </div>
+                    <div id="J-buy-read-bd" class="tabCon"></div>
+                </div>
+                {:W('Goods/hot',array($goods_inf['cat_id']))}             
+            </div>
+            <div class="area-r fr clearfix">
+                {:W('User/card',array($good_inf['c_uid']))}
+                <div class="m-side-ad mt-10">
+                    {:W('Promote/show',array($Think.CONTROLLER_NAME,'right','1'))}
+                </div>                                        
+            </div>
+        </div>
+    </div>        
+<include file="include:footer" />

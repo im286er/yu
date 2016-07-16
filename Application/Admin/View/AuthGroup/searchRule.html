@@ -1,0 +1,65 @@
+<div class="page">
+    <div class="pageContent" style="border-top-width:1px;">
+    	  <div layoutH="37">
+              <h2 class="contentTitle" style="border-bottom:none; background-color:#ebf0f5; margin-bottom:0;"> {$cat_name}</h2>
+              <div class="pageFormContent" style="border-width:0;">
+                  <volist name="node" id="node1" key="k">
+                      <fieldset>
+                          <legend class="J-node">&nbsp;{$node1.title}&nbsp;</legend>
+                          <volist name="node1._child" id="node2">
+                              <label style="width:130px; padding-right:10px;"><input type="checkbox" name="rule" value="{ids:'{$node2.id}', groupName:'{$node2.title}', attr_ids:'{$node2.id}'}" /> {$node2.title}</label>
+                          </volist>
+                      </fieldset>
+                  </volist>
+                  <label id="J-select-all" class="select-all">
+                    <input type="checkbox">
+                    全选
+                  </label>
+              </div>
+          </div>
+          <div class="formBar">
+              <ul>
+                  <li><div class="buttonActive"><div class="buttonContent"><button type="button" multLookup="rule">确定</button></div></div></li>
+                  <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+              </ul>
+          </div> 
+    </div>
+</div>
+<style>
+.pageFormContent .select-all{
+  float: right;
+}
+.pageFormContent .select-all input{
+  vertical-align:-2px;
+}
+</style>
+<script>
+$(function(){
+  //全选 
+  function selectAll(obj,name){
+    $(obj).click(function(){
+      var _checked = $(this).find('input').prop("checked");
+      //所有checkbox跟着全选的checkbox走。
+      $(name).prop("checked", _checked );
+
+    });
+    $(name).click(function(){
+      //定义一个临时变量，避免重复使用同一个选择器选择页面中的元素，提升程序效率。
+      var $tmp=$(name);
+      //用filter方法筛选出选中的复选框。并直接给CheckedAll赋值。
+      $(obj).prop('checked',$tmp.length==$tmp.filter(':checked').length);
+    });  
+  }
+
+  $('.J-node').off('click');
+  $('.J-node').on('click',function(){
+    var _obj = $(this).siblings('label').find('input');
+    var _checked = $(this).next().find('input').prop('checked');
+  
+    _checked ? _checked = false : _checked = true;
+    _obj.prop('checked',_checked)
+  })
+
+  selectAll('#J-select-all',"input[name='rule']")
+})
+</script>

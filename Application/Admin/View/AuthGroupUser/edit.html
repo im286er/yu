@@ -1,0 +1,29 @@
+<div class="pageContent">
+	<form method="post" action="__CONTROLLER__/update" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+    	<input type="hidden" name="callbackType" value="closeCurrent" />
+        <input type="hidden" name="navTabId" value="{$Think.request.navTabId}" />
+        <input type="hidden" name="id" value="{$Think.request.id}" />
+    	<div class="pageFormContent" layoutH="58">
+        	<div class="unit">
+            	<label>UID：</label>
+                <input type="text" name="uid" class="required digits" size="33" readonly="readonly" maxlength="20" value="{$vo['uid']}" />
+            </div>
+        	<div class="unit">
+            	<label>用户组：</label>
+                <input type="text"   name="group.groupName" class="readonly" size="53" value="{$vo['group_names']}" readonly="readonly" />
+                <input type="hidden" name="group.groupId"   class="readonly" size="33" value="{$vo['group_ids']}" readonly="readonly" />
+                <a class="unit btn" href="__CONTROLLER__/searchGroup" target="dialog" mask="true" title="选择用户组" width="400" height="300" lookupGroup="group" >选择用户组</a>
+            </div>
+            <div class="unit">
+            	<label>备　注：</label>
+                <textarea name="remark" rows="3" cols="50">{$vo['remark']}</textarea>
+            </div>
+        </div>
+        <div class="formBar">
+        	<ul>
+            	<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+</div>

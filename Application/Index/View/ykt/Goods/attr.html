@@ -1,0 +1,38 @@
+<switch name="goods_inf['multi']" >
+    <case value="0">
+                 
+    </case>
+    <case value="1">
+           <volist name="goods_inf['attr_des']" id="vo" empty="暂没有据" key="k" >
+                <li class="choose clearfix">
+                    <div class="tag">{$vo['title']}：</div>
+                    <div class="frame">
+                        <foreach name="vo['val']" item="voo" >
+                          <div data-attr="{$key}" class="item  <eq name="key" value="$gp['attr']">active</eq> J-item">
+                            <a href="javascript:;">{$voo}</a>   
+                            <i></i>
+                          </div>
+                        </foreach>  
+                    </div>
+                </li>
+           </volist>
+    </case>
+    <case value="2">
+           <volist name="goods_inf['attr_des']" id="vo" empty="暂没有据" key="k" >
+                <li class="choose clearfix">
+                    <div class="tag">{$vo['title']}：</div>
+                    <div class="frame">
+                        <foreach name="vo['val']" item="voo" >
+                          <div data-attr="{$key}" class="item  <eq name="k" value="1"><eq name="key" value="$gp['attr_1']">active</eq></eq>
+                                                               <eq name="k" value="2"><eq name="key" value="$gp['attr_2']">active</eq></eq>
+                          J-item">
+                            <a href="javascript:;">{$voo}</a>   
+                            <i></i>
+                          </div>
+                        </foreach>  
+                    </div>
+                </li>
+           </volist>
+    </case>
+    <default />私有属性出错
+</switch>

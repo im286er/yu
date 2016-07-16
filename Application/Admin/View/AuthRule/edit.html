@@ -1,0 +1,44 @@
+<div class="pageContent">
+	<form method="post" action="__CONTROLLER__/update" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+    	<input type="hidden" name="callbackType" value="closeCurrent" />
+        <input type="hidden" name="navTabId" value="{$Think.request.navTabId}" />
+        <input type="hidden" name="id" value="{$Think.request.id}" />
+    	<div class="pageFormContent" layoutH="58">
+        	<div class="unit">
+            	<label>规则标识：</label>
+                <input type="text" name="name" class="required" size="33" maxlength="80" value="{$vo.name}" />
+            </div>
+            <div class="unit">
+            	<label>上层规则：</label>
+                <select name="pid" style="width:198px;">
+                	<option value="0">顶层</option>
+                    <volist name="list" id="voo">
+                    	<option value="{$voo.id}" <eq name="voo.id" value="$vo['pid']">selected</eq> >{$voo.title}</option>
+                    </volist>                    
+                </select>
+            </div>
+            <div class="unit">
+            	<label>规则名称：</label>
+                <input type="text" name="title" class="required" size="33" maxlength="20" value="{$vo.title}" />
+            </div>
+            <div class="unit">
+            	<label>层　数：</label>
+                <select name="level">
+                	<option value="1" <eq name="vo.level" value="1">selected</eq> >1</option>
+                    <option value="2" <eq name="vo.level" value="2">selected</eq> >2</option>
+                </select>
+            </div>
+            <div class="unit">
+            	<label>排　序：</label>
+                <input type="text" name="sort" class="required" size="33" maxlength="6" value="{$vo.sort}" />
+            </div>
+        </div>
+        
+        <div class="formBar">
+        	<ul>
+            	<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+</div>

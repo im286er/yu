@@ -1,0 +1,101 @@
+<include file="Public:head" />
+
+<body scroll="no">
+    <div id="layout">
+        <div id="header">
+            <div class="headerNav">
+                <div class="logo"><a href="__MODULE__">御咖塘后台</a>
+                </div>
+                <ul class="nav">
+                    <li class="first"><a href="__ROOT__/index.php" target="_blank">御咖塘首页</a>
+                    </li>
+                    <!--
+                    <li><a href="{:U('Admin/User/password')}" target="dialog" mask="true">修改密码</a></li>
+                    <li><a href="{:U('Admin/User/profile')}" target="dialog" mask="true">修改资料</a></li>
+                    -->
+                    <li><a href="{:U('Index/Index/logout')}">退出</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="leftside">
+            <div id="sidebar">
+                <include file="Public:menu" />
+            </div>
+        </div>
+        <div id="container">
+            <div id="navTab" class="tabsPage">
+                <div class="tabsPageHeader">
+                    <div class="tabsPageHeaderContent">
+                        <!-- 显示左右控制时添加 class="tabsPageHeaderMargin" -->
+                        <ul class="navTab-tab">
+                            <li tabid="main" class="main"><a href="javascript:void(0)"><span><span class="home_icon">我的主页</span></span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tabsLeft">left</div>
+                    <!-- 禁用只需要添加一个样式 class="tabsLeft tabsLeftDisabled" -->
+                    <div class="tabsRight">right</div>
+                    <!-- 禁用只需要添加一个样式 class="tabsRight tabsRightDisabled" -->
+                    <div class="tabsMore">more</div>
+                </div>
+                <ul class="tabsMoreList">
+                    <li><a href="javascript:void(0)">我的主页</a>
+                    </li>
+                </ul>
+                <div class="navTab-panel tabsPageContent layoutBox">
+                    <div class="page unitBox">
+                        <div class="accountInfo">
+                            <p><span>御咖塘管理中心</span>
+                            </p>
+                            <p>
+                                <div>欢迎您<font color="red">{$Think.session.username}</font>
+                                </div>
+                            </p>
+                        </div>
+
+                        <div class="panelBar pbtitle">系统信息</div>
+                        <div class="grid">
+                            <div class="gridTbody">
+                                <table class="list" style="width:100%;">
+                                    <tbody>
+                                        <volist name="info" id="vo">
+                                            <eq name="mod" value="0">
+                                                <tr>
+                                                    <td style="width:25%;">
+                                                        <div>{$key}：</div>
+                                                    </td>
+                                                    <td style="width:25%;">
+                                                        <div>{$vo}</div>
+                                                    </td>
+                                            </eq>
+                                            <eq name="mod" value="1">
+                                                <td style="width:25%;">
+                                                    <div>{$key}：</div>
+                                                </td>
+                                                <td style="width:25%;">
+                                                    <div>{$vo}</div>
+                                                </td>
+                                                </tr>
+                                            </eq>
+                                        </volist>
+                                        <if condition="$infonum eq 1">
+                                            <td style="width:25%;"></td>
+                                            <td style="width:25%;"></td>
+                                            </tr>
+                                        </if>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--系统信息结束-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <include file="Public:footer" />
+</body>
+
+</html>

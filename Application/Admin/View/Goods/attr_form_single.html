@@ -1,0 +1,35 @@
+<div class="result-wrap">
+    <table class="result-table">
+		<tr>
+			<th>{$attr_des['1']['title']}</th>
+			<th>价格(元)</th>
+			<th>数量</th>
+            <th>重量(kg)</th>
+            <th>区域码</th>
+            <th>商品缩写</th>
+			<th>图片</th>
+            <th>默认</th>
+		</tr>
+        <foreach name="attr_des['1']['val']" item="vo" >
+            <tr class="result-list">
+    			<td class="first">{$vo}</td>
+                <td style="display: none;">
+                   <input type="hidden" name="attr[{$key}]" value="{$key}" />
+                   <input type="hidden" name="attr_match[{$key}]" value="{$vo}" />
+                </td>
+    			<td><input class="input-edit number required" type="text" name="price[{$key}]" value=""></td>
+    			<td><input class="input-edit digits required" type="text" name="stock[{$key}]" value=""></td>
+                <td><input class="input-edit number required" type="text" name="weight[{$key}]" value=""></td>
+                <td><input class="input-edit required" type="text" name="area_code[{$key}]" value=""></td>
+                <td><input class="input-edit required required" type="text" name="abbr[{$key}]" value=""></td>
+    			<td class="last">
+    				<div id="J-suit-button-{$key}" class="fl upload-btn u-btn u-btn-primary" data-i="{$key}">上传图片</div>
+    				<ul id="J-suit-img-wrap-{$key}" class="fl upload-pic"></ul>
+    				<div id="J-suit-status-{$key}" style="display:none"></div>
+    				<input type="hidden" id="J-suit-inputVal-{$key}" name="img[{$key}]" value="" />
+    			</td>
+                <td><input class="default-radio" name="default" type="radio" <eq name="key" value="1">checked="true"</eq> value="{$key}"></td>
+    		 </tr>
+        </foreach>
+    </table> 
+</div>

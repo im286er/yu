@@ -1,0 +1,88 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/user_Center.css"/>
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/bootstrap-datepicker.css"/>
+<script> 
+    var pageName = 'home',                                                  
+        seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';
+
+    yktGlobal.pageName ='home_auth';
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="apply-wrap mainbody-2 clearfix">
+	<include file="Home:left" />
+	<div class="m-content">
+		<div class="sub-nav">
+			<a class="active" href="#">实名认证</a>
+		</div>
+            <switch name="inf.consigner">
+                <case value="1">
+                    <!-----------------------实名认证-------------------------->
+                    <form id="J-auth-form" method="post">
+            		    <div class="notice">实名认证成功后,方可开通寄售委托服务</div>
+            			<ul class="bd">
+            				<li>
+            					<label class="label">真实姓名</label>
+            					<div class="frame">
+            						<input type="text" name="realname" placeholder="用于资料修改时进行身份验证"/>
+            						<span class="error"></span>
+            					</div>
+            				</li>
+            				<li>
+            					<label class="label">支付宝账号</label>
+            					<div class="frame">
+            						<input type="text" name="alipay_account" placeholder="用于结算，请认真核对填写"/>
+            						<span class="error"></span>
+            					</div>
+            				</li>
+            				<li>
+            					<label class="label">支付宝户名</label>
+            					<div class="frame">
+            						<input type="text" name="alipay_user" placeholder="用于结算，请认真核对填写"/>
+            						<span class="error"></span>
+            					</div>
+            				</li>
+            			</ul>
+            		    <input id="J-auth-submit-btn" class="btn u-btn-primary" type="submit" value="提交认证"/>
+                    </form>
+                </case>
+                <case value="2">
+                    <!-----------------------实名认证审核中-------------------------->
+                    <div class="notice">实名认证审核中....</div>
+        			<ul class="bd">
+        				<li>
+        					<label class="label">真实姓名:</label>
+        					<div class="frame">{$inf['realname']}</div>
+        				</li>
+        				<li>
+        					<label class="label">支付宝账号:</label>
+                            <div class="frame">{$inf['alipay_account']}</div>
+        				</li>
+        				<li>
+        					<label class="label">支付宝户名:</label>
+                            <div class="frame">{$inf['alipay_user']}</div>
+        				</li>
+        			</ul>
+                </case>
+                <case value="3">
+                    <!-----------------------实名认证已通过-------------------------->
+                    <div class="notice">实名认证已通过,已开通寄售服务</div>
+        			<ul class="bd">
+        				<li>
+        					<label class="label">真实姓名:</label>
+        					<div class="frame">{$inf['realname']}</div>
+        				</li>
+        				<li>
+        					<label class="label">支付宝账号:</label>
+                            <div class="frame">{$inf['alipay_account']}</div>
+        				</li>
+        				<li>
+        					<label class="label">支付宝户名:</label>
+                            <div class="frame">{$inf['alipay_user']}</div>
+        				</li>
+        			</ul>
+                </case>
+                <default />default
+            </switch>
+    </div>
+</div>
+<include file="include:footer" />

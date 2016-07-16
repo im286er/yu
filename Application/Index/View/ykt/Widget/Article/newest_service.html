@@ -1,0 +1,24 @@
+<volist id="vo" name="list">
+    <li class="clearfix">
+    	<a href="{:U('Index/Article/detail',array('id'=>$vo['id']))}">
+    		<a class="pic" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}"><img class="m-lazy" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/lazyload226X160.png" data-original="__UPLOAD__{$vo['title_img']}!c266x160.jpg"/></a>
+    		<div class="info">
+    			<a class="title" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}">{$vo['title']}</a>
+                <div class="data">
+                    <a class="name" href="#">{$vo['uid']|uidToField=###,'username'}</a>
+                    <time>{$vo['add_time']|date="Y-m-d",###}</time>
+                </div>
+    			<a class="txt" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}">{$vo['summary']}</a>
+                <div class="tool">
+                    <div class="m-tool-r fr">
+                        <a class="comment" href="javascript:;">{$vo['comment_num']}</a>
+                        <a class="collect" href="javascript:;">{$vo['collect_num']}</a>
+                        <a class="support" href="javascript:;">{$vo['support_num']}</a>
+                    </div>          
+                </div>  
+    		</div>
+    	</a>
+    </li>
+</volist> 
+
+

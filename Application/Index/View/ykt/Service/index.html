@@ -1,0 +1,66 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/service.css"/>
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/article.css"/>
+<script> 
+    var pageName = 'service',                                                  
+        seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/'              
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<include file="include:toolbar" />
+	<div class="body-bg">
+	<div class="mainbody service-index-wrap">
+		<ul class="m-sub-nav clearfix mb-20">
+			<li>
+				<a class="active" href="{:U('Index/Service/index')}">服务首页</a>
+			</li>
+            <volist id="vo" name="catlist">
+          		<li>
+					<a href="{:U('Index/Service/show',array('cat'=>$vo['id']))}">{$vo['cat_name']}</a>
+				</li>		                  	
+            </volist>				 		
+		</ul>		
+		<div class="banner-wrap m-flexslider">
+        <!--头图-->
+			<div id="J-slidedown">
+				<ul class="slides">
+                    {:W('Promote/show',array($Think.CONTROLLER_NAME,'focus','3'))}                                    
+				</ul>
+			</div>				
+		</div> 
+		<div class="process mb-20"> 
+			<div class="printing">
+				<a href="http://form.mikecrm.com/f.php?t=CoK7Om" target="_blank">
+				</a>
+			</div>
+			
+				
+			
+			<div class="customized mt-10"></div>
+		</div>
+		<div class="article-list-wrap clearfix">
+			<div class="area-l">
+				<ul class="bd">
+					{:W('Article/newest',array($catlist,1))}				
+				</ul>				
+			</div>
+			<div class="area-r">
+				<div class="aside-article m-side-box">
+					<div class="top clearfix">
+						<div class="title">信息动态</div>
+					</div>					
+					<ul class="bd">
+						<li class="article-list"><a href="#">12月和纸胶带团制报名开始</a></li>
+						<li class="article-list"><a href="#">12月和纸胶带团制报名开始</a></li>
+						<li class="article-list"><a href="#">12月和纸胶带团制报名开始</a></li>
+						<li class="article-list"><a href="#">12月和纸胶带团制报名开始</a></li>
+						<li class="article-list"><a href="#">12月和纸胶带团制报名开始</a></li>
+					</ul>
+				</div>
+				<div class="m-side-ad mt-10">
+				  {:W('Promote/show',array($Think.CONTROLLER_NAME,'right','2'))} 
+				</div>									
+			</div>			
+		</div>
+	</div> 
+</body>
+</html>

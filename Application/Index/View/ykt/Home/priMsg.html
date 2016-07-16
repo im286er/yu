@@ -1,0 +1,43 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/user_Center.css"/>
+<script> 
+    var pageName = 'home';   
+    var seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';
+
+    yktGlobal.pageName ='home_priMsg';
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="notice-wrap mainbody-2 clearfix">
+    <include file="Home:left" />
+    <div class="m-content">		
+    	<div class="hd clearfix">
+    		<div class="fl title">用户通知</div>
+    		<div class="fr">
+    			<a id="J-all-read" class="more" href="javascript:;">全部标记为已读</a>
+    		</div> 
+    	</div>
+    	<div id="J-container">
+        <neq name="list" value="">  
+       		<ul class="bd">
+        	      <volist id="vo" name="list">
+        			<li data-id="{$vo['id']}"> 
+        				<div class="title">{$vo['title']}</div>
+        				<div class="content">{$vo['summary']}
+                        <neq name="vo['link']" value="">
+                          <a class="m-more-color J-read" target="_blank" href="{$vo['link']}">查看</a></div>
+                        </neq>        
+        				<div class="time">
+        					<time>{$vo['add_time']|date="Y-m-d H:i:s",###}</time>
+        				</div>
+                        <i class="{$vo['read']?'read':'unread'}"></i>
+        			</li>
+        		  </volist>				
+        	</ul>
+            <include file="Home:page_tpl" />
+        <else />
+            <div class="m-no-record">没有相关记录</div>
+        </neq> 
+        </div>
+    </div>
+</div>
+<include file="include:footer" />

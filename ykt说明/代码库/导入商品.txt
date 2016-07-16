@@ -1,0 +1,60 @@
+header("Content-Type:text/html;charset=utf-8");  
+    $arr = str_getcsv(file_get_contents('import.csv')); 
+    $k = 1;$goods = array();
+    for($i=1;$i<1630;$i++){
+        
+        $goods[$k]['goods_name'] = iconv('GBK','UTF-8',$arr[$i*13+1]) ; 
+        $cat_id = iconv('GBK','UTF-8',$arr[$i*13+2]) ;  
+        switch ($cat_id)
+        {
+        case '刊物':
+          $goods[$k]['cat_id'] = 4;
+          break;
+        case '无料传单':
+          $goods[$k]['cat_id'] = 5;
+          break;
+        case '和纸胶带':
+          $goods[$k]['cat_id'] = 6;
+          break;
+        case '动漫周边':
+          $goods[$k]['cat_id'] = 7;
+          break;
+        case '生活杂货':
+          $goods[$k]['cat_id'] = 5;
+          break;
+        default:
+          $goods[$k]['cat_id'] = 4;
+          break;
+        }
+      
+      $goods[$k]['status'] = 2;     
+      $goods[$k]['on_sale'] = 1;                
+      $goods[$k]['original'] = $arr[$i*13+5];    
+      $goods[$k]['author'] = 'ykt';              
+      
+      
+      $img_arr = explode('|',$arr[$i*13+12]);     
+      $img = explode(';',$img_arr[1]);
+      $goods[$k]['goods_img'] = $img[0];  
+
+      $info = pathinfo($goods[$k]['goods_img']); 
+      $goods[$k]['goods_img_ext'] = $info['extension'];
+      $goods[$k]['goods_ps'] = trim(iconv('GBK','UTF-8',$arr[$i*13+13])); 
+      $goods[$k]['stock'] = $arr[$i*13+7];
+      $goods[$k]['weight'] = $arr[$i*13+8];
+      $goods[$k]['price'] = $arr[$i*13+9];
+      $goods[$k]['abbr'] = iconv('GBK','UTF-8',$arr[$i*13+11]);
+    
+      
+      $k++;   
+        
+    }
+   F('goods_import',$goods);
+   pr($goods);
+   
+   
+   
+   
+   
+   
+   

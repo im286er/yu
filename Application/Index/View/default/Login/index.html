@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>登录雪狐商城</title>
+<load href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/log_reg.css" />
+<load href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/jquery-1.7.2.min.js" />
+<script type="text/javascript">
+$(function()
+{
+	//回车登录
+	$("#formlogin").keypress(function(e) {
+
+	if (e.which == 13) {
+	$("#loginsubmit").click();
+	}
+	});
+
+
+	$('.text').focus(function()
+	{
+		$(this).addClass("highlight");
+		$('.focus').removeClass("errorinf");
+		$('.focus').html("");
+	});
+	
+	$('.text').blur(function()
+	{
+		$(this).removeClass("highlight");
+	});
+	
+	$('#loginsubmit').click(function()
+	{	
+		var username=$('#loginname').val();
+		if(username=="")
+		{
+			$('#loginname_error').html("请输入用户名.");
+			$('#loginname_error').addClass("errorinf");
+			return false;
+		}
+		var password=$('#loginpwd').val();
+		if(password=="")
+		{
+			$('#loginpwd_error').html("请输入密码.");
+			$('#loginpwd_error').addClass("errorinf");
+			return false;
+		}
+		var authcode=$('#authcode').val();
+		if(authcode=="")
+		{
+			$('#authcode_error').html("请输入验证码.");
+			$('#authcode_error').addClass("errorinf");
+			return false;
+		}
+		var type = $('#type').val(); //登录成功后返回我的购物车
+		$.post('__URL__/doLogin',{'username':username,'password':password,'code':authcode,'type':type},function(data)
+		{
+			/*if(data=='0')
+			{
+				$('#authcode_error').html("验证码错误.");
+				$('#authcode_error').addClass("errorinf");
+			}
+			else*/
+            if(data=='1')
+			{
+				$('#loginname_error').html("用户名不存在.");
+				$('#loginname_error').addClass("errorinf");
+			}
+			else if(data=='2')
+			{
+				$('#loginpwd_error').html("密码错误.");
+				$('#loginpwd_error').addClass("errorinf");
+			}
+			else if(data=='3')
+			{
+				window.location='__ROOT__/index.php';
+			}
+			else if(data=='5')
+			{
+				window.location='__MODULE__/cart/cartlist';
+			}
+		});
+	});
+});
+</script>
+</head>
+
+<body>
+	<div class="w">
+    	<div id="logo" class="log_title">
+        	<a href="__APP__"><img src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/logo.png" alt="雪狐" width="170" height="60" /></a>
+            <b></b>
+        </div>
+    </div>
+    
+    <form id="formlogin" method="post">
+    	<div id="entry">
+        	<div class="mc">
+            	<div style="width:402px; height:354px; background:url(__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/upload/8.jpg) no-repeat; float:left;"></div>
+                <div class="forminf">
+                	<div class="item fore1">
+                    	<span>用户名</span>
+                        <div class="info">
+                        	<input class="text" type="text" id="loginname" name="loginname" tabindex="1" />
+                            <div class="ico i_name"></div>
+                            <label id="loginname_error" class="focus"></label>
+                        </div>
+                    </div>
+                    
+                	<div class="item fore2">
+                    	<span>密码</span>
+                        <div class="info">
+                        	<input class="text" type="password" id="loginpwd" name="loginpwd" tabindex="2" />
+                            <div class="ico i_pwd"></div>
+                            <label id="loginpwd_error" class="focus"></label>
+                        </div>
+                    </div>
+                    
+                	<!--<div class="item fore3">
+                    	<span>验证码</span>
+                        <div class="info">
+                        	<input class="text text_code" type="text" id="authcode" name="code" tabindex="3" />
+                            <label class="img"><img id="verifycode" style="cursor:pointer; width:120px; height:34px;" title="点击刷新" src="__CONTROLLER__/verify" onclick="this.src='__CONTROLLER__/verify/'+Math.random()" /></label>
+                            <label class="hline">看不清？<br /><a href="javascript:void(0)" onclick="javascript:document.getElementById('verifycode').src='__CONTROLLER__/verify/'+Math.random()">换一张</a></label>
+                            <label id="authcode_error" class="focus"></label>
+                        </div>
+                    </div>
+                    -->
+                	<div class="item fore4">
+                        <div class="info">
+                        	<input class="checkbox" type="checkbox" name="chkRemember" tabindex="4" />
+                            <label class="mar">自动登录</label>
+                            <label><a href="#">忘记密码?</a></label>
+                        </div>
+                    </div>
+                    
+                    <div class="item login">
+                    	<input type="hidden" class="text" id="type" value="{$Think.request.type}" />
+                    	<input type="button" class="btn_login" id="loginsubmit" tabindex="5" />
+                    </div>
+                    
+                    <div class="item">
+                    	<label class="loginmore">使用合作网站账号登录雪狐商城：
+                        	<div class="clr"></div>
+                        	<span class="btns qq"><a href="#" onclick="">QQ</a></span>
+                            <span class="btns qq"><s></s><a href="#" onclick="">新浪微博</a></span>
+                            <span class="btns qq"><s></s><a href="#" onclick="">网易</a></span>
+                            <span class="btns qq"><s></s><a href="#" onclick="">人人</a></span>
+                            <span class="btns qq"><s></s><a href="#" onclick="">奇虎360</a></span>
+                            <span class="btns qq"><s></s><a href="#" onclick="">开心</a></span>
+                            <span class="btns qq"><s></s><a href="#" onclick="">豆瓣</a></span>
+                        </label>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="free_regist">
+            	<span><a href="{:U('regist/index')}">免费注册&gt;&gt;</a></span>
+            </div>
+        </div>
+    </form>
+    
+    <div class="space">
+    	<div class="mb"></div>
+    </div>
+    
+    <div class="w">
+    	<div id="footer">
+        	<div>
+            	<a href="#" target="_blank">关于我们</a>|
+                <a href="#" target="_blank">联系我们</a>|
+                <a href="#" target="_blank">人才招聘</a>|
+                <a href="#" target="_blank">广告服务</a>|
+                <a href="#" target="_blank">手机雪狐</a>|
+                <a href="#" target="_blank">友情链接</a>|
+                <a href="#" target="_blank">雪狐社区</a>|
+                <a href="#" target="_blank">雪狐公益</a>
+            </div>
+            <div class="copyright">Copyright&nbsp;©&nbsp;2013&nbsp;&nbsp;雪狐商城&nbsp;www.StudyFox.com&nbsp;版权所有</div>
+        </div>
+    </div>
+</body>
+</html>

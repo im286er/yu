@@ -1,0 +1,71 @@
+<style type="text/css">
+.pageFormContent span { padding-left:0;}
+</style>
+<div class="pageContent">
+	<form method="post" action="__CONTROLLER__/update" class="pageForm required-validate" enctype="multipart/form-data" onsubmit="return iframeCallback(this,dialogAjaxDone);">
+    	<input type="hidden" name="callbackType" value="closeCurrent" />
+        <input type="hidden" name="id" value="{$Think.request.id}" />
+    	<div class="pageFormContent" layoutH="58">
+            <div class="unit">
+            	<label>状态：</label>
+                <select name="status">
+                    <option value="1" <eq name="vo.status" value="1">selected</eq> >待处理</option>
+                    <option value="2" <eq name="vo.status" value="2">selected</eq> >已通过</option>
+                    <option value="3" <eq name="vo.status" value="3">selected</eq> >未通过</option>
+                </select>
+            </div>
+            <div class="unit">
+            	<label>用户：</label>
+                {$vo['uid']|uidToField=###,'username'}
+            </div>
+            <div class="unit">
+            	<label>商品：</label>
+                {$vo['gid']|gidToField=###,'goods_name'}
+            </div>
+            <div class="unit">
+            	<label>商品图片：</label>
+                <a target="_blank" href="{:U('Index/Goods/item',array('id'=>$vo['gid']))}">
+                          <img src="__UPLOAD__{$vo['gid']|gidToField=###,'goods_img'}" width="80px" height="80px" />
+                </a>
+            </div>
+            <div class="unit">
+            	<label>问题描述：</label>
+                <textarea name="summary" class="article-textarea">{$vo['description']}</textarea>
+            </div>
+            <div class="unit">
+            	<label>问题附图：</label>
+                <notempty name="vo['img']">
+                  <img src="__UPLOAD__{$vo['img']}" width="80px" height="80px" />
+                </notempty>
+            </div>
+            <div class="unit">
+            	<label>方式：</label>
+                {$vo['type']=='1'?'退货':'换货'}
+            </div>
+        </div>
+        <div class="formBar">
+        	<ul>
+            	<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+</div>
+
+<style type="text/css">
+.create-process ul{
+    float:left;
+}
+.create-process .list{
+    margin-bottom:5px;
+    clear:both;
+}
+.create-process .list img{
+    width:55px;
+    height: 40px;
+    float:left;
+}
+.create-process .list input{
+    float:left;
+}
+</style>

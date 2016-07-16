@@ -1,0 +1,152 @@
+<!--查询条件-->
+<div class="pageHeader order-index-wrap">
+   <form id="pagerForm" class="clearfix" action="__CONTROLLER__" method="post" onsubmit="return navTabSearch(this)">
+    	<input type="hidden" name="pageNum" value="1" />
+        <input type="hidden" name="numPerPage" value="{$numPerPage}" />
+    	<div class="searchBar">
+        	<ul class="searchContent">
+                <li>
+                	<label>状态：</label>
+                    <select name="status" style="width:90px">
+                    	<option value="">全部</option>
+                    	<foreach name="status" item="vo" key="k" >
+                    		<option value="{$k}" <eq name="k" value="$Think.post.status">selected</eq> >{$vo}</option>
+                        </foreach>
+                    </select>
+                </li>
+                <li>
+                	<label>用户名：</label>
+                    <input name="user" type="text" size="25" value="{$Think.post.user}"  />
+                </li>
+                <li>
+                	<label>订单号：</label>
+                    <input name="order_sn" type="text" size="25" value="{$Think.post.order_sn}"  />
+                </li>
+                <li>
+                	<label>时间[起]：</label>
+                    <input name="start_time" class="date textInput readonly" type="text" size="25" datefmt="yyyy-MM-dd" value="{$Think.post.start_time}" style="width:100px"/>
+                </li>
+                <li>
+                	<label>时间[止]：</label>
+                    <input name="stop_time" class="date textInput readonly" type="text" size="25" datefmt="yyyy-MM-dd" value="{$Think.post.stop_time}" style="width:100px"/>
+                </li>
+            </ul>
+            <div class="subBar">
+            	<ul>
+                	<li>
+                    	<div class="buttonActive">
+                        	<div class="buttonContent">
+                            	<button type="submit">查询</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form> 
+    <form class="export" action="__CONTROLLER__/doExport" method="post" target="_blank">
+    	<div class="searchBar">
+            <div class="subBar">
+            	<ul>
+                	<li>
+                    	<div class="buttonActive">
+                        	<div class="buttonContent">
+                            	<button type="submit">导出待发货订单</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+    <form class="import" action="__CONTROLLER__/doImport" target="_blank" method="post" enctype="multipart/form-data">
+    	<div class="searchBar">
+        	<ul class="searchContent">
+                <li>
+                    <input name="excelData" type="file" id="file"/>
+                </li>
+            </ul>
+            <div class="subBar">
+            	<ul>
+                	<li>
+                    	<div class="buttonActive">
+                        	<div class="buttonContent">
+                            	<button type="submit">导入已发货订单</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="pageContent">
+    <!--操作按钮-->
+    <div class="panelBar">
+    	<ul class="toolBar">
+            <li><a class="edit" href="__CONTROLLER__/edit/orderId/{id}" rel="order_edit" target="dialog" mask="true" warn="请选择一条记录" width="750" height="450" max="false" ><span>订单编辑</span></a></li>
+        </ul>
+    </div>
+    <!--操作按钮结束-->
+
+    <!--数据显示-->
+    <table class="list" width="100%" layoutH="115">
+    	<thead>
+        	<tr>
+            	<!--<th width="5%"><input type="checkbox" group="ids" class="checkboxCtrl" /></th>-->
+                <!--<th width="5%">编号</th>-->
+                <th width="5%">序号</th>
+                <th width="8%">订单号码</th>
+                <th width="8%">下单用户</th>
+                <th width="5%">状态</th> 
+                <th width="5%">商品价格</th>
+                <th width="5%">运费</th>
+                <th width="5%">总价</th>
+                <th width="10%">下单时间</th>
+                <th width="10%">应发时间</th>
+                <th width="10%">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<volist id="vo" name="list" key="k">
+                <tr target="id" rel="{$vo['id']}">
+                    <!--<td><input type="checkbox" name="ids" value="{$vo['id']}" /></td>-->
+                    <!--<td>{$vo['id']}</td>-->
+                    <td>{$k}</td>
+                    <td>{$vo['order_sn']}</td> 
+                    <td>{$vo['uid']|uidToField=###,'username'}</td>              
+                    <td>{:C('ORDER_STATUS')[$vo['status']]}</td>
+                    <td>{$vo['goods_price']}</td>
+                    <td>{$vo['express_fee']}</td>
+                    <td>{$vo['order_price']}</td>
+                    <td>{$vo['add_time']|date="Y-m-d H:i:s",###}</td>
+                    <td>{$vo['send_time']|date="Y-m-d H:i:s",###}</td>
+                    <td>
+                       <a href="__CONTROLLER__/detail/orderId/{$vo['id']}" target="dialog" rel="order_detail" mask="true" width="1000" height="800" max="false"><span>详情</span></a>
+                       <a href="__CONTROLLER__/goods/orderId/{$vo['id']}" target="dialog" rel="order_goods" mask="true" width="1000" height="800" max="false"><span>商品</span></a>
+                       <a href="__MODULE__/User/detail/uid/{$vo['uid']}" target="dialog" rel="order_user" mask="true" width="1000" height="800" max="false"><span>用户</span></a>
+                    </td>
+                </tr>
+            </volist>
+        </tbody>
+    </table>
+    <!--数据显示结束-->
+
+    <!--数据分页-->
+    <div class="panelBar">
+    	<div class="pages">
+        	<span>共&nbsp;{$totalCount}&nbsp;条,&nbsp;</span>
+                <select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+                  <option value="10" <eq name="numPerPage" value="10">selected</eq>>10</option>
+                  <option value="15" <eq name="numPerPage" value="15">selected</eq>>15</option>
+                  <option value="20" <eq name="numPerPage" value="20">selected</eq>>20</option>
+                  <option value="50" <eq name="numPerPage" value="50">selected</eq>>50</option>
+                  <option value="100" <eq name="numPerPage" value="100">selected</eq>>100</option>
+           	 	</select>
+            <span>&nbsp;条&nbsp;/&nbsp;页</span>
+        </div>
+        <div class="pagination" targetType="navTab" totalCount="{$totalCount}" numPerPage="{$numPerPage}" pageNumShown="10" currentPage="{$currentPage}"></div>
+    </div>
+    <!--数据分页结束-->
+</div>

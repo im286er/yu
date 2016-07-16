@@ -1,0 +1,33 @@
+<ul> 
+    <volist name="insidecomment" id="v">
+			<li class="inside-list clearfix">
+				<div class="inside-l">
+					<div class="inside-avatar" data-userID="{$v['uid']}"> 
+						<a href="#"><img src="__UPLOAD__{$v['uid']|avatar=###}"/></a>
+					</div>
+                    <eq name="v.uid" value="$articleinf['uid']">
+				       <div class="level">作者</div>
+                    </eq>
+				</div>
+				<div class="bd J-comment-reply-inside-content">
+					<div class="name">{$v.uid|uidToField=###,'username'}</div>
+					<span class="time"> {$v.add_time|date="Y-m-d H:i",###}</span>
+					<div class="txt">{$v.content}</div>
+					<div class="comment-tool">
+						<ul class="frame">
+							<!-- <li class="comment-tool-list" data-target=".J-comment-report"  data-toggle="modal" data-backdrop="true">举报</li> --> 
+							<li class="comment-tool-list J-comment-reply-inside-hd">回复</li>
+						</ul>
+					</div>											
+				</div> 
+			</li>
+	</volist>                      				 				
+</ul>		
+<span>共<strong class="J-reply-num">{$reply_num}</strong>条回复</span>
+<div class="page fl">
+	<gt name="reply_num" value="4">	
+        <for start="1" end="ceil($reply_num/4)+1"> 
+			<a href="javascript:;" class="J-inside-paginator <eq name="currentPage" value="$i">active</eq>">{$i}</a>
+		</for>	    
+    </gt>
+</div>             	

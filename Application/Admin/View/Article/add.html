@@ -1,0 +1,98 @@
+<script>
+    adminGlobal.pageName = 'article_add';  
+    adminGlobal.UEurl  = "{:U('Admin/Ueditor/index')}";  //ue-url
+    adminGlobal.pub = '__PUBLIC__';
+    adminGlobal.controller = '__CONTROLLER__';
+    adminGlobal.upload = '__UPLOAD__';
+
+    //UE层 ID后增加时间戳，修复id保留问题
+    var UEdate = Date.parse(new Date());
+    var UEid = $('.J-UEcontainer').prop('id');
+    UEid = UEid + UEdate;
+    $('.J-UEcontainer').prop('id',UEid);  
+
+    //UE配置
+    var ue = UE.getEditor(UEid,{
+        serverUrl :adminGlobal.UEurl,
+        UEDITOR_HOME_URL:'__PUBLIC__/ueditor/',
+        initialFrameWidth:756,
+        initialFrameHeight:380,
+    });          
+</script> 
+<script src="__PUBLIC__/dwz/js/extraBase.js" type="text/javascript"></script>
+<script>
+AjaxUploadPic('#J-cover-button','#J-cover-status','#J-cover-inputVal','#J-cover-container','cover',600,600,commonUploadCallback);
+</script>
+<style type="text/css">
+.pageFormContent span { padding-left:0;}
+</style>
+<div class="pageContent">
+	<form method="post" action="__CONTROLLER__/insert" class="pageForm required-validate" enctype="multipart/form-data" onsubmit="return iframeCallback(this,dialogAjaxDone);">
+    	<input type="hidden" name="callbackType" value="closeCurrent" />
+    	<div class="pageFormContent" layoutH="58">
+        	<div class="unit">
+            	<label>分类名称：</label>
+                <select name="cat_id" id="cat_id" style="width:198px;">
+                    <volist name="catlist" id="vo">
+                        <option value="{$vo.id}" <neq name="vo.level" value="3">disabled</neq> >{$vo.cat_name}</option>
+                    </volist>
+                </select>
+            </div>
+            <div class="unit">
+            	<label>状态：</label>
+                <select name="status">
+                    <foreach name="Think.config.ARTICLE_STATUS" item="vo" key="k" >
+              		  <option value="{$k}" >{$vo}</option>
+                    </foreach>
+                </select>
+            </div>
+            <div class="unit">
+            	<label>来源：</label>
+                <select name="status">
+                    <foreach name="Think.config.ARTICLE_SOURCE" item="vo" key="k" >
+              		  <option value="{$k}" >{$vo}</option>
+                    </foreach>
+                </select>
+            </div>
+            <div class="unit">
+            	<label>外链URL：</label>
+                <input type="text" name="link" class="" size="83" value="" />
+            </div>
+            <div class="unit">
+            	<label>标题：</label>
+                <input type="text" name="title" class="required" size="83" value="" />
+            </div>
+            <div class="unit">
+            	<label>摘要：</label>
+                <textarea name="summary" class="article-textarea"></textarea>
+            </div>
+            <div class="unit cover"> 
+                <label>标题图片:</label>
+                <div class="frame">
+                    <div id="J-cover-button" class="upload-btn">上传图片</div>
+                    <input id="J-cover-inputVal" type="hidden" name="title_img" value="" />
+                    <div id="J-cover-status" style="display:none"></div>
+                    <div class="clear"></div>
+                    <img id="J-cover-container" src="" style="display:none;" />                  
+                </div>
+            </div>
+            <div class="unit">
+            	<label>标签：</label>
+                <input type="text" name="tags" class="" size="60" value="" />
+            </div>
+            <div class="unit">
+            	<label>排序：</label>
+                <input type="text" name="sort" class="" size="10" value="" />
+            </div>
+            <div class="unit">
+                <script id="UEcontainer" class="J-UEcontainer" name="content" type="text/plain"></script>
+            </div>
+        </div>
+        <div class="formBar">
+        	<ul>
+            	<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+</div>

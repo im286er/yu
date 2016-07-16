@@ -1,0 +1,134 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/user_Center.css" />
+<script>
+var pageName = 'home',
+    seajsBase = '__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/'
+</script>
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="orderView-wrap mainbody-2 clearfix">
+    <include file="Home:left" />
+    <div class="m-content">
+        <div class="sub-nav">
+            <a class="active" href="#">订单详细</a>
+        </div>
+        <div class="info clearfix">
+            <div class="info-l">
+                <span>订单编号：<strong>{$order_inf['order_sn']}</strong></span>
+                <span>状态：<strong>{:C('ORDER_STATUS')[$order_inf['status']]}</strong></span>
+                <span>下单时间： <strong>{$order_inf['add_time']|date="Y-m-d H:i",###}</strong></span>
+            </div>
+            <div class="info-r">
+                <eq name="vo['status']" value="1">
+                    <a class="btn important-btn" target="_blank" href="{:U('Index/Order/confirm',array('orderId'=>$vo['id'],'passKey'=>passKey($vo['order_sn'])))}">
+                     付款
+                  </a>
+                </eq>
+                <eq name="vo['status']" value="4">
+                    <a class="btn" href="{:U('Index/Home/orderRefundApply',array('orderId'=>$vo['id'],'passKey'=>passKey($vo['order_sn'])))}">退货换货</a>
+                </eq>
+            </div> 
+        </div> 
+        <div class="order-summary">
+            <div class="order-progress">
+                <ol class="progress-list clearfix">
+                    <li class="step step-first step-done">
+                        <div class="progress"><span class="text">下单</span></div>
+                        <div class="info">{$order_inf['add_time']|date="Y-m-d H:i",###}</div>
+                    </li>
+                    <li class="step step-done">
+                        <div class="progress"><span class="text">付款</span></div>
+                        <div class="info">
+                                         <gt name="order_inf['pay_time']" value="0">
+                                            {$order_inf['pay_time']|date="Y-m-d H:i",###}
+                                         </gt>
+                        </div>
+                    </li>
+                    <li class="step step-done">
+                        <div class="progress"><span class="text">配货</span></div>
+                        <div class="info">
+                                         <gt name="order_inf['assort_time']" value="0">
+                                            {$order_inf['assort_time']|date="Y-m-d H:i",###}
+                                         </gt>
+                        </div>
+                    </li>
+                    <li class="step step-done">
+                        <div class="progress"><span class="text">出库</span></div>
+                        <div class="info">
+                                         <gt name="order_inf['send_time_real']" value="0">
+                                            {$order_inf['send_time_real']|date="Y-m-d H:i",###}
+                                         </gt>
+                        </div>
+                    </li>
+                    <li class="step step-active step-last">
+                        <div class="progress"><span class="text">交易成功</span></div>
+                        <div class="info">
+                                         <gt name="order_inf['take_time']" value="0">
+                                            {$order_inf['take_time']|date="Y-m-d H:i",###}
+                                         </gt>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+            <if condition="$vo['status'] gt C('ORDER_STATUS_VAL.pre_send')"><!--已经发货的话-->
+                <div class="order-delivery order-delivery-detail" style="display: block;">
+                    <p class="delivery-num">
+                        物流公司：{:C('EXPRESS_COM')[$order_inf['express_com']]} 运单号：{$order_inf['express_num']} 
+                    </p>
+                    <neq name="order_inf['express_msg']" value="">
+                        <div class="delivery-list-wrapper">
+                            <ul class="delivery-list">
+                              <volist id="vo" name="order_inf['express_msg']['data']">
+                                  <li>{$vo['context']} {$vo['time']}</li>
+                              </volist>
+                            </ul>
+                        </div>
+                    </neq>
+                </div>
+            </if>
+        </div>
+        <div class="order">
+            <ul class="order-l">
+                <volist id="vo" name="order_inf['order_goods']">
+                    <li class="clearfix">
+                        <div class="pic">
+                            <a target="_blank" href="{:U('Index/Goods/item',array('id'=>$vo['gid']))}">
+                                <img src="__UPLOAD__{$vo['gid']|gidToField=###,'goods_img'}" />
+                            </a>
+                        </div>
+                        <div class="frame">
+                            <div class="name">
+                                <a target="_blank" href="{:U('Index/Goods/item',array('id'=>$vo['gid']))}">
+                                  {$vo['gid']|gidToField=###,'goods_name'}&nbsp;
+                                  {$vo['gpid']|gpidToField=###,$vo['gid'],'attr_match'}
+                                  </a>
+                            </div>
+                            <div class="price">{$order_inf['gpid']|gpidToField=###,$vo['gid'],'price'}元 ×{$vo['num']}</div>
+                        </div>
+                    </li>
+                </volist>
+            </ul>
+            <div class="order-r">
+                <div class="price">金额：<strong>{$order_inf['order_price']}</strong>元</div>
+            </div>
+        </div>
+        <div class="consignee">
+            <h1>收货信息</h1>
+            <ul class="info">
+                <li>
+                    <div class="tag">姓名：</div>
+                    <div class="frame">{$order_inf['address_id']|addressMsg=###,'realname'}</div>
+                </li>
+                <li>
+                    <div class="tag">联系电话：</div>
+                    <div class="frame">{$order_inf['address_id']|addressMsg=###,'mobile'}</div>
+                </li>
+                <li>
+                    <div class="tag">收货地址：</div>
+                    <div class="frame">{$order_inf['address_id']|addressMsg=###,'location'}</div>
+                </li>
+            </ul>
+            <div class="pay"><div class="tag">支付方式：</div>在线支付</div>
+        </div>
+    </div>
+</div>
+<include file="include:footer" />

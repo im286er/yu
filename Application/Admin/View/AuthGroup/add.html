@@ -1,0 +1,26 @@
+<div class="pageContent">
+	<form method="post" action="__CONTROLLER__/insert" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+    	<input type="hidden" name="callbackType" value="closeCurrent" />
+        <input type="hidden" name="navTabId" value="{$Think.request.navTabId}" />
+    	<div class="pageFormContent" layoutH="58">
+            <div class="unit">
+            	<label>用户组：</label>
+                <input type="text" name="title" class="required" size="33" maxlength="20" value="" />
+            </div>
+            <div class="unit">
+            	<label>状　态：</label>
+                <select name="status">
+                	<option value="1">正常</option>
+                    <option value="0">停用</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="formBar">
+        	<ul>
+            	<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+</div>

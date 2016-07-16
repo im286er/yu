@@ -1,0 +1,232 @@
+<include file="include:header" />
+<script> 
+	var pageName = 'consign';                                                   //页面
+	var seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';              //路径
+    var uploadPath = '__UPLOAD__';	
+    yktGlobal.pageName = 'edit';	//当前页
+</script>	
+<!-- 百度编辑器 -->
+<script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.all.js"> </script> 
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/consign.css"/>	
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/uploadify.css" />
+<div class="body-bg">
+	<div class="blank10"></div>
+	<div class="mainbody saleProcess-wrap clearfix">
+		<div class="detail-top clearfix">
+			<div class="top-l">修改委托资料</div>
+			<a class="top-r" href="{:U('Index/Home/consign')}">返回</a>
+		</div>	 
+		<!-- <div class="explain"></div> -->
+		<div class="saleProcess-l"> 
+			<form id="J-apply-form" method="post" action="__CONTROLLER__/update.html" onsubmit="">
+				<div class="special clearfix">
+					<div class="s-l">
+						<div id="J-cover-button" class="pic">
+							<div id="J-cover-status" style="display:none"></div>
+                            <img id="J-cover-container" src="__UPLOAD__{$consign_inf['goods_img']}!c160x160.jpg" />
+							<input type="hidden" id="J-cover-inputVal" name="goods_img" value="{$consign_inf['goods_img']}" />
+							<span class="msg-span J-msg-span"></span>
+						</div>
+						<div class="txt">图片需小于1M，不小于400*400像素，支持jpg、jpeg、png格式</div>
+					</div>
+					<div class="s-r">
+						<div class="attr-list attr-list-name clearfix">
+            				<div class="tag"></i>委托人：</div>
+            				<div class="frame"><div class="show-txt">{$consign_inf['uid']|uidToField=###,'username'}</div></div>
+			            </div>
+                        <div class="attr-list attr-list-name clearfix">
+            				<div class="tag"></i>状态：</div>
+            				<div class="frame">
+            					<span class="m-status">{:C('CONSIGN_STATUS')[$consign_inf['status']]}</span>
+            				</div>
+            			</div>
+            			<neq name="consign_inf['modify_desc']" value="">
+	            			<div class="attr-list attr-list-name clearfix">
+	            				<div class="tag"></i></div>
+	            				<div class="frame"><font color="red">【{$consign_inf['modify_desc']}】</font></div>
+				            </div>
+			        	</neq>
+                        <div class="attr-list attr-list-name clearfix">
+							<div class="tag"><i class="required-icon"></i>名称：</div>
+							<div class="frame">
+								<input name="goods_name" class="input-title u-input-text" type="text" placeholder="50字以内" maxlength="50" value="{$consign_inf['goods_name']}"/>
+								<div class="m-tips">请使用【类型】商品名称【其他信息】的类似格式填写</div>
+								<span class="msg-span J-msg-span"></span>
+							</div>
+						</div>	
+						<div class="attr-list clearfix">
+							<div class="tag"><i class="required-icon"></i>类型：</div>
+							<div class="frame">
+                                <eq name="consign_inf['multi']" value="0">
+                                  <a id="J-no-attr" class="add_attr_btn active" href="javascript:;">无套装</a>
+                                  <a id="J-multi-attr" class="add_attr_btn" href="javascript:;">多套装</a>
+                                <else/>    
+                                  <a id="J-no-attr" class="add_attr_btn" href="javascript:;">无套装</a>
+                                  <a id="J-multi-attr" class="add_attr_btn active" href="javascript:;">多套装</a>
+                                </eq>
+                            </div>
+						</div>							
+						<div class="attr-list clearfix">
+                            <eq name="consign_inf['multi']" value="0">            
+                				<div class="tag"></div>
+    							<div id="J-attr-frame" class="frame"> 
+    								<div class="m-attr-data clearfix">
+    									<div class="item m-tooltip-wrap">
+    										<input class="u-input-text" type="text" name="num"  value="{$attr_val['num']}" placeholder="请输入数量" data-rule-required="true" data-msg-required="数量不能为空" data-rule-digits="true" data-msg-digits="数量只能输入整数"/>
+    										<span class="unit">件</span>
+    										<span class="tooltip J-msg-span"></span>
+    									</div>
+    									<div class="item m-tooltip-wrap">
+    										<input class="u-input-text" type="text" name="price" value="{$attr_val['price']}" placeholder="请输入售价" data-rule-required="true" data-msg-required="售价不能为空" data-rule-number="true" data-msg-number="请输入合法的售价"/>
+    										<span class="unit">元</span>
+    										<span class="tooltip J-msg-span"></span>
+    									</div>
+    								</div>	
+    							</div>					
+                           <else/>
+                                <div class="tag"></div>
+                                <div id="J-attr-frame" class="frame">
+                                   <div class="multi-attr-content">
+                                      <ul id="J-ul-attr" class="top">
+                                          <volist name="attr_des" id="vo" key="k">
+                                            <li class="J-attr-row clearfix" data-row="{$k}">
+                                              <div class="J-attr-title attr-title m-tooltip-wrap">
+                                                  <input class="J-input-edit input-edit valid" type="text" name="attr_des[{$k}][title]" placeholder="输入属性名" value="{$vo['title']}" data-rule-required="true" data-msg-required="属性名不能为空" aria-required="true"/>
+                                              </div>
+                                              <div class="J-attr-val-frame attr-val">
+                                                <foreach name="vo['val']" item="voo" key="key" >
+                                                  <div class="J-attr-val-list attr-val-list m-tooltip-wrap"> 	
+                                                    <input class="J-input-edit input-edit valid" type="text" name="attr_des[{$k}][val][{$key}]" placeholder="输入属性值" value="{$voo}" data-rule-required="true" data-msg-required="属性值不能为空" aria-required="true" aria-invalid="false">
+                                                    <i class="m-close close J-delete-attr-val">x</i>
+                                                    <span class="tooltip J-msg-span"></span>
+                                                  </div>
+                                                </foreach> 
+                                                <a class="add-btn J-add-attr-val">+添加</a>
+                                              </div>
+                                              <i class="close-item m-close J-delete-attr-row">x</i>
+                                            </li>  
+                                          </volist> 
+                                       </ul>
+                                      
+                                       <a id="J-add-attr-btn" class="add-attr-btn" href="javascript:;" <eq name="consign_inf['multi']" value="2"> style="display: none;" </eq>>添加规格项目</a>
+                                       <div id="J-result-wrap">
+                                           {$attr_form}
+                                       </div>
+                                   </div>
+                                </div>
+                           </eq> 
+                        </div>				 												
+					</div>
+				</div>
+				<input type="hidden" name="multi" value="{$consign_inf['multi']}"  />
+				<input type="hidden" name="public_attr_ids" value="{$consign_inf['public_attr_ids']}" />
+				<ul class="clearfix">					
+					<include file="Consign:edit_public_attr" />
+					<li class="saleProcess-list clearfix">
+						<div class="fl tag">原著：</div>
+						<div class="frame">
+							<input name="original" class="s-p-input u-input-text input-width-style-1" type="text" maxlength="50" placeholder="原创题材可不填，多个原著请用逗号分开" value="{$consign_inf['original']}"/>
+							<span class="msg-span J-msg-span"></span>
+						</div>  
+					</li>
+                    <li class="saleProcess-list clearfix">
+						<div class="fl tag"><i class="required-icon"></i>作者：</div>
+						<div class="frame">
+							<input name="author" class="s-p-input u-input-text input-width-style-1" type="text" maxlength="30" value="{$consign_inf['author']}"/>
+							<span class="msg-span J-msg-span"></span>
+						</div>  
+					</li>
+					<li class="saleProcess-list clearfix">
+						<div class="fl tag">CP：</div>
+						<div class="frame">
+							<input name="cp" class="s-p-input u-input-text input-width-style-1" type="text" maxlength="30" placeholder="多个CP请用逗号分开" value="{$consign_inf['cp']}"/>
+							<span class="msg-span J-msg-span"></span>
+						</div>  
+					</li>	
+                    <li class="saleProcess-list clearfix">
+						<div class="fl tag">商品简介：</div>
+						<div class="frame"> 
+						    <textarea class="s-p-textarea u-textarea" name="goods_desc">{$consign_inf['goods_desc']}</textarea>
+							<span class="msg-span J-msg-span"></span>
+						</div>
+					</li>		
+					<li class="saleProcess-list clearfix">
+						<div class="fl tag"><i class="required-icon"></i>商品参数：</div>
+						<div class="frame">
+			                <script id="editorParam" type="text/plain" style="width:100%;height:150px;" name="goods_param">
+                               {$consign_inf['goods_param']|htmlspecialchars_decode|stripslashes}
+                            </script>
+							<span class="msg-span J-msg-span"></span>
+						</div> 
+					</li>
+					<li id="J-detail-pic" class="saleProcess-list publicity-pic clearfix">
+						<div class="fl tag">
+							<div class="fr remark">
+								<p><i class="required-icon"></i>商品详细：</p>
+							</div>
+						</div>
+						<div class="frame">
+			                <script id="editorDetail" type="text/plain" style="width:100%;height:150px;" name="goods_detail">
+                              {$consign_inf['goods_detail']|htmlspecialchars_decode|stripslashes}
+                            </script>
+						</div>  							
+					</li>
+					<li class="separator"></li>
+					<li class="saleProcess-list clearfix">
+						<div class="fl tag">
+							<div class="fr tag-remark">通贩要求和提示：</div>
+						</div>
+						<div class="frame">
+							<textarea class="s-p-textarea u-textarea" name="claim" maxlength="200" placeholder="如前十名读者送出签绘">{$consign_inf['claim']}</textarea>
+							<span class="msg-span J-msg-span"></span>
+						</div>  
+					</li>	
+					<li class="saleProcess-list clearfix">
+						<div class="fl tag"><i class="required-icon"></i>样品提供：</div>
+						<div class="frame">
+							<ul class="flaw-product">
+								<li class="f-p-list clearfix">
+									<input id="sample-1" class="s-p-checkbox" type="radio" name="sample" value="1" data-rule-required="true" <eq name="consign_inf['sample']" value="1">checked="true"</eq> />
+									<label for="sample-1" class="falw-tip active">我是首次寄售该商品，提供一份样品（可使用瑕疵品） 请寄送时单独包装贴上标签</label>
+									<span class="msg-span J-msg-span msg-radio-span"></span>
+								</li>
+								<li class="f-p-list clearfix">
+									<input id="sample-2" class="s-p-checkbox" type="radio" name="sample" value="0" <eq name="consign_inf['sample']" value="0">checked="true"</eq> />
+									<label for="sample-2" class="falw-tip-2">我是二次委托，无需提供样品</label>
+								</li>							
+							</ul>
+						</div>
+					</li>						
+					<li class="saleProcess-list clearfix">
+						<div class="fl tag"><i class="required-icon"></i>瑕疵品处理方式：</div>
+						<div class="frame">
+							<ul class="flaw-product">
+								<li class="f-p-list clearfix">
+									<input id="flaw-1" class="s-p-checkbox" type="radio" name="treat_default" value="1" <eq name="consign_inf['treat_default']" value="1">checked="true"</eq> />
+									<label for="flaw-1" class="falw-tip active">默认御咖塘的瑕疵处理方式</label>
+								</li>
+								<li class="f-p-list clearfix">
+									<input id="flaw-2" class="s-p-checkbox" type="radio" name="treat_default" value="0" <eq name="consign_inf['treat_default']" value="0">checked="true"</eq> />
+									<label for="flaw-2" class="falw-tip-2">到货汇报后才决定如何处理<span>（这里可能会因为延迟确认而延误上架）</span></label>
+								</li>							
+							</ul>
+							<span class="msg-span J-msg-span"></span>
+						</div>
+					</li>							
+				</ul>
+				<div class="fl consignor-r">
+                    <input type="hidden" name="id" value="{$consign_inf['id']}"/>
+					<input id="J-next" type="submit" class="btn-next u-btn u-btn-primary" value="修改寄售申请"/>
+				</div>
+			</form>
+		</div>
+		<div class="saleProcess-r">
+               
+		</div>	
+	</div>
+	<include file="include:footer" />
+</div>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>注册雪狐商城</title>
+<load href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/log_reg.css" />
+<load href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/jquery-1.7.2.min.js" />
+
+<script type="text/javascript">
+$(function()
+{
+	//用户名
+	$('#regName').focus(function()
+	{
+		$(this).attr("class","text highlight"); //改变文本框边框颜色
+		$("#regName_error").attr("style","display:block"); //显示右侧提示
+		$("#regName_error").children("span").attr("style","font-style:normal");//设置字体为默认
+		$("#regName_error").children("span").html("4-20位字符"); //设置提示本文
+		$("#regName_error").attr("class","error focus"); //提示默认样式
+		$(".i-name").attr("style","display:block"); //显示文本框内右侧小图标
+		$("#regName_succeed").attr("style","display:none"); //隐藏文本框内右侧正确小图标
+	});
+	
+	$('#regName').blur(function()
+	{
+		$(this).attr("class","text"); //恢复文本框边框颜色
+		//判断文本框有无用户名及用户名长度
+		if($(this).val() == '')
+		{
+			$("#regName_error").attr("style","display:none"); //隐藏右侧提示
+		}
+		else if($(this).val().length<4 || $(this).val().length>20)
+		{
+			$("#regName_error").attr("class","error"); //提示改为警告样式
+			$("#regName_error").children("span").html("用户名长度只能在4-20位字符之间"); //设置提示本文
+		}
+		else
+		{
+			//设置提示文本字体,斜体
+			$("#regName_error").children("span").attr("style","font-style:italic");
+			$("#regName_error").children("span").html("检验中..."); //设置提示本文
+			setTimeout(function() {
+				//暂停0.5秒后执行
+				$.post('__CONTROLLER__/checkName',{'username':$('#regName').val()},function(data)
+				{
+					if(data.num == 1)
+					{
+						//存在用户名，不能注册
+						$("#regName_error").attr("class","error"); //提示改为警告样式
+						$("#regName_error").children("span").attr("style","font-style:normal");//设置字体为默认
+						$("#regName_error").children("span").html("该用户名已被使用，请重新输入"); //设置提示本文
+					}
+					else
+					{
+						//可以注册
+						$("#regName_error").attr("style","display:none"); //隐藏右侧提示
+						$(".i-name").attr("style","display:none"); //隐藏文本框内右侧小图标
+						$("#regName_succeed").attr("style","display:block"); //显示文本框内右侧正确小图标
+					}
+				});
+			},500);
+		}
+	});
+	
+	//密码
+	$('#pwd').focus(function()
+	{
+		$(this).attr("class","text highlight"); //改变文本框边框颜色
+		$("#pwd_error").attr("style","display:block"); //显示右侧提示
+		$("#pwd_error").children("span").html("6-20位字符"); //设置提示本文
+		$("#pwd_error").attr("class","error focus"); //提示默认样式
+		$(this).parent().children(".i-pass").attr("style","display:block"); //显示文本框内右侧小图标
+		$("#pwd_succeed").attr("style","display:none"); //隐藏文本框内右侧正确小图标
+	});
+	$('#pwd').blur(function()
+	{
+		$(this).attr("class","text"); //恢复文本框边框颜色
+		//判断文本框有无用户名及用户名长度
+		if($(this).val() == '')
+		{
+			$("#pwd_error").attr("style","display:none"); //隐藏右侧提示
+		}
+		else if($(this).val().length<6 || $(this).val().length>20)
+		{
+			$("#pwd_error").attr("class","error"); //提示改为警告样式
+			$("#pwd_error").children("span").html("密码长度只能在6-20位字符之间"); //设置提示本文
+		}
+		else
+		{
+			$("#pwd_error").attr("style","display:none"); //隐藏右侧提示
+			$(this).parent().children(".i-pass").attr("style","display:none"); //隐藏文本框内右侧小图标
+			$("#pwd_succeed").attr("style","display:block"); //显示文本框内右侧正确小图标
+			//如果确认密码不为空，则再判断是否一致
+			if($('#pwdRepeat').val() != '')
+			{
+				if($(this).val() != $('#pwdRepeat').val())
+				{
+					//匹配两次密码不同时处理
+					$("#pwdRepeat_error").attr("style","display:block"); //显示右侧提示
+					$("#pwdRepeat_error").attr("class","error"); //提示改为警告样式
+					$("#pwdRepeat_error").children("span").html("两次输入密码不一致"); //设置提示本文
+					$('#pwdRepeat').parent().children(".i-pass").attr("style","display:block"); //显示文本框内右侧小图标
+					$("#pwdRepeat_succeed").attr("style","display:none"); //隐藏文本框内右侧正确小图标
+				}
+			}
+		}
+	});
+	
+	
+	//确认密码
+	$('#pwdRepeat').focus(function()
+	{
+		$(this).attr("class","text highlight"); //改变文本框边框颜色
+		$("#pwdRepeat_error").attr("style","display:block"); //显示右侧提示
+		$("#pwdRepeat_error").children("span").html("6-20位字符"); //设置提示本文
+		$("#pwdRepeat_error").attr("class","error focus"); //提示默认样式
+		$(this).parent().children(".i-pass").attr("style","display:block"); //显示文本框内右侧小图标
+		$("#pwdRepeat_succeed").attr("style","display:none"); //隐藏文本框内右侧正确小图标
+	});
+	$('#pwdRepeat').blur(function()
+	{
+		$(this).attr("class","text"); //恢复文本框边框颜色
+		//判断文本框有无用户名及用户名长度
+		if($(this).val() == '')
+		{
+			$("#pwdRepeat_error").attr("style","display:none"); //隐藏右侧提示
+		}
+		else if($(this).val().length<6 || $(this).val().length>20)
+		{
+			$("#pwdRepeat_error").attr("class","error"); //提示改为警告样式
+			$("#pwdRepeat_error").children("span").html("确认密码长度只能在6-20位字符之间"); //设置提示本文
+		}
+		else if($(this).val() != $('#pwd').val())
+		{
+			//匹配两次密码不同时处理
+			$("#pwdRepeat_error").attr("class","error"); //提示改为警告样式
+			$("#pwdRepeat_error").children("span").html("两次输入密码不一致"); //设置提示本文
+			$(this).parent().children(".i-pass").attr("style","display:block"); //显示文本框内右侧小图标
+			$("#pwdRepeat_succeed").attr("style","display:none"); //隐藏文本框内右侧正确小图标
+		}
+		else
+		{
+			$("#pwdRepeat_error").attr("style","display:none"); //隐藏右侧提示
+			$(this).parent().children(".i-pass").attr("style","display:none"); //隐藏文本框内右侧小图标
+			$("#pwdRepeat_succeed").attr("style","display:block"); //显示文本框内右侧正确小图标
+		}
+	});
+	
+	//立即注册
+	$('#registsubmit').live("click",function()
+	{	
+		if($('#regName').val() == '')
+		{
+			$("#regName_error").attr("style","display:block"); //显示右侧提示
+			$("#regName_error").attr("class","error"); //提示改为警告样式
+			$("#regName_error").children("span").html("请输入用户名"); //设置提示本文
+		}
+		if($('#pwd').val() == '')
+		{
+			$("#pwd_error").attr("style","display:block"); //显示右侧提示
+			$("#pwd_error").attr("class","error"); //提示改为警告样式
+			$("#pwd_error").children("span").html("请输入密码"); //设置提示本文
+		}
+		if($('#pwdRepeat').val() == '')
+		{
+			$("#pwdRepeat_error").attr("style","display:block"); //显示右侧提示
+			$("#pwdRepeat_error").attr("class","error"); //提示改为警告样式
+			$("#pwdRepeat_error").children("span").html("请输入确认密码"); //设置提示本文
+			return false;
+		}
+		//输入都正确的情况下，提交控制器处理
+		if($("#regName_succeed").attr("style")=="display:block" && $("#pwd_succeed").attr("style")=="display:block" && $("#pwdRepeat_succeed").attr("style")=="display:block")
+		{
+			$.post('__CONTROLLER__/regUser',{'username':$('#regName').val(), 'password':$('#pwd').val()},function(data)
+			{
+				if(data.result == 1)
+				{
+					//处理成功
+					window.location='__ROOT__/index.php';
+				}
+			});
+		}
+	});
+});
+</script>
+</head>
+
+<body>
+	<div class="w">
+    	<div id="logo" class="ret_title">
+        	<a href="__APP__"><img src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/logo.png" alt="雪狐" width="170" height="60" /></a>
+            <b></b>
+        </div>
+    </div>
+    
+    <div id="regist" class="w">
+    	<div class="mt">
+        	<ul class="tab"><li>个人用户</li></ul>
+            <div class="extra"><span>我已经注册，现在就&nbsp;<a href="{:U('login/index')}">登录</a></span></div>
+        </div>
+        <div class="mc">
+        	<div class="form">
+            	
+                <div class="item" id="select-regName">
+                	<span class="label"><b>*</b>用户名：</span>
+                    <div class="fl item-ifo">
+                    	<input type="text" id="regName" name="regName" class="text" tabindex="1" />
+                        <i class="i-name" style="display:block"></i>
+                        <label id="regName_succeed" class="blank succeed" style="display:none"></label>
+                        <label id="regName_error" class="focus error" style="display:none"><span></span></label><!--focus error最终只留一个-->
+                    </div>
+                </div>
+                
+                <div class="item">
+                	<span class="label"><b>*</b>请设置密码：</span>
+                    <div class="fl item-ifo">
+                    	<input type="password" id="pwd" name="pwd" class="text" tabindex="2" />
+                        <i class="i-pass" style="display:block"></i>
+                        <label id="pwd_succeed" class="blank succeed" style="display:none"></label>
+                        <label id="pwd_error" class="focus error" style="display:none"><span></span></label>
+                    </div>
+                </div>
+                
+                <div class="item">
+                	<span class="label"><b>*</b>请确认密码：</span>
+                    <div class="fl item-ifo">
+                    	<input type="password" id="pwdRepeat" name="pwdRepeat" class="text" tabindex="3" />
+                        <i class="i-pass" style="display:block"></i>
+                        <label id="pwdRepeat_succeed" class="blank succeed" style="display:none"></label>
+                        <label id="pwdRepeat_error" class="focus error" style="display:none"><span>test</span></label>
+                    </div>
+                </div>
+                
+                <div class="item">
+                	<span class="label">&nbsp;</span>
+                    <div class="fl item-ifo">
+                    	<input type="button" id="registsubmit" class="btn-regist" tabindex="4" value="立即注册" onclick="javascript:void(0);" />
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="w">
+    	<div id="footer">
+        	<div>
+            	<a href="#" target="_blank">关于我们</a>|
+                <a href="#" target="_blank">联系我们</a>|
+                <a href="#" target="_blank">人才招聘</a>|
+                <a href="#" target="_blank">广告服务</a>|
+                <a href="#" target="_blank">手机雪狐</a>|
+                <a href="#" target="_blank">友情链接</a>|
+                <a href="#" target="_blank">雪狐社区</a>|
+                <a href="#" target="_blank">雪狐公益</a>
+            </div>
+            <div class="copyright">Copyright&nbsp;©&nbsp;2013&nbsp;&nbsp;雪狐商城&nbsp;www.StudyFox.com&nbsp;版权所有</div>
+        </div>
+    </div>
+</body>
+</html>

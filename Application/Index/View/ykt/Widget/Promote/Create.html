@@ -1,0 +1,21 @@
+<!-- 创作区 -->
+
+<!-- 头图 -->
+<eq name="block_sign" value="focus">
+   <volist id="vo" name="list" empty="头图" key="k">
+   			<eq name="k" value="1">
+        		<li><a target="_blank" href="{$vo['link']}"><img class="m-lazy" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/lazyload1140X350.png" data-original="__UPLOAD__{$vo['img']}!c1140x350.jpg"/></a></li>
+        	<else/>
+        		<li><a target="_blank" href="{$vo['link']}"><img src="__UPLOAD__{$vo['img']}!c1140x350.jpg"/></a></li>
+        </eq>
+   </volist> 
+</eq>
+
+<!-- 右图 -->
+<eq name="block_sign" value="right">
+   <volist id="vo" name="list" empty="右图" key="k">
+   	<if condition="$k elt 3">
+        <a href="{$vo['link']}" target="_blank"><img class="m-lazy" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/lazyload200X200.png" data-original="__UPLOAD__{$vo['img']}" /></a>
+    </if>
+   </volist> 
+</eq>

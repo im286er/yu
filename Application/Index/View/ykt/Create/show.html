@@ -1,0 +1,78 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/article.css"/>
+<script> 
+    var pageName = 'article';                                        
+    var seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';
+    //当前页
+    yktGlobal.pageName = 'sale';             
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+	<div class="article-list-wrap mainbody-2 clearfix">
+		<ul class="m-sub-nav clearfix mb-20">
+			<li>
+				<a <eq name="Think.get.cat" value="">class="active"</eq> href="{:U('Index/Create/index')}">创作首页</a>
+			</li>
+            <volist id="vo" name="catlist">
+          		<li>
+					<a href="{:U('Index/Create/show',array('cat'=>$vo['id']))}"
+                      <eq name="vo['id']" value="$Think.get.cat">class="active"</eq> >{$vo['cat_name']}
+                    </a>
+				</li>		                  	
+            </volist>			 		
+		</ul>
+		<div class="area-l">
+			<div class="menu">
+				<!--<a class="active" href="javascript:;">最新</a>
+				<a href="javascript:;">月热门</a>
+				<a href="javascript:;">总热门</a>-->
+			</div>
+			<ul class="bd">
+				<volist id="vo" name="list">
+					<li>
+						<a class="pic" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}" target="_blank"><img class="m-lazy" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/lazyload226X160.png" data-original="__UPLOAD__{$vo['title_img']}"/></a>
+						<div class="info">
+							<a class="title" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}" target="_blank">{$vo['title']}</a>
+							<div class="data">
+								<a class="name" href="#">{$vo['uid']|uidToField=###,'username'}</a>
+								<time>{$vo['add_time']|date="Y-m-d",###}</time>
+							</div>
+							<a class="txt" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}">{$vo['summary']}</a>
+							<div class="tool">
+								<div class="m-tool-r fr">
+									<a class="comment" href="javascript:;">{$vo['comment_num']}</a>
+									<a class="collect" href="javascript:;">{$vo['collect_num']}</a>
+									<a class="support" href="javascript:;">{$vo['support_num']}</a>
+								</div>			
+							</div>			
+						</div>
+					</li>			                  	
+				</volist> 		
+			</ul>
+	        <div class="m-paginator">
+	            {$page}
+	        </div>			
+		</div>
+		<div class="area-r">
+			<div class="share">
+				<div class="hd">跟塘友分享你的触生活</div>
+				<div class="summary">无论是小角虫还是大角虫，爱分享就是好角虫。 </div>
+				<a class="btn" href="{:U('Index/Article/contribute/t/anli')}" target="_blank"><i></i>我要投稿</a>
+			</div>
+			<div class="hot m-side-box">
+				<div class="top clearfix">
+					<div class="title">热门</div>
+				</div>
+				{:W('Article/heat',array($cat_id))}   					
+				
+			</div>	
+			<div class="m-side-ad mt-10">
+				{:W('Promote/show',array($Think.CONTROLLER_NAME,'right','1'))} 				
+			</div>							
+		</div>		
+	</div>    
+<include file="include:footer" />
+</div>    
+
+
+
+

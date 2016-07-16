@@ -1,0 +1,31 @@
+<include file="Space:space_header" />
+<div class="body-bg">
+	<div class="space-wrap mainbody-2">
+		<div class="box article">
+			<div class="hd">
+				文章	
+			</div>
+            <notempty name="list">
+                <ul class="bd clearfix">
+    				<volist id="vo" name="list">
+    				    <li>
+    				        <a class="pic" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}"><img class="m-lazy" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/lazyload360X200.png" data-original="__UPLOAD__{$vo['title_img']}!c360x200.jpg" /></a>  
+    				        <a class="txt" href="{:U('Index/Article/detail',array('id'=>$vo['id']))}">{$vo['title']}</a>
+    				        <a class="summary">{$vo['summary']}</a>
+    				        <div class="label">{$vo['cat_name']}</div>
+    				        <time>{$vo['add_time']|date="Y-m-d",###}</time>      
+    				    </li>
+    				</volist>         
+                </ul>
+            <else />
+                <div class="m-no-record">没有相关记录</div>
+            </notempty>
+		</div>
+	</div> 
+	<div class="space-page">
+          {$page}
+	</div>
+    <include file="include:footer" />
+</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/article.css"/>
+<script> 
+    var pageName = 'article';                                        
+    var seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/';
+    //当前页
+    yktGlobal.pageName = 'other';             
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="body-bg" >
+	<div class="article-index-wrap mainbody-2 clearfix">
+		<ul class="m-sub-nav clearfix mb-20">
+			<li>
+				<a class="active" href="{:U('Index/Create/index')}">创作首页</a>
+			</li>
+            <volist id="vo" name="catlist">
+          		<li>
+					<a href="{:U('Index/Create/show',array('cat'=>$vo['id']))}">{$vo['cat_name']}</a>
+				</li>		                  	
+            </volist>						 		
+		</ul>
+		<div class="banner m-flexslider">
+			<div id="J-slidedown">
+				<ul class="slides">
+                	{:W('Promote/show',array($Think.CONTROLLER_NAME,'focus','4'))}}                                    
+				</ul>
+			</div>	
+		</div>
+		<div class="hd clearfix">
+			<div class="fl txt">最新</div>
+			<a class="fr btn" href="{:U('Index/Article/contribute',array('t'=>'create'))}"><i>+</i>我要投稿</a>
+		</div>
+		<div class="bd">
+			<ul class="clearfix">
+                {:W('Article/newest',array($catlist))}
+			</ul>
+		</div>
+	</div>
+<include file="include:footer" />
+</div>

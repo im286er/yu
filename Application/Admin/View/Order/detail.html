@@ -1,0 +1,32 @@
+<table class="list" width="100%" style >
+    <tbody>
+        <tr><td>订单号</td><td>{$vo['order_sn']}</td></tr>
+        <tr><td>状态</td><td>{:C('ORDER_STATUS')[$vo['status']]}</td></tr>
+        <tr><td>下单用户</td><td>{$vo['uid']|uidToField=###,'username'}</td></tr>
+        <tr><td>收货地址</td><td>{$vo['address_id']|addressMsg=###,'location'}</td></tr>
+        <tr><td>收货人</td><td>{$vo['address_id']|addressMsg=###,'realname'}</td></tr>
+        <tr><td>收货人电话</td><td>{$vo['address_id']|addressMsg=###,'mobile'}</td></tr>
+        <tr><td>快递公司</td><td>{:C('EXPRESS_COM')[$vo['express_com']]}</td></tr>
+        <tr><td>快递单号</td><td>{$vo['express_num']}</td></tr>
+        <tr><td>运费优惠</td><td>{$vo['express_fee_coupon']==0?'无':'有'}</td></tr>
+        <tr><td>运费</td><td>{$vo['express_fee']}</td></tr>
+        <tr><td>商品总计</td><td>{$vo['goods_price']}</td></tr>
+        <tr><td>订单总计</td><td>{$vo['order_price']}</td></tr>
+        <tr><td>添加时间</td><td>{$vo['add_time']|date="Y-m-d H:i:s",###}</td></tr>
+        <tr><td>支付时间</td><td><notempty name="vo['pay_time']">{$vo['pay_time']|date="Y-m-d H:i:s",###}</notempty></td></tr>
+        <tr><td>配货时间</td><td><notempty name="vo['assort_time']">{$vo['assort_time']|date="Y-m-d H:i:s",###}</notempty></td></tr>
+        <tr><td>支付方式</td><td>{:C('PAY_WAY')[$vo['pay_way']]}</td></tr>
+        <tr><td>支付宝流水号</td><td>{$vo['alipay_serial']}</td></tr>
+        <tr><td>应发货时间</td><td><notempty name="vo['send_time']">{$vo['send_time']|date="Y-m-d H:i:s",###}</notempty></td></tr>
+        <tr><td>实际发货时间</td><td><notempty name="vo['send_time_real']">{$vo['send_time_real']|date="Y-m-d H:i:s",###}</notempty></td></tr>
+        <tr><td>收货时间</td><td><notempty name="vo['take_time']">{$vo['take_time']|date="Y-m-d H:i:s",###}</notempty></td></tr>
+        <tr><td>取消时间</td><td><notempty name="vo['cancel_time']">{$vo['cancel_time']|date="Y-m-d H:i:s",###}</notempty></td></tr>
+    </tbody>
+</table>
+<style>
+.dialogContent{
+    overflow: auto  !important;
+    height: auto !important;
+    height: 82%  !important;
+}
+</style>

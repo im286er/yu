@@ -1,0 +1,40 @@
+<script>
+//UE层 ID后增加时间戳，修复id保留问题
+var UEdate = Date.parse(new Date());
+var UEid = $('.J-UEcontainer').prop('id');
+UEid = UEid + UEdate;
+$('.J-UEcontainer').prop('id',UEid);  
+
+//UE配置
+var UEurl="{:U('Admin/Ueditor/index')}";
+var ue = UE.getEditor(UEid,{
+    serverUrl :UEurl,
+    UEDITOR_HOME_URL:'__PUBLIC__/ueditor/',
+    initialFrameWidth:756,
+    initialFrameHeight:380,
+});          
+</script> 
+<style type="text/css">
+.pageFormContent span { padding-left:0;}
+</style>
+<div class="pageContent">
+	<form method="post" action="__CONTROLLER__/update" class="pageForm required-validate" enctype="multipart/form-data" onsubmit="return iframeCallback(this,dialogAjaxDone);">
+    	<input type="hidden" name="callbackType" value="closeCurrent" />
+        <input type="hidden" name="id" value="{$Think.request.id}" />
+    	<div class="pageFormContent" layoutH="58">
+            <div class="unit">
+            	<label>标题：</label>
+                <input type="text" name="title"  size="33" value="{$vo.title}" />
+            </div>
+            <div class="unit">
+               <script id="UEcontainer" class="J-UEcontainer" name="content" type="text/plain">{$vo.content|htmlspecialchars_decode|stripslashes}</script>
+            </div>
+        </div>
+        <div class="formBar">
+        	<ul>
+            	<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+</div>

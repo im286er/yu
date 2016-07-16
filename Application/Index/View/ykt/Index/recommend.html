@@ -1,0 +1,25 @@
+<volist id="vo" name="goods_promote">
+    <li>
+        <div class="pic">
+            <a href="{:U('Index/Goods/item',array('id'=>$vo['id']))}" target="_blank">
+                <img src="__UPLOAD__{$vo.goods_img}!c200x200.jpg"/>
+                <div class="overlayh"></div>
+                <div class="overlaym"></div>
+                <div class="overlayb"></div>                
+            </a>
+            <switch name="vo['status']"> 
+                <case value="1"><i class="presell"></i></case>
+                <case value="2"><i class="stock"></i></case>
+                <case value="3"><i class="add"></i></case>
+            </switch>  
+            <eq name="vo['pre_sale']" value="1">
+                <i class="foreshow"></i>
+            </eq>                                  
+        </div>
+        <a class="title" href="#" target="_blank">{$vo.goods_name}</a>
+        <a class="classify" href="#">{$vo.original|default='原创'}</a>
+    </li>                            
+</volist>                          
+<li class="more"><a href="#">更多</a></li>                                            
+
+              

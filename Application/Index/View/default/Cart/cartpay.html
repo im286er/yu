@@ -1,0 +1,506 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>雪狐ThinkPHP商城系统</title>
+<load href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/main.css" />
+<script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	<!--选择省份-->
+	$("#consignee_province").change(function()
+	{
+		var pid =$("#consignee_province").val();
+		$.post('__CONTROLLER__/getArea',{'pid':pid},function(data)
+		{
+			$("#consignee_city").empty(); //清空市下拉框
+			$("#consignee_city").append("<option value=''>请选择：</option>"); //初始化市第一条数据
+			$("#consignee_county").empty(); //同时需要清空县下拉框
+			$("#consignee_county").append("<option value=''>请选择：</option>"); //初始化县第一条数据
+			
+			//alert(data[1]['areaname']);
+			for(var i=0; i<data.length; i++)
+			{
+				$("#consignee_city").append("<option value='"+data[i]['id']+"'>"+data[i]['areaname']+"</option>");
+			}
+		});
+	});
+	
+	<!--选择市区-->
+	$("#consignee_city").change(function()
+	{
+		var pid =$("#consignee_city").val();
+		$.post('__CONTROLLER__/getArea',{'pid':pid},function(data)
+		{
+			$("#consignee_county").empty(); //清空县下拉框
+			$("#consignee_county").append("<option value=''>请选择：</option>"); //初始化第一条数据
+			
+			//alert(data[1]['areaname']);
+			for(var i=0; i<data.length; i++)
+			{
+				$("#consignee_county").append("<option value='"+data[i]['id']+"'>"+data[i]['areaname']+"</option>");
+			}
+		});
+	});
+	
+	<!--鼠标移入、移出 $(".item").mouseenter(function() 这种写法无法操作动态添加元素，应采用下面的写法-->
+	$(".item").live("mouseenter",function()
+	{
+		$(this).attr("class","item item-selected");
+		$(this).children("span").attr("style","display:inline");//显示编辑、删除链接
+	});
+	$(".item").live("mouseleave",function()
+	{
+		//判断点击的ITEM内input有没有被选中
+		var radio = $(this).children("input").attr("checked");
+		if(radio != "checked")
+		{
+			$(this).attr("class","item"); //第2步，input没被选中则取消背景
+			$(this).children("span").attr("style","display:none");//隐藏编辑、删除链接
+		}
+	});
+	
+	//鼠标点击选中,在点编辑链接后执行
+	$(".item").live("click",function()
+	{
+		//将全部item背景全部取消
+		$(".item").attr("class","item");
+		//设置当前ITEM背景
+		$(this).attr("class","item item-selected"); //第1步
+		
+		//将全部ITEM内input的checked属性全删除
+		$(".item").children("input").removeAttr("checked");
+		//设置当前ITEM内input为checked
+		$(this).children("input").attr("checked","checked");
+		
+		//隐藏全部其它span中编辑和删除链接
+		$(".item-action").attr("style","display:none");
+		//显示当前span中编辑和删除链接
+		$(this).children("span").attr("style","display:inline");
+		
+		//判断：如果是点击的新地址，则显示新增FORM表单
+		var radioid = $(this).children("input").attr("id");
+		if(radioid == "consignee_radio_new")
+		{
+			$("#consignee-form").attr("style","padding-left:12px;display:block;"); //显示表单
+		}
+		else
+		{
+			//如果未点击编辑链接则隐藏，点击则删除编辑链接type属性
+			if($("#consignee-form").attr("type") != "edit")
+			{
+				$("#consignee-form").attr("style","padding-left:12px;display:none;"); //隐藏表单
+			}
+			else
+			{
+				$("#consignee-form").removeAttr("type");
+			}
+		}
+	});
+	
+	//保存收货人信息，分三种情况：1 新增 2 编辑 3 默认地址
+	$(".btn-submit").click(function()
+	{
+		//详细区分点击三种情况1 新增 2 编辑 3 修改默认地址
+		//当open==1 (id==0新增、id!=0编辑)、open==0 只改默认地址状态
+		
+		//先获取收货地址ID,0为新增 非0为编辑或修改默认地址
+		var id = $("input[checked='checked']").attr("value");
+		
+		//检测表单是否打开 0未打开 1打开
+		if($("#consignee-form").attr("style") == "padding-left:12px;display:none;")
+		{
+			var open = 0;
+		}
+		else
+		{
+			var open =1;
+		}
+		
+		if(open== 1) <!--id==0新增、id!=0编辑-->
+		{
+			//收货人
+			var consignee_name = $("#consignee_name").val();
+			if(consignee_name == '')
+			{
+				$("#name_div").attr("class","list message");
+				$("#name_div_error").html("请您填写收货人姓名");
+				$("#name_div_error").attr("class","status error");
+			}
+			else
+			{
+				$("#name_div").attr("class","list");
+				$("#name_div_error").html("");
+				$("#name_div_error").attr("class","status");
+			}
+			
+			//所在地区
+			var consignee_province = $("#consignee_province").val();
+			var consignee_city = $("#consignee_city").val();
+			var consignee_county = $("#consignee_county").val();
+			if(consignee_province == '' || consignee_city == '' || consignee_county == '')
+			{
+				$("#area_div").attr("class","list message");
+				$("#area_div_error").html("请您选择完整的地区信息");
+				$("#area_div_error").attr("class","status error");
+			}
+			else
+			{
+				$("#area_div").attr("class","list");
+				$("#area_div_error").html("");
+				$("#area_div_error").attr("class","status");
+			}
+			
+			//详细地址
+			var consignee_address = $("#consignee_address").val();
+			if(consignee_address == '')
+			{
+				$("#address_div").attr("class","list message");
+				$("#address_div_error").html("请您填写收货人详细地址");
+				$("#address_div_error").attr("class","status error");
+			}
+			else
+			{
+				$("#address_div").attr("class","list");
+				$("#address_div_error").html("");
+				$("#address_div_error").attr("class","status");
+			}
+			
+			//手机号码
+			var consignee_call = $("#consignee_call").val();
+			if(consignee_call == '' || consignee_call.length != 11)
+			{
+				$("#call_div").attr("class","list message");
+				$("#call_div_error").html("请您填写收货人手机号码或号码有误");
+				$("#call_div_error").attr("class","status error");
+			}
+			else
+			{
+				$("#call_div").attr("class","list");
+				$("#call_div_error").html("");
+				$("#call_div_error").attr("class","status");
+			}
+			
+			//将表单数据添加到数据库
+			$.post('__CONTROLLER__/addAddress',{'realname':consignee_name,'province':consignee_province,'city':consignee_city,'county':consignee_county,'address':consignee_address,'mobile':consignee_call,'id':id,'open':open},function(data)
+			{
+				if(data.result == 1)
+				{
+					//无论是新增还是编辑公共部分需要处理，相同
+					//更新单条默认数据
+					$("#addressInf1").html(consignee_name+"&nbsp;&nbsp;"+consignee_call);
+					var province_text = $("#consignee_province option:selected").text();//取出省名
+					var city_text = $("#consignee_city option:selected").text();//取出市名
+					var county_text = $("#consignee_county option:selected").text();//取出县名
+					$("#addressInf2").html(province_text+"&nbsp;&nbsp;"+city_text+"&nbsp;&nbsp;"+county_text+"&nbsp;&nbsp;"+consignee_address);
+					
+					$("#step-1").attr("class","step step-complete"); //显示细边框
+					$("#existAddress").attr("style","display:block"); //显示单条收货地址
+					$("#noexistAddress").attr("style","display:none"); //隐藏新增表单
+					
+					if(id == 0)
+					{
+						//数据库新增记录后，原列表也需同时新加一条记录
+						
+						//先去除当前radio选中状态和背景色、隐藏form
+						$("#consignee_radio_new").removeAttr("checked");
+						$("#item_new").attr("class","item");
+						$("#consignee-form").attr("style","padding-left:12px;display:none;"); //隐藏表单
+						
+						//在列表中新增一条记录
+						var insertInfo ="<div class='item item-selected'><input type='radio' class='hookbox' value='"+data.newid+"' name='consignee_radio' checked='checked'><label><b>"+ consignee_name +"</b>&nbsp;&nbsp;"+province_text+city_text+county_text+consignee_address+"&nbsp;&nbsp;&nbsp;"+consignee_call+"&nbsp;&nbsp;</label><span class='item-action' style='display:inline;'><a id='editAddress' href='javascript:void(0);'>编辑</a>&nbsp;&nbsp;<a href='javascript:void(0);' id='delAddress'>删除</a></span></div>";
+						$("#item_new").before(insertInfo);
+					}
+					else
+					{
+						//编辑后更新当前列表数据
+						var editInfo = "<b>"+ consignee_name +"</b>&nbsp;&nbsp;"+province_text+city_text+county_text+consignee_address+"&nbsp;&nbsp;&nbsp;"+consignee_call+"&nbsp;&nbsp;";
+						$("input[checked='checked']").parent().children("label").html(editInfo);
+					}
+				}
+			});
+		}
+		else
+		{
+			//只改状态
+			$.post('__CONTROLLER__/addAddress',{'id':id,'open':open},function(data)
+			{
+				$("#addressInf1").html(data.realname+"&nbsp;&nbsp;"+data.mobile);
+				$("#addressInf2").html(data.province+"&nbsp;&nbsp;"+data.city+"&nbsp;&nbsp;"+data.county+"&nbsp;&nbsp;"+data.address);
+				
+				$("#step-1").attr("class","step step-complete"); //显示细边框
+				$("#existAddress").attr("style","display:block"); //显示单条收货地址
+				$("#noexistAddress").attr("style","display:none"); //隐藏新增表单
+			});
+		}
+		
+	});
+	
+	//点击修改链接切换到新增表单界面
+	$("#changeAddress").click(function()
+	{
+		$("#step-1").attr("class","step step-complete step-current"); //显示粗边框
+		$("#existAddress").attr("style","display:none"); //隐藏单条收货地址
+		$("#noexistAddress").attr("style","display:block"); //显示新增表单
+	});
+	
+	//点击编辑链接
+	$("#editAddress").live("click",function()
+	{
+		$("#consignee-form").attr("style","padding-left:12px;display:block;"); //显示表单
+		//设置一个编辑标识
+		$("#consignee-form").attr("type","edit");
+		//获取当前编辑所在ITEM的INPUT VALUE，即地址ID
+		var id = $(this).parent().parent().children("input").attr("value");
+		//将ID发送到控制器获取所有地址信息
+		$.post('__CONTROLLER__/editAddress',{'id':id},function(data)
+		{
+			$("#consignee_name").val(data.realname);//收货人
+			$("#consignee_address").val(data.address);//收货地址
+			$("#consignee_call").val(data.mobile);//收货人手机
+			
+			//选中省份
+			$("#consignee_province").val(data.province);
+			
+			$("#consignee_city").empty(); //清空市下拉框
+			$("#consignee_city").append("<option value=''>请选择：</option>"); //初始化市第一条数据
+			$("#consignee_county").empty(); //同时需要清空县下拉框
+			$("#consignee_county").append("<option value=''>请选择：</option>"); //初始化县第一条数据
+			
+			var count = data['city'].length;
+			for(var i=0; i<count; i++)
+			{
+				$("#consignee_city").append("<option value='"+data['city'][i]['id']+"'>"+data['city'][i]['areaname']+"</option>");
+			}
+			//选中市
+			$("#consignee_city").val(data.city_id);
+			
+			var num = data['county'].length;
+			for(var i=0; i<num; i++)
+			{
+				$("#consignee_county").append("<option value='"+data['county'][i]['id']+"'>"+data['county'][i]['areaname']+"</option>");
+			}
+			//选中县
+			$("#consignee_county").val(data.county_id);
+		});
+	});
+	
+	//点击删除链接
+	$("#delAddress").live("click",function()
+	{
+		//获取删除链接所在INPUT的ID
+		var id = $(this).parent().parent().children("input").attr("value");
+		//删除收货地址DIV
+		$(this).parent().parent().remove();
+		
+		//将ID传给控制器删除
+		$.post('__CONTROLLER__/delAddress',{'id':id},function(data)
+		{
+			//将返回的data.newid记录设为高亮
+			$("input[value='"+data.newid+"']").parent().attr("class","item item-selected");
+			//将其选中
+			$("input[value='"+data.newid+"']").attr("checked","checked");
+			//显示编辑和删除链接
+			$("input[value='"+data.newid+"']").parent().children("span").attr("style","display:inline");
+		});
+	});
+	
+	//最终支付按钮
+	$("#payforgoods").click(function()
+	{
+		if($.trim($("#step-1").attr("class"))=="step step-complete" && $("#existAddress").attr("style")=="display:block")
+		{
+			window.location.href="__MODULE__/pay/submit";
+		}
+	});
+});
+</script>
+</head>
+
+<body>
+	{:W('Template/top')}
+    <!--nav end-->
+
+    <div class="w m3">
+    	<div class="mt"><h2></h2></div>
+        <div class="checkout-steps">
+        	<!--没有默认地址，直接显示新增表单，有默认地址只显示一条记录-->
+        	<div id="step-1" class="step step-complete <if condition='!$isExistAddress'>step-current</if>">
+            
+            	<div id="existAddress" style="<if condition='$isExistAddress'>display:block<else/>display:none</if>">
+                    <div class="step-title">
+                    	<strong>收货人信息</strong>
+                    	<span class="step-action" id="consignee_edit"><a id="changeAddress" href="javascript:void(0);">[修改]</a></span>
+                    </div>
+                    <div class="step-content">
+                        <div class="payment-ship">
+                            <div class="sbox">
+                                <span id="addressInf1">{$defaultAddress.realname}&nbsp;&nbsp;{$defaultAddress.mobile}</span><br>
+                                <span id="addressInf2">{$defaultAddress.province|getAreaName}&nbsp;&nbsp;{$defaultAddress.city|getAreaName}&nbsp;&nbsp;{$defaultAddress.county|getAreaName}&nbsp;&nbsp;{$defaultAddress.address}</span>
+                            </div>
+                        </div>
+                    </div>
+            	</div>
+                
+            	<div id="noexistAddress" style="<if condition='$isExistAddress'>display:none<else/>display:block</if>">
+                    <div class="step-title"><strong>收货人信息</strong></div>
+                    <div class="step-content">
+                        <div class="form">
+    
+                            <!--已有地址显示 开始-->
+                            <volist name="totalAddress" id="vototalAddress">
+                                <div class="<if condition='$vototalAddress.status eq 1'>item item-selected<else/>item</if>"><!--默认地址加上背景-->
+                                    <input type="radio" class="hookbox" value="{$vototalAddress.id}" name="consignee_radio" <if condition='$vototalAddress.status eq 1'>checked="checked"</if>>
+                                    <label><b>{$vototalAddress.realname}</b>&nbsp;&nbsp;{$vototalAddress.province|getAreaName}{$vototalAddress.city|getAreaName}{$vototalAddress.county|getAreaName}{$vototalAddress.address}&nbsp;&nbsp;&nbsp;{$vototalAddress.mobile}&nbsp;&nbsp;</label>
+                                    <span class="item-action" style="<if condition='$vototalAddress.status eq 1'>display:inline;<else/>display:none;</if>"><a id="editAddress" href="javascript:void(0);">编辑</a>&nbsp;&nbsp;<a id="delAddress" href="javascript:void(0);">删除</a></span>
+                                </div>
+                            </volist>
+                            <!--已有地址显示 结束-->
+                            
+                            <!--使用新地址 开始-->
+                            <div id="item_new" class="<if condition='$isExistAddress'>item<else/>item item-selected</if>">
+                                <input type="radio" class="hookbox" name="consignee_radio" id="consignee_radio_new" value="0" <if condition='!$isExistAddress'>checked="checked"</if>>
+                                <label>使用新地址</label>
+                            </div>
+                            <form>
+                                <div class="consignee-form" id="consignee-form" style="padding-left:12px;<if condition='$isExistAddress'>display:none;<else/>display:block;</if>">
+                                    <div class="list" id="name_div">
+                                        <span class="lable"><em>*</em>收货人：</span>
+                                        <div class="field"><input type="text" class="textbox" id="consignee_name" maxlength="20"></div>
+                                        <span class="status" id="name_div_error"></span>
+                                    </div>
+                                    
+                                    <div class="list select-address" id="area_div">
+                                        <span class="lable"><em>*</em>所在地区：</span>
+                                        <div class="field">
+                                            <span id="span_area">
+                                                <span id="span_province">
+                                                    <select id="consignee_province">
+                                                        <option value="">请选择：</option>
+                                                        <volist name="province" id="voprovince">
+                                                            <option value="{$voprovince.id}">{$voprovince.areaname}</option>
+                                                        </volist>
+                                                    </select>
+                                                </span>
+                                                <span id="span_city">
+                                                    <select id="consignee_city">
+                                                        <option value="">请选择：</option>
+                                                    </select>
+                                                </span>
+                                                <span id="span_county">
+                                                    <select id="consignee_county">
+                                                        <option value="">请选择：</option>
+                                                    </select>
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <span class="status" id="area_div_error"></span>
+                                    </div>
+                                    
+                                    <div class="list full-address" id="address_div">
+                                        <span class="lable"><em>*</em>详细地址：</span>
+                                        <div class="field">
+                                            <span class="fl selected-address" id="areaNameTxt"></span>
+                                            <input type="text" class="textbox" maxlength="50" id="consignee_address">
+                                        </div>
+                                        <span class="status" id="address_div_error"></span>
+                                    </div>
+                                    
+                                    <div class="list" id="call_div">
+                                        <span class="lable"><em>*</em>手机号码：</span>
+                                        <div class="field">
+                                            <input type="text" class="textbox" maxlength="11" id="consignee_call">
+                                        </div>
+                                        <span class="status" id="call_div_error"></span>
+                                    </div>
+                                    
+                                </div>
+                            </form>
+                            
+                            <div class="form-btn">
+                                <a href="javascript:void(0);" class="btn-submit" onClick=""><span>保存收货人信息</span></a>
+                            </div>
+                            
+                            <!--使用新地址 结束-->
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div id="step-2" class="step step-complete">
+            	<div class="step-title"><strong>支付及配送方式</strong></div>
+                <div class="step-content">
+                	<div class="payment-ship">
+                    	<div class="sbox">
+                        	<span>在线支付(支付宝)</span><br>
+                            <span>雪狐快递&nbsp;&nbsp;<font>工作日、双休日与节假日均可送货</font></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="step-3" class="step step-complete">
+            	<div class="step-title"><strong>发票信息</strong></div>
+                <div class="step-content">
+                	<div class="payment-ship">
+                    	<div class="sbox">
+                        	<span>普通发票（电子）&nbsp;&nbsp;个人&nbsp;&nbsp;明细</span><br>
+                            <span><font>温馨提示：
+发票的开票金额不包括雪狐卡、优惠券支付部分</font></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="step-4" class="step step-complete">
+            	<div class="step-title"><strong>商品清单</strong><a href="__MODULE__/cart/cartlist" class="return-edit">返回修改购物车</a></div>
+                <div class="step-content">
+                	<!--定单商品信息 begin-->
+                	<div class="part-order">
+                    	
+                        <div class="part-head">
+                        	<div class="fore">商品</div>
+                            <div>雪狐价</div>
+                            <div>数量</div>
+                            <div>库存状态</div>
+                        </div>
+                        
+                        <div class="part-body">
+                        	<volist name="cart_list" id="vo">
+                                <div class="p-goods">
+                                    <div class="p-img"><a href="__MODULE__/goods/index/id/{$vo.gid}" target="_blank"><img src="__UPLOAD__{$vo['cartgoods']['goods_img']}" width="50" height="50" alt=""></a></div>
+                                    <div class="p-name"><a href="__MODULE__/goods/index/id/{$vo.gid}" target="_blank">
+{$vo['cartgoods']['goods_name']}</a><br><span>商品编号：{$vo.gid}</span></div>
+                                    <div class="cell p-price">￥{$vo['cartgoods']['goods_price']|number_format=###,2,'.',''}</div>
+                                    <div class="cell p-quantity">x {$vo.num}</div>
+                                    <div class="cell p-inventory">有货</div>
+                                </div>
+                            </volist>
+                        </div>
+                        
+                        <div class="order-summary">
+                        	<div class="summary-inf fr">
+                            	<span><em>{$cart_num}</em> 件商品，总商品金额：</span><em class="price">￥{$cart_price|number_format=###,2,'.',''}</em>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <!--定单商品信息 end-->
+                    
+                    <div class="checkout-btn">
+                    	<span class="total">应付总额：<strong>￥{$cart_price|number_format=###,2,'.',''}</strong>元</span>
+                        <a id="payforgoods" href="#"></a>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!--底部 begin-->
+    {:W('Template/bottom')}
+    <!--底部 end-->
+</body>
+</html>

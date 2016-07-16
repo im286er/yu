@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>雪狐ThinkPHP商城系统</title>
+<load href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/main.css" />
+<load href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/css.css" />
+<script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/base.js"></script>
+<script type="text/javascript">
+function goods_reduce()
+{
+	var num_val = document.getElementById('buy-num');
+	var new_num = num_val.value;
+	if(isNaN(new_num))
+	{
+		alert('请输入数字');
+		num_val.value = 1;
+		return false;
+	}
+	var Num = parseInt(new_num);
+	if(Num>1)
+	{
+		Num = Num-1;
+		num_val.value = Num;
+		
+		var cart_a = document.getElementById('initcart');
+		cart_a.href = "__MODULE__/cart/index/id/{$good_inf.id}/num/"+Num;
+	}
+}
+
+function goods_add()
+{
+	var num_val = document.getElementById('buy-num');
+	var new_num = num_val.value;
+	if(isNaN(new_num))
+	{
+		alert('请输入数字');
+		return false;
+	}
+	var Num = parseInt(new_num);
+	Num = Num+1;
+	num_val.value = Num;
+	
+	var cart_a = document.getElementById('initcart');
+	cart_a.href = "__MODULE__/cart/index/id/{$good_inf.id}/num/"+Num;
+}
+
+$(function(){
+/*
+	$("a[name='goToGood']").click(function()
+	{
+		//只有当点击非选中属性才执行
+		if(!$(this).parent().hasClass("selected"))
+		{
+			
+			//获取被点击私有属性ID
+			id = $(this).parent().attr("id");
+			//获取当前同一行私有属性被选中的ID
+			selected_id = $(this).parent().siblings('.selected').attr("id");
+			//商品ID
+			goodid = {$good_inf.id};
+			$.post('__CONTROLLER__/getNewGoodId',{'id':id, 'selected_id':selected_id, 'goodid':goodid},function(data)
+			{
+				//if(data>0)
+//				{
+//					window.location.href = "__ACTION__/id/"+data;
+//				} else {
+//					alert(data)
+//				}
+                 alert(data);
+			});
+		}
+	});
+*/
+	$("a[name='goToGood']").click(function(){
+		var thisSelected = $(this).parent().hasClass("selected");
+		var thisDisabled = $(this).parent().hasClass("disabled");
+		if(!thisSelected && !thisDisabled){
+			//商品ID
+			goodid = {$good_inf.id};
+			
+			//高亮
+			$(this).parent().addClass("selected").end().parent().siblings().removeClass("selected");
+			
+			//第一个私有属性ID
+			var firstId = $('.J-first-private').find('.selected').attr('id');
+			firstId = ',' + firstId + ','
+			//获取被点击私有属性ID
+			var arrId = new Array(),
+			arrSecondId = $(this).parents('.J-choose-private').siblings().find('.selected').attr('id');
+			
+			arrId[0] = $(this).parent().attr("id");
+			arrSecondId ? arrId[1] = arrSecondId : '';
+			if(arrId.length > 1){
+				arrId.sort();
+				var privateId = arrId.join(',');			
+				privateId = ',' + privateId + ','
+			} else {
+				privateId = firstId;
+			}			
+
+            $.post('__CONTROLLER__/getNewGoodId',{'firstId':firstId, 'privateId':privateId, 'goodid':goodid},function(data){
+                if(data>0){
+                   window.location.href = "__ACTION__/id/"+data;
+                } 
+			});
+		}
+	})
+});
+</script>
+</head>
+<style>
+#choose .item.disabled a{
+    border: 1px dashed #ccc;
+    color: #999;
+	cursor: not-allowed;
+}
+#choose .item.disabled a:hover{
+	padding-left:5px;
+}
+</style>
+<body>
+	{:W('Template/top')}
+    <!--nav end-->
+    
+    <div class="w">
+    	<div class="catnav">
+        	<strong>{$catname_top}</strong>
+            <span>&nbsp;&gt;&nbsp;{$cat_mid.cat_name}&nbsp;&gt;&nbsp;<a href="__MODULE__/list/index/id/{$cat.id}" target="_blank">{$cat.cat_name}</a></span>
+        </div>
+    </div>
+    
+    <!--中间主要信息 begin-->
+    <div class="w">
+    	<div id="product-intro">
+        	<!--右侧商品基本信息 begin-->
+            <div id="name">
+            	<h1>{$good_inf.goods_name}</h1>
+                <strong>{$good_inf.goods_name_exp}</strong>
+            </div>
+            <div id="good_show">
+            	<ul id="summary">
+                	<li id="summary-price">
+                    	<div class="dt">雪&nbsp;狐&nbsp;价：</div>
+                        <div class="dd"><strong class="p-price">￥{$good_inf.goods_price}</strong></div>
+                    </li>
+                    <li id="summary-num">
+                    	<div class="dt">库&nbsp;&nbsp;&nbsp;&nbsp;存：</div>
+                        <div class="dd"><span>{$good_inf.goods_num}</span></div>
+                    </li>
+                    <li id="summary-addtime">
+                    	<div class="dt">上架日期：</div>
+                        <div class="dd"><span>{$good_inf.goods_addtime|date='Y-m-d',###}</span></div>
+                    </li>
+                </ul>
+                <ul id="choose">
+                
+                	<if condition="$exist_private eq true">
+                    	<volist name="privatelist" id="vo" key="k">
+                            <li id="choose-private" class="J-choose-private <if condition='$k eq 1'>J-first-private</if>">
+                                <div class="dt">{$vo.title}：</div>
+                                <div class="dd">
+                                	<volist name="vo.attr_sub" id="sub">
+                                        <div id="{$sub.id}" class='item 
+                                        <in name="sub.id" value="$good_inf.private_attr_id">selected</in> 
+                                        <if condition="$k eq 1"> <notin name="sub.id" value="$private_top_str">disabled</notin></if> 
+                                        <if condition="$k eq 2"> <notin name="sub.id" value="$private_sub_str">disabled</notin></if> '> <!--不存在属性标示顶级-->
+                                           
+                                           <a name="goToGood" class="<if condition="$sub.img eq ''">ctext</if>" href="javascript:void(0);"><b></b>
+                                             <if condition="$sub.img neq ''">
+                                               <img src="__UPLOAD__/{$sub.img}" width="25" height="25">
+                                             </if>{$sub.title}
+                                           </a>
+                                        </div>
+                                    </volist>
+                                </div>
+                            </li>
+                        </volist>
+                    </if>
+                    
+                    <li id="choose-type"></li>
+                	<li id="choose-amount">
+                    	<div class="dt">购买数量：</div>
+                        <div class="dd">
+                        	<div class="wrap-input">
+                            	<a class="btn-reduce" href="javascript:(0);" onClick="goods_reduce();">减少数量</a>
+                                <a class="btn-add" href="javascript:(0);" onClick="goods_add();">增加数量</a>
+                                <input class="text" id="buy-num" value="1">
+                            </div>
+                        </div>
+                    </li>
+                    <li id="choose-btns">
+                    	<div class="btn">
+                        	<a class="btn-append" id="initcart" href="__MODULE__/cart/index/id/{$good_inf.id}/num/1" title=""></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--右侧商品基本信息 end-->
+            
+        	<!--左侧商品放大镜 begin-->
+            <div id="preview">
+                <div class="jqzoom" id="spec-n1"><img width="350" height="350" src="__ROOT__{$good_img[0]['goods_img']}" jqimg="__ROOT__{$good_img[0]['goods_img']}">
+                </div>
+                <div id="spec-n5">
+                    <div class="control" id="spec-left">
+                        <img src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/left.gif" />
+                    </div>
+                    <div id="spec-list">
+                        <ul class="list-h">
+                        	<volist name="good_img" id="vo">
+                            	<li><img src="__ROOT__{$vo.goods_img}"></li>
+                            </volist>
+                        </ul>
+                    </div>
+                    <div class="control" id="spec-right">
+                        <img src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/right.gif" />
+                    </div>
+                </div>
+            </div>
+			<script type="text/javascript">
+                $(function(){			
+                   $(".jqzoom").jqueryzoom({
+                        xzoom:400,
+                        yzoom:400,
+                        offset:10,
+                        position:"right",
+                        preload:1,
+                        lens:1
+                    });
+                    $("#spec-list").jdMarquee({
+                        deriction:"left",
+                        width:350,
+                        height:56,
+                        step:2,
+                        speed:4,
+                        delay:10,
+                        control:true,
+                        _front:"#spec-right",
+                        _back:"#spec-left"
+                    });
+                    $("#spec-list img").bind("mouseover",function(){
+                        var src=$(this).attr("src");
+                        $("#spec-n1 img").eq(0).attr({
+                            src:src.replace("\/n5\/","\/n1\/"),
+                            jqimg:src.replace("\/n5\/","\/n0\/")
+                        });
+                        $(this).css({
+                            "border":"2px solid #e4393c",
+                            "padding":"0px"
+                        });
+                    }).bind("mouseout",function(){
+                        $(this).css({
+                            "border":"1px solid #ccc",
+                            "padding":"1px"
+                        });
+                    });				
+                })
+                </script>
+            <script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib.js"></script>
+            <script type="text/javascript" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/jzoom.js"></script>
+            <!--左侧商品放大镜 end-->
+        </div>
+    </div>
+    <!--中间主要信息 end-->
+    
+    <!--左侧热销排行、右侧商品介绍 begin-->
+    <div class="w">
+    	<div class="right">
+        	<div id="product-detail">
+            	<div id="product-title"><a href="javascript:(0);">商品介绍</a></div>
+                <div class="mc">
+                	{$good_inf.goods_desc|html_entity_decode}
+                </div>
+            </div>
+        </div>
+        <div class="left">
+        	<div id="hot-buy" class="m2">
+            	<div class="mt"><h2>笔记本热销排行</h2></div>
+                <div class="mc">
+                	<ul>
+                    	<li class="fore1">
+                        	<div class="p-img"><a target="_blank" href="http://item.jd.com/1108383.html"><img width="100" height="100" alt="" src="http://img13.360buyimg.com/n4/g12/M00/0A/1C/rBEQYVNXEZEIAAAAAAFRccKBpTgAAE8rQE4rjMAAVGJ937.jpg"></a></div>
+                            <div class="p-name"><a target="_blank" href="http://item.jd.com/1108383.html">华硕（ASUS） R510LD 15.6英寸笔记本 （i5-4200U 4G 500G GT820M 2G独显 D刻 Win8 白色）</a></div>
+                            <div class="p-price"><strong>￥3999.00</strong></div>
+                        </li>
+                        <li>
+                        	<div class="p-img"><a target="_blank" href="http://item.jd.com/996188.html"><img width="100" height="100" alt="" src="http://img13.360buyimg.com/n4/g15/M00/18/02/rBEhWVKS7TgIAAAAAAFGeniiI_UAAF6FAFii4IAAUaS681.jpg"></a></div>
+                            <div class="p-name"><a target="_blank" href="http://item.jd.com/996188.html">宏碁（acer） E1-570G-53334G50Dnkk 15.6英寸超薄本 （i5-3337U 4G 500G GT740M 2G独显 Linux）黑色</a></div>
+                            <div class="p-price"><strong>￥3399.00</strong></div>
+                        </li>
+                        <li>
+                        	<div class="p-img"><a target="_blank" href="http://item.jd.com/1108383.html"><img width="100" height="100" alt="" src="http://img13.360buyimg.com/n4/g12/M00/0A/1C/rBEQYVNXEZEIAAAAAAFRccKBpTgAAE8rQE4rjMAAVGJ937.jpg"></a></div>
+                            <div class="p-name"><a target="_blank" href="http://item.jd.com/1108383.html">华硕（ASUS） R510LD 15.6英寸笔记本 （i5-4200U 4G 500G GT820M 2G独显 D刻 Win8 白色）</a></div>
+                            <div class="p-price"><strong>￥3999.00</strong></div>
+                        </li>
+                        <li>
+                        	<div class="p-img"><a target="_blank" href="http://item.jd.com/996188.html"><img width="100" height="100" alt="" src="http://img13.360buyimg.com/n4/g15/M00/18/02/rBEhWVKS7TgIAAAAAAFGeniiI_UAAF6FAFii4IAAUaS681.jpg"></a></div>
+                            <div class="p-name"><a target="_blank" href="http://item.jd.com/996188.html">宏碁（acer） E1-570G-53334G50Dnkk 15.6英寸超薄本 （i5-3337U 4G 500G GT740M 2G独显 Linux）黑色</a></div>
+                            <div class="p-price"><strong>￥3399.00</strong></div>
+                        </li>
+                        <li>
+                        	<div class="p-img"><a target="_blank" href="http://item.jd.com/1108383.html"><img width="100" height="100" alt="" src="http://img13.360buyimg.com/n4/g12/M00/0A/1C/rBEQYVNXEZEIAAAAAAFRccKBpTgAAE8rQE4rjMAAVGJ937.jpg"></a></div>
+                            <div class="p-name"><a target="_blank" href="http://item.jd.com/1108383.html">华硕（ASUS） R510LD 15.6英寸笔记本 （i5-4200U 4G 500G GT820M 2G独显 D刻 Win8 白色）</a></div>
+                            <div class="p-price"><strong>￥3999.00</strong></div>
+                        </li>
+                        <li>
+                        	<div class="p-img"><a target="_blank" href="http://item.jd.com/996188.html"><img width="100" height="100" alt="" src="http://img13.360buyimg.com/n4/g15/M00/18/02/rBEhWVKS7TgIAAAAAAFGeniiI_UAAF6FAFii4IAAUaS681.jpg"></a></div>
+                            <div class="p-name"><a target="_blank" href="http://item.jd.com/996188.html">宏碁（acer） E1-570G-53334G50Dnkk 15.6英寸超薄本 （i5-3337U 4G 500G GT740M 2G独显 Linux）黑色</a></div>
+                            <div class="p-price"><strong>￥3399.00</strong></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--左侧热销排行、右侧商品介绍 end-->
+    
+    <!--底部 begin-->
+    {:W('Template/bottom')}
+    <!--底部 end-->
+</body>
+</html>

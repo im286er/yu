@@ -1,0 +1,75 @@
+<include file="include:header" />
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/user_Center.css"/>
+<script> 
+    var pageName = 'home',                                                  
+        seajsBase ='__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/'              
+        
+   	yktGlobal.pageName ='home_order_goods_refund';   	
+</script>  
+<script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>
+<div class="apply-service-wrap mainbody-2 clearfix">
+	<include file="Home:left" />
+		<div class="m-content">
+			<div class="sub-nav">
+				<a class="active" href="#">退货换货</a>
+			</div>
+			<form id="J-order-service-form" method="post" action="{:U('Index/Home/doOrderRefund')}">
+                <div class="m-apply-title">请选择方式</div>
+				<ul class="menu clearfix" data-toggle="buttons">
+					<li>
+						<label class="btn" for="type-1">
+							<input id="type-1" type="radio" name="type" value="1" />
+							退货
+						</label>
+					</li>
+					<li>
+						<label class="btn" for="type-2">
+							<input id="type-2" type="radio" name="type" value="2" />
+							换货
+						</label>
+					</li>	
+					<label for="type" class="m-msg-span error mt-10"></label>				
+				</ul>
+				<div class="choose">
+					<div class="m-apply-title">请选择商品</div>
+	                <ul class="bd clearfix" data-toggle="buttons">
+	                    <volist id="voo" name="vo['order_goods']" key="k">	
+	                      <li class="J-choose-goods" data-gpid="{$voo['gpid']}" data-gid="{$voo['gid']}" >
+	                      	<label class="btn clearfix" for="gpid-{$voo['gpid']}">
+	                      		<input id="gpid-{$voo['gpid']}" type="radio" name="goodsGpid" value="{$voo['gpid']}" />
+								<img class="pic" src="__UPLOAD__{$voo['gid']|gidToField=###,'goods_img'}"/>
+								<div class="title">
+                                   {$voo['gid']|gidToField=###,'goods_name'}&nbsp;
+                                   {$voo['gpid']|gpidToField=###,$voo['gid'],'attr_match'}
+                                </div>
+							</label>
+						  </li>        
+	       		       </volist>
+	       		       <label for="goodsGpid" class="m-msg-span error mt-10"></label>				
+	                </ul>
+	            </div>
+				<div class="description">
+					<div class="m-apply-title">问题描述</div>
+					<textarea name='description'></textarea>
+					<label for="description" class="m-msg-span error mt-10"></label>			
+				</div>
+				<div class="uplaod">
+					<div class="m-apply-title">附图</div>
+					<img class="J-upload-button J-img-container pic" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/upload_icon.png"/>
+					<div id="J-upload-txt" style="display:none"></div>
+					<input id="J-upload-inputVal" type="hidden" name="img" value=""/>
+				</div>
+				<div class="agree">
+					<input type="checkbox" checked="true" name="agree"/>
+					我已阅读并同意《售后政策》
+					<label for="agree" class="m-msg-span error mt-10"></label>	
+				</div>
+                <input type="hidden" name="order_id" value="{$vo['id']}" />
+                <input type="hidden" name="order_sn" value="{$vo['order_sn']}" />
+                <input type="hidden" name="gpid" value="" />
+                <input type="hidden" name="gid" value="" />
+				<div id="J-order-servicer-btn" class="submit-btn"><a href="javascript:;">提交</a></div>
+			</form>
+		</div>				
+</div>
+<include file="include:footer" />

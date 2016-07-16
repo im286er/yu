@@ -1,0 +1,211 @@
+<div class="unit goods-attr-type">
+    <label>套装:</label> 
+    <div class="frame">
+        <a class="add_attr_btn <eq name="vo['multi']" value="0">active</eq>" href="javascript:;">无套装</a>
+        <a class="add_attr_btn <in name="vo['multi']" value="1,2">active</in>" href="javascript:;">多套装</a>
+    <div id="J-attr-frame" class="frame"> 
+      <switch name="vo['multi']" >
+         <case value="0">  
+            <div class="no-attr-content">
+              <div class="result-wrap">
+                   <table class="result-table">
+                        <tbody>                               
+                            <tr>
+                                <th>价格(元)</th>
+                                <th>数量</th>
+                                <th>重量(kg)</th>
+                                <th>商品编码</th>
+                                <th>区域码</th>
+                                <th>商品缩写</th>
+                            </tr>
+                            <tr class="result-list">
+                                <td style="display: none;">
+                                   <input type="hidden" name="gpid" value="{$vo['private'][0]['gpid']}" />
+                                </td>
+                                <td><input class="u-input-text number required" type="text" name="price" value="{$vo['private'][0]['price']}"/></td>
+                                <td><input class="u-input-text digits required" type="text" name="stock" value="{$vo['private'][0]['stock']}"/></td>
+                                <td><input class="u-input-text number required" type="text" name="weight" value="{$vo['private'][0]['weight']}"/></td>
+                                <td><input class="u-input-text required" type="text" name="goods_code" value="{$vo['private'][0]['goods_code']}" /></td>
+                                <td><input class="u-input-text required" type="text" name="area_code" value="{$vo['private'][0]['area_code']}"/></td>
+                                <td><input class="u-input-text required" type="text" name="abbr" value="{$vo['private'][0]['abbr']}"/></td>
+                            </tr>  
+                         </tbody>
+                   </table>
+                </div>
+             </div>
+         </case>                   
+         <case value="1"> 
+            <php> $attr_des_arr = unserialize($vo['attr_des']); </php>  <!--先反序列化属性描述--> 
+            <div class="multi-attr-content">
+                <ul id="J-ul-attr" class="top">
+                    <li class="J-attr-row clearfix">
+                        <div class="J-attr-title attr-title">
+                            <input class="input-edit required" type="text" value="{$attr_des_arr[1]['title']}" readonly="readonly"/>
+                        </div>
+                        <div class="J-attr-val-frame attr-val">
+                            <foreach name="attr_des_arr[1]['val']" item="voo" >
+                                <div class="J-attr-val-list attr-val-list">
+                                    <input class="input-edit required" type="text" value="{$voo}" readonly="readonly"/>
+                                </div>
+                            </foreach>
+                        </div>
+                    </li>
+                </ul>
+                <div id="J-result-wrap">
+                   <div class="result-wrap">
+                      <table class="result-table">
+                        <tbody>                               
+                            <tr>
+                                <th>值</th>
+                                <th>价格(元)</th>
+                                <th>数量</th>
+                                <th>重量(kg)</th>
+                                <th>商品编码</th>
+                                <th>区域码</th>
+                                <th>商品缩写</th>
+                                <th>图片</th>
+                                <th>默认</th>
+                            </tr>
+                            <volist name="vo['private']" id="voo" key="key">
+                                <tr class="result-list">
+                                    <td style="display: none;">
+                                      <input type="hidden" name="gpid[{$key}]" value="{$voo['gpid']}" />
+                                    </td>
+                                    <td class="first">
+                                       <input type="hidden" name="attr[{$key}]" value="{$voo['attr']}" readonly="readonly" />
+                                       <input size="15" class="input-edit required" type="text"   value="{$voo['attr_match']}" readonly="readonly" />
+                                    </td>
+                                    <td>
+                                        <input size="15" class="input-edit required" type="text" name="price[{$key}]" value="{$voo['price']}" />
+                                    </td>
+                                    <td>
+                                        <input size="15" class="input-edit required" type="text" name="stock[{$key}]" value="{$voo['stock']}" />
+                                    </td>
+                                    <td>
+                                        <input size="15" class="input-edit required" type="text" name="weight[{$key}]" value="{$voo['weight']}" />
+                                    </td>
+                                    <td>
+                                       <input class="input-edit required" type="text" name="goods_code[{$key}]" value="{$voo['goods_code']}"  />
+                                    </td>
+                                    <td>
+                                       <input class="input-edit required" type="text" name="area_code[{$key}]" value="{$voo['area_code']}" />
+                                    </td>
+                                    <td>
+                                       <input class="input-edit required" type="text" name="abbr[{$key}]" value="{$voo['abbr']}" />
+                                    </td>
+                                    <td>
+                                        <div id="J-suit-button-{$key}" class="fl upload-btn u-btn u-btn-primary" data-i="{$key}">上传图片</div>
+                                        <ul id="J-suit-img-wrap-{$key}" class="fl upload-pic">
+                                        <neq name="voo['img']" value="">    
+                                            <li class="upload-pic-list">
+                                                <div class="u-small-close"></div>
+                                                <div class="u-opacity-bg"></div>
+                                                <img id="J-suit-container-{$key}" class="J-img-container" src="__UPLOAD__{$voo['img']}">
+                                            </li>
+                                        </neq>
+                                        </ul>
+                                        <div id="J-suit-status-{$key}" style="display:none"></div>
+                                        <input type="hidden" id="J-suit-inputVal-{$key}" name="img[{$key}]" value="{$voo['img']}" />
+                                    </td>
+                                    <td class="last">
+                                        <input class="default-radio" name="default" type="radio" value="{$key}" <eq name="voo['default']" value="1">checked="true"</eq> />
+                                    </td>
+                                </tr>
+                             </volist>      
+                         </tbody>
+                       </table>
+                   </div>
+                </div>             
+             </div>                                          
+          </case> 
+         <case value="2">
+             <php> $attr_des_arr = unserialize($vo['attr_des']); </php>  <!--先反序列化属性描述--> 
+             <div class="multi-attr-content">
+                <ul id="J-ul-attr" class="top">
+                  <volist name="attr_des_arr" id="voo">   
+                    <li class="J-attr-row clearfix">
+                        <div class="J-attr-title attr-title">
+                            <input class="input-edit required" type="text" value="{$voo['title']}" readonly="readonly"/>
+                        </div>
+                        <div class="J-attr-val-frame attr-val">
+                            <foreach name="voo['val']" item="vooo" key="key" >
+                                <div class="J-attr-val-list attr-val-list">
+                                    <input class="input-edit required" type="text" value="{$vooo}" readonly="readonly"/>
+                                </div>
+                            </foreach>
+                        </div>
+                    </li>
+                  </volist>
+                </ul>
+                <div id="J-result-wrap">
+                   <div class="result-wrap">
+                      <table class="result-table">
+                        <tbody>                               
+                            <tr>
+                                <th>值</th>
+                                <th>价格(元)</th>
+                                <th>数量</th>
+                                <th>重量(kg)</th>
+                                <th>商品编码</th>
+                                <th>区域码</th>
+                                <th>商品缩写</th>
+                                <th>图片</th>
+                                <th>默认</th>
+                            </tr>
+                            <volist name="vo['private']" id="voo" key="key">
+                                <tr class="result-list">
+                                    <td style="display: none;">
+                                      <input type="hidden" name="gpid[{$key}]" value="{$voo['gpid']}" />
+                                    </td>
+                                    <td class="first">
+                                       <input type="hidden" name="attr[{$key}]" value="{$voo['attr']}" readonly="readonly" />
+                                       <input size="15" class="input-edit required" type="text"   value="{$voo['attr_match']}" readonly="readonly" />
+                                    </td>
+                                    <td>
+                                        <input size="15" class="input-edit required" type="text" name="price[{$key}]" value="{$voo['price']}" />
+                                    </td>
+                                    <td>
+                                        <input size="15" class="input-edit required" type="text" name="stock[{$key}]" value="{$voo['stock']}" />
+                                    </td>
+                                    <td>
+                                        <input size="15" class="input-edit required" type="text" name="weight[{$key}]" value="{$voo['weight']}" />
+                                    </td>
+                                    <td>
+                                        <input class="input-edit required" type="text" name="goods_code[{$key}]" value="{$voo['goods_code']}" />
+                                    </td>
+                                    <td>
+                                        <input class="input-edit required" type="text" name="area_code[{$key}]" value="{$voo['area_code']}" />
+                                    </td>
+                                    <td>
+                                        <input class="input-edit required" type="text" name="abbr[{$key}]" value="{$voo['abbr']}" />
+                                    </td>
+                                    <td>
+                                        <div id="J-suit-button-{$key}" class="fl upload-btn u-btn u-btn-primary" data-i="{$key}">上传图片</div>
+                                        <ul id="J-suit-img-wrap-{$key}" class="fl upload-pic">
+                                        <neq name="voo['img']" value="">    
+                                            <li class="upload-pic-list">
+                                                <div class="u-small-close"></div>
+                                                <div class="u-opacity-bg"></div>
+                                                <img id="J-suit-container-{$key}" class="J-img-container" src="__UPLOAD__{$voo['img']}" />
+                                            </li>
+                                        </neq>
+                                        </ul>
+                                        <div id="J-suit-status-{$key}" style="display:none"></div>
+                                        <input type="hidden" id="J-suit-inputVal-{$key}" name="img[{$key}]" value="{$voo['img']}" />
+                                    </td>
+                                    <td class="last">
+                                        <input class="default-radio" name="default" type="radio" value="{$key}" <eq name="voo['default']" value="1">checked="true"</eq> />
+                                    </td>
+                                </tr>
+                             </volist>      
+                         </tbody>
+                       </table>
+                   </div>
+                </div>           
+             </div>               
+         </case>
+         <default />配搭表格错误
+      </switch>   
+    </div> 
+    </div>                                       
+</div>

@@ -1,0 +1,128 @@
+<include file="include:header" />
+<div class="body-bg clearfix">
+<div class="blank10"></div>
+<link rel="stylesheet" href="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/css/blog.css"/>
+<script>
+    //当前页
+    yktGlobal.pageName = 'contribute';        
+</script>  
+<div class="mainbody blogProcess-wrap clearfix">
+	<include file="Article:head" />
+    <!-- seajs加载 -->
+    <script src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/js/lib/seajs/seajs/2.3.0/sea.js"></script>	
+    <div class="icon-explain"></div>
+	<div class="notice">感谢你的投稿，你的投稿将在我们审核后呈现在网站上。 </div>
+	<div class="fl bd">
+	   <form id="J-upload-form" method="post" action="__CONTROLLER__/doContribute"> 
+		<div id="J-upload-coer-frame" class="upload-coer-frame">	
+			<div class="upload-cover-pic">
+				<img id="J-titleImg-container" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/contribute_cover.jpg"/>  
+				<input id="J-titleImg-button" class="upload-cover-btn" type="button" value="上传封面640 X 360"/>
+				<div id="J-titleImg-status" style="display:none"></div>
+				<input type="hidden" id="J-titleImg-inputVal" name="title_img" value="" />
+			</div>
+			<div class="msg-span" style="display:none"></div>
+		</div>	
+		<ul>
+			<li class="form-list">
+				<div class="headline">标题</div>
+				<input class="blogProcess-input" type="text" placeholder="请输入标题" name="title"/>
+				<span class="msg-span"></span>
+			</li>
+			<li class="form-list">
+				<div class="headline">分类</div>
+				<select name="cat_id" data-rule-required="true" data-msg-required="请选择分类">
+					<option value="">选择分类</option>
+				    <volist id="vo" name="catlist">
+                       <option value="{$vo['id']}">{$vo['cat_name']}</option>				                  	
+                    </volist>
+				</select>
+				<span class="msg-span"></span>
+			</li>			
+			<li class="form-list">
+				<div class="headline">简介</div>
+				<textarea class="blogProcess-textarea" placeholder="请用简单的文字介绍这个教程" name="summary"></textarea>
+				<span class="msg-span"></span>
+			</li>
+            <!-- <li class="form-list clearfix">
+				<div class="headline">创作环境</div>
+				<ul class="fl">
+					<li class="upload-bigpic-list">
+						<div class="avatar">
+							<div id="J-background-delete" class="u-small-close"></div>
+							<div class="u-opacity-bg"></div>								
+							<img id="J-background-container" class="J-environment" src="__PUBLIC__/themes/{$Think.config.DEFAULT_THEME}/images/test/aside_9.png"/>
+							<div id="J-background-status" style="display:none"></div>
+							<input type="hidden" id="J-background-inputVal" name="background" value="" />
+						</div>
+						<div id="J-background-button" class="no-radius u-btnBlock u-btn-primary">上传环境图片</div>
+					</li>							
+				</ul>
+			</li> -->
+			<li class="form-list clearfix">
+				<div class="headline">原料/工具</div>
+				<ul id="J-add-tool-frame"> 
+					<li class="J-tool-list form-list clearfix">			
+						<div class="input-frame"> 
+							<input class="J-tool-val blogProcess-input" type="text" placeholder="多个工具用空格隔开" name="tool" data-rule-required="true" data-msg-required="不能为空" />
+							<span class="msg-span"></span>
+						</div>					
+					</li>						
+				</ul>
+			</li>	
+			<!-- <li class="form-list clearfix">
+				<div id="J-add-tool" class="fl add-btn"><span class="fl add-icon">+</span>添加原料/工具</div>
+			</li> -->
+			<li class="form-list clearfix">
+				<div class="headline">步骤</div>
+				<input id="J-step-count" type="hidden" value="1"/>
+				<ul id="J-step-frame"> 
+					<li class="J-step-list form-list clearfix">
+						<div class="move-icon"></div>
+						<div class="J-step-number number-icon">1</div>
+						<div class="blank10"></div>
+						<textarea class="J-step-val blogProcess-textarea" placeholder="" name="step_des[1]" data-rule-required="true" data-msg-required="不能为空"></textarea>
+						<span class="msg-span"></span>
+						<div class="blank10"></div>
+						<div id="J-step-button-1" class="fl editorUpload-btn u-btn u-btn-small u-btn-primary J-upload-btn" data-i="1">上传步骤图片</div>  
+						<ul id="J-step-img-wrap-1" class="fl upload-pic J-upload-wrap"></ul>	
+						<div id="J-step-status-1" class="J-upload-status" style="display:none"></div>
+						<input type="hidden" id="J-step-inputVal-1" class="J-upload-inputVal" name="step_img[1]" value="" />				
+					</li>
+				</ul>
+			</li>	
+
+			<li class="form-list clearfix">
+				<div id="J-add-step" class="fl add-btn"><span class="fl add-icon">+</span>添加步骤</div>
+			</li>
+			<li class="form-list clearfix">
+				<div class="headline">结束语<span class="tip">（选填）</span></div>
+				<textarea class="blogProcess-textarea" placeholder="请用简单的文字介绍这个教程" name="remark"></textarea>
+			</li>
+            <li class="form-list clearfix">
+                <div class="headline">来源</div> 
+                <label class="source-item">
+                    <input type="radio" name="source" value="1" checked="true"/>
+                    本文为发布者原创，禁止未授权转载
+                </label>
+                <label class="source-item">
+                    <input type="radio" name="source" value="2"/>
+                    已经获得授权转载，建议在文章中标明作者和源地址
+                </label>
+                <label class="source-item">
+                    <input type="radio" name="source" value="3"/>
+                    本文读者在网络资料搜集整理，如有版权问题请联系我们删除
+                </label>
+                <span class="msg-span"></span>                  
+            </li>
+			<li class="form-list clearfix"> 
+				<input class="fl u-btn u-btn-big btn-check radius mr-10" type="submit" value="提交审核" name="release"/>
+			</li>
+		</ul>
+        <input type="hidden" name="serialize" value="1"/>
+      </form>
+	</div> 
+</div>	
+<include file="include:footer" />
+</div>
+

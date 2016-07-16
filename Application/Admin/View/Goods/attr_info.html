@@ -1,0 +1,40 @@
+<table class="list" width="100%" layoutH="115">
+    	<thead>
+            <!---商品信息---->
+            <tr>
+                <td colspan="2">商品名称</td>
+                <td colspan="6"><a target="_blank" href="{:U('Index/Goods/item',array('id'=>$vo['id']))}">{$vo['goods_name']}</a></td>
+            </tr>
+            <!---商品信息---->
+        	<tr>
+                <th width="10%">套装序号</th>
+                <th width="20%">商品属性</th>
+                <th width="10%">库存</th>
+                <th width="10%">价格</th>
+                <th width="10%">商品编码</th>
+                <th width="10%">重量</th>
+                <th width="10%">是否默认</th>
+                <th width="10%">属性图片</th>
+                <th width="10%">销量</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<volist id="voo" name="vo['private']" key="k">
+                <tr>
+                    <td>{$k}</td>
+                    <td>{$voo['attr_match']}</td>
+                    <td>{$voo['stock']}</td>
+                    <td>{$voo['price']}</td>
+                    <td>{$voo['goods_code']}</td>
+                    <td>{$voo['weight']}kg</td>
+                    <td>{$voo['default']?'默认':''}</td>
+                    <td>
+                       <neq name="voo['img']" value="">
+                         <img src="__UPLOAD__{$voo['img']}" style="width: 60px; height: 60px;" />
+                       </neq>
+                    </td>
+                    <td>{$voo['sales']}</td>
+                </tr>
+            </volist>
+        </tbody>
+</table>
